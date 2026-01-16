@@ -9,9 +9,9 @@ import AboutPage from "./pages/AboutPage";
 import DoctorsPage from "./pages/DoctorsPage";
 import DentalTourismPage from "./pages/DentalTourismPage";
 import ContactPage from "./pages/ContactPage";
+import PricingPage from "./pages/PricingPage";
 import DentalImplantsPage from "./pages/treatments/DentalImplantsPage";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -27,6 +27,7 @@ const App = () => (
           <Route path="/about" element={<AboutPage />} />
           <Route path="/doctors" element={<DoctorsPage />} />
           <Route path="/dental-tourism" element={<DentalTourismPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
