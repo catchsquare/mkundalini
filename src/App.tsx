@@ -27,6 +27,7 @@ import Billing from "./pages/admin/Billing";
 
 // Placeholder components for new admin pages
 import { AdminPlaceholder } from "./pages/admin/AdminPlaceholder";
+import UserManagement from "./pages/admin/UserManagement";
 
 const queryClient = new QueryClient();
 
@@ -133,7 +134,7 @@ const App = () => (
               <Route path="settings/emails" element={<AdminPlaceholder title="Email Templates" />} />
 
               {/* Users & Roles */}
-              <Route path="users" element={<AdminPlaceholder title="All Users" />} />
+              <Route path="users" element={<UserManagement />} />
               <Route path="users/roles" element={<AdminPlaceholder title="Roles & Permissions" />} />
               <Route path="users/activity" element={<AdminPlaceholder title="Activity Logs" />} />
 
