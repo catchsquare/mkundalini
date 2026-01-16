@@ -1,32 +1,151 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, Send, Globe, MessageCircle } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Send,
+  Globe,
+  MessageCircle,
+  Calendar,
+  CheckCircle,
+  AlertTriangle,
+  Video,
+  FileText,
+  Heart,
+  ArrowRight,
+  Smartphone,
+  Shield,
+  Users,
+  Sparkles,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Layout } from "@/components/layout/Layout";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
-const contactInfo = [
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5 },
+};
+
+const staggerContainer = {
+  initial: {},
+  whileInView: {
+    transition: { staggerChildren: 0.1 },
+  },
+  viewport: { once: true },
+};
+
+const contactMethods = [
   {
-    icon: MapPin,
-    title: "Visit Us",
-    details: ["Durbar Marg, Kathmandu", "Nepal 44600"],
+    icon: MessageCircle,
+    title: "WhatsApp",
+    subtitle: "Fastest Response",
+    value: "+977 98-1234-5678",
+    href: "https://wa.me/9779812345678",
+    description: "Get instant responses. Share photos, X-rays, and questions directly.",
+    responseTime: "Usually within 1 hour",
+    color: "bg-green-500",
   },
   {
     icon: Phone,
-    title: "Call Us",
-    details: ["+977 1-234-5678", "+977 98-1234-5678 (WhatsApp)"],
+    title: "Viber",
+    subtitle: "Free International Calls",
+    value: "+977 98-1234-5678",
+    href: "viber://chat?number=9779812345678",
+    description: "Free voice and video calls from anywhere in the world.",
+    responseTime: "During clinic hours",
+    color: "bg-purple-500",
+  },
+  {
+    icon: Video,
+    title: "Video Consultation",
+    subtitle: "Face-to-Face Online",
+    value: "Book a Session",
+    href: "#booking-form",
+    description: "Schedule a free 30-minute video call with our dental team.",
+    responseTime: "By appointment",
+    color: "bg-accent",
   },
   {
     icon: Mail,
-    title: "Email Us",
-    details: ["info@kundalinidental.com", "tourism@kundalinidental.com"],
+    title: "Email",
+    subtitle: "Detailed Inquiries",
+    value: "info@kundalinidental.com",
+    href: "mailto:info@kundalinidental.com",
+    description: "Best for sending X-rays, photos, and detailed treatment histories.",
+    responseTime: "Within 24 hours",
+    color: "bg-primary",
+  },
+];
+
+const bookingSteps = [
+  {
+    step: 1,
+    title: "Submit Your Inquiry",
+    description: "Fill out the form below or contact us via WhatsApp with your dental concerns and goals.",
+  },
+  {
+    step: 2,
+    title: "Free Virtual Consultation",
+    description: "We'll review your case and schedule a video call to discuss treatment options and costs.",
+  },
+  {
+    step: 3,
+    title: "Receive Your Treatment Plan",
+    description: "Get a detailed, personalized treatment plan with transparent pricing—no obligations.",
+  },
+  {
+    step: 4,
+    title: "Confirm Your Visit",
+    description: "Once you're ready, we'll help coordinate your appointment dates and travel logistics.",
+  },
+];
+
+const treatmentOptions = [
+  { value: "implants", label: "Dental Implants" },
+  { value: "veneers", label: "Veneers / Smile Makeover" },
+  { value: "crowns", label: "Crowns & Bridges" },
+  { value: "orthodontics", label: "Braces / Aligners" },
+  { value: "whitening", label: "Teeth Whitening" },
+  { value: "rootcanal", label: "Root Canal Treatment" },
+  { value: "extraction", label: "Tooth Extraction" },
+  { value: "checkup", label: "General Checkup" },
+  { value: "other", label: "Other / Not Sure" },
+];
+
+const clinicHours = [
+  { day: "Sunday - Friday", hours: "9:00 AM - 6:00 PM" },
+  { day: "Saturday", hours: "10:00 AM - 4:00 PM" },
+  { day: "Public Holidays", hours: "Closed" },
+];
+
+const reassurances = [
+  {
+    icon: Shield,
+    title: "No Obligation",
+    description: "Free consultations with zero pressure to proceed",
   },
   {
     icon: Clock,
-    title: "Opening Hours",
-    details: ["Sun - Fri: 9:00 AM - 6:00 PM", "Saturday: 10:00 AM - 4:00 PM"],
+    title: "Quick Response",
+    description: "We respond within 24 hours, often much faster",
+  },
+  {
+    icon: Users,
+    title: "Dedicated Support",
+    description: "A personal coordinator assigned to your case",
+  },
+  {
+    icon: Heart,
+    title: "Patient-First",
+    description: "Your comfort and satisfaction is our priority",
   },
 ];
 
@@ -37,7 +156,10 @@ export default function ContactPage() {
     email: "",
     phone: "",
     country: "",
-    subject: "",
+    treatment: "",
+    preferredDate: "",
+    isInternational: false,
+    hasXrays: false,
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,11 +169,11 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
+      title: "Inquiry Received!",
+      description: "Our team will contact you within 24 hours to schedule your consultation.",
     });
 
     setFormData({
@@ -59,7 +181,10 @@ export default function ContactPage() {
       email: "",
       phone: "",
       country: "",
-      subject: "",
+      treatment: "",
+      preferredDate: "",
+      isInternational: false,
+      hasXrays: false,
       message: "",
     });
     setIsSubmitting(false);
@@ -68,50 +193,187 @@ export default function ContactPage() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+    if (type === "checkbox") {
+      setFormData({ ...formData, [name]: (e.target as HTMLInputElement).checked });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   return (
     <Layout>
       {/* Hero */}
-      <section className="bg-muted/30 py-20 lg:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="relative pt-32 pb-20 bg-gradient-to-b from-muted/50 to-background overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="container-wide mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
+            className="max-w-4xl mx-auto text-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+              <Calendar className="w-4 h-4" />
+              Book Your Appointment
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+              Your Smile Journey{" "}
+              <span className="text-primary">Starts Here</span>
+            </h1>
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Whether you're across town or across the world, reaching us is easy. 
+              Choose your preferred way to connect, and we'll guide you through 
+              every step of your dental care journey.
+            </p>
+          </motion.div>
+
+          {/* Reassurance Pills */}
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 mt-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span className="text-primary font-medium text-sm uppercase tracking-wider">
-              Contact Us
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mt-2 mb-6">
-              Get in Touch
-            </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Ready to start your smile transformation? Have questions about our 
-              services or dental tourism packages? We're here to help. Reach out 
-              and our team will respond within 24 hours.
-            </p>
+            {reassurances.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50"
+              >
+                <item.icon className="w-4 h-4 text-primary" />
+                <span className="text-sm text-foreground font-medium">{item.title}</span>
+              </div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Form & Info */}
-      <section className="section-padding">
-        <div className="mx-auto max-w-7xl">
+      {/* Contact Methods */}
+      <section className="section-padding bg-background">
+        <div className="container-wide mx-auto">
+          <motion.div
+            className="text-center mb-12"
+            {...fadeInUp}
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Choose How to Connect
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              We're available through multiple channels to suit your preference. 
+              International patients especially love our WhatsApp support.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+          >
+            {contactMethods.map((method, index) => (
+              <motion.a
+                key={index}
+                href={method.href}
+                target={method.href.startsWith("http") ? "_blank" : undefined}
+                rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="bg-card rounded-2xl p-6 border border-border/50 card-hover group block"
+                variants={fadeInUp}
+              >
+                <div className={`w-12 h-12 rounded-xl ${method.color} flex items-center justify-center mb-4`}>
+                  <method.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-bold text-foreground mb-1">{method.title}</h3>
+                <span className="text-xs text-accent font-medium">{method.subtitle}</span>
+                <p className="text-primary font-medium mt-3 group-hover:underline">
+                  {method.value}
+                </p>
+                <p className="text-muted-foreground text-sm mt-2">
+                  {method.description}
+                </p>
+                <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  {method.responseTime}
+                </p>
+              </motion.a>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Booking Process */}
+      <section className="section-padding bg-muted/30">
+        <div className="container-wide mx-auto">
+          <motion.div
+            className="text-center mb-16"
+            {...fadeInUp}
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
+              <Sparkles className="w-4 h-4" />
+              Simple Process
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              How Booking Works
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              From first contact to sitting in our chair, we make the process 
+              smooth and stress-free.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid md:grid-cols-4 gap-8"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+          >
+            {bookingSteps.map((step, index) => (
+              <motion.div
+                key={index}
+                className="relative"
+                variants={fadeInUp}
+              >
+                {index < bookingSteps.length - 1 && (
+                  <div className="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-border" />
+                )}
+                <div className="relative bg-card rounded-2xl p-6 border border-border/50 text-center">
+                  <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                    {step.step}
+                  </div>
+                  <h3 className="font-bold text-foreground mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground text-sm">{step.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Booking Form */}
+      <section id="booking-form" className="section-padding bg-background scroll-mt-24">
+        <div className="container-wide mx-auto">
           <div className="grid lg:grid-cols-3 gap-12">
-            {/* Contact Form */}
+            {/* Form */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
               className="lg:col-span-2"
+              {...fadeInUp}
             >
-              <div className="card-elevated p-8">
-                <h2 className="text-2xl font-bold text-foreground mb-6">
-                  Send Us a Message
+              <div className="bg-card rounded-2xl p-8 md:p-10 border border-border/50">
+                <h2 className="text-2xl font-bold text-foreground mb-2">
+                  Request Your Consultation
                 </h2>
+                <p className="text-muted-foreground mb-8">
+                  Fill out this form and we'll get back to you within 24 hours with 
+                  next steps. No commitment required.
+                </p>
+
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Personal Info */}
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
@@ -121,7 +383,7 @@ export default function ContactPage() {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder="John Smith"
+                        placeholder="Your full name"
                         required
                       />
                     </div>
@@ -134,15 +396,16 @@ export default function ContactPage() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="john@example.com"
+                        placeholder="your@email.com"
                         required
                       />
                     </div>
                   </div>
+
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
-                        Phone Number
+                        Phone / WhatsApp *
                       </label>
                       <Input
                         type="tel"
@@ -150,134 +413,331 @@ export default function ContactPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+1 234 567 8900"
+                        required
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
-                        Country
+                        Country *
                       </label>
                       <Input
                         name="country"
                         value={formData.country}
                         onChange={handleChange}
-                        placeholder="United States"
+                        placeholder="Your country"
+                        required
                       />
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Subject *
-                    </label>
-                    <select
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="w-full h-10 px-3 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                      required
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="appointment">Book an Appointment</option>
-                      <option value="tourism">Dental Tourism Inquiry</option>
-                      <option value="consultation">Free Virtual Consultation</option>
-                      <option value="quote">Request a Quote</option>
-                      <option value="other">Other</option>
-                    </select>
+
+                  {/* Treatment & Date */}
+                  <div className="grid sm:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Treatment Interest *
+                      </label>
+                      <select
+                        name="treatment"
+                        value={formData.treatment}
+                        onChange={handleChange}
+                        className="w-full h-10 px-3 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                        required
+                      >
+                        <option value="">Select treatment type</option>
+                        {treatmentOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Preferred Visit Date
+                      </label>
+                      <Input
+                        type="date"
+                        name="preferredDate"
+                        value={formData.preferredDate}
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
+
+                  {/* Checkboxes */}
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="isInternational"
+                        checked={formData.isInternational}
+                        onChange={handleChange}
+                        className="w-5 h-5 rounded border-input text-primary focus:ring-primary"
+                      />
+                      <span className="text-sm text-foreground">
+                        I'm an international patient traveling to Nepal for treatment
+                      </span>
+                    </label>
+                    <label className="flex items-center gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="hasXrays"
+                        checked={formData.hasXrays}
+                        onChange={handleChange}
+                        className="w-5 h-5 rounded border-input text-primary focus:ring-primary"
+                      />
+                      <span className="text-sm text-foreground">
+                        I have X-rays or photos to share for initial assessment
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* Message */}
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Message *
+                      Tell Us About Your Dental Needs
                     </label>
                     <Textarea
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Tell us about your dental needs or questions..."
+                      placeholder="Describe your dental concerns, goals, or any questions you have..."
                       rows={5}
-                      required
                     />
                   </div>
-                  <Button type="submit" size="lg" disabled={isSubmitting}>
-                    {isSubmitting ? (
-                      "Sending..."
-                    ) : (
-                      <>
-                        Send Message
-                        <Send className="w-4 h-4 ml-2" />
-                      </>
-                    )}
-                  </Button>
+
+                  {/* Submit */}
+                  <div className="flex flex-col sm:flex-row gap-4 items-start">
+                    <Button type="submit" size="lg" disabled={isSubmitting} className="w-full sm:w-auto">
+                      {isSubmitting ? (
+                        "Submitting..."
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4 mr-2" />
+                          Submit Consultation Request
+                        </>
+                      )}
+                    </Button>
+                    <p className="text-xs text-muted-foreground mt-2 sm:mt-3">
+                      By submitting, you agree to our privacy policy. We'll never 
+                      share your information.
+                    </p>
+                  </div>
                 </form>
               </div>
             </motion.div>
 
-            {/* Contact Info */}
+            {/* Sidebar */}
             <motion.div
+              className="space-y-6"
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="space-y-6"
             >
-              {contactInfo.map((item) => (
-                <div key={item.title} className="card-elevated p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                      <item.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">
-                        {item.title}
-                      </h3>
-                      {item.details.map((detail) => (
-                        <p key={detail} className="text-sm text-muted-foreground">
-                          {detail}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              {/* Quick Contact */}
-              <div className="card-elevated p-6 bg-primary text-primary-foreground">
-                <h3 className="font-semibold mb-4">Quick Contact</h3>
-                <div className="space-y-3">
-                  <a
-                    href="https://wa.me/9771234567890"
-                    target="_blank"
-                    rel="noopener"
-                    className="flex items-center gap-3 text-sm hover:opacity-80 transition-opacity"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    WhatsApp Us
-                  </a>
-                  <a
-                    href="tel:+9771234567890"
-                    className="flex items-center gap-3 text-sm hover:opacity-80 transition-opacity"
-                  >
-                    <Phone className="w-5 h-5" />
-                    Call Now
-                  </a>
-                  <a
-                    href="mailto:info@kundalinidental.com"
-                    className="flex items-center gap-3 text-sm hover:opacity-80 transition-opacity"
-                  >
-                    <Mail className="w-5 h-5" />
-                    Email Us
-                  </a>
-                </div>
+              {/* WhatsApp CTA */}
+              <div className="bg-green-500 rounded-2xl p-6 text-white">
+                <MessageCircle className="w-10 h-10 mb-4" />
+                <h3 className="font-bold text-lg mb-2">Prefer WhatsApp?</h3>
+                <p className="text-white/90 text-sm mb-4">
+                  Skip the form! Send us a message directly and get a response 
+                  within an hour during business hours.
+                </p>
+                <a
+                  href="https://wa.me/9779812345678?text=Hello!%20I'm%20interested%20in%20dental%20treatment%20at%20Kundalini%20Dental%20Clinic."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-green-600 px-4 py-2 rounded-lg font-medium hover:bg-green-50 transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Chat on WhatsApp
+                </a>
               </div>
 
               {/* For International Patients */}
-              <div className="card-elevated p-6 border-2 border-accent">
-                <div className="flex items-center gap-3 mb-3">
-                  <Globe className="w-5 h-5 text-accent" />
-                  <h3 className="font-semibold text-foreground">
-                    International Patients
-                  </h3>
+              <div className="bg-accent/10 rounded-2xl p-6 border border-accent/20">
+                <Globe className="w-8 h-8 text-accent mb-4" />
+                <h3 className="font-bold text-foreground mb-2">International Patients</h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Send us your dental X-rays and photos for a comprehensive 
+                  remote assessment and detailed treatment quote before you travel.
+                </p>
+                <Link
+                  to="/dental-tourism"
+                  className="inline-flex items-center gap-2 text-accent font-medium text-sm hover:underline"
+                >
+                  Learn About Dental Tourism
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              {/* Clinic Hours */}
+              <div className="bg-card rounded-2xl p-6 border border-border/50">
+                <div className="flex items-center gap-3 mb-4">
+                  <Clock className="w-6 h-6 text-primary" />
+                  <h3 className="font-bold text-foreground">Clinic Hours</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Planning dental tourism? Email us your X-rays and photos for a 
-                  free virtual consultation and personalized treatment quote.
+                <div className="space-y-2">
+                  {clinicHours.map((item, index) => (
+                    <div key={index} className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">{item.day}</span>
+                      <span className="text-foreground font-medium">{item.hours}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-4">
+                  Nepal Standard Time (UTC+5:45)
+                </p>
+              </div>
+
+              {/* What to Prepare */}
+              <div className="bg-card rounded-2xl p-6 border border-border/50">
+                <FileText className="w-6 h-6 text-primary mb-4" />
+                <h3 className="font-bold text-foreground mb-3">What to Prepare</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    Recent dental X-rays (if available)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    Photos of your teeth/smile
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    List of current medications
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    Medical history summary
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Emergency Contact */}
+      <section className="section-padding bg-muted/30">
+        <div className="container-wide mx-auto">
+          <motion.div
+            className="bg-destructive/10 border border-destructive/20 rounded-2xl p-8 md:p-10"
+            {...fadeInUp}
+          >
+            <div className="flex flex-col md:flex-row md:items-center gap-6">
+              <div className="w-16 h-16 rounded-full bg-destructive/20 flex items-center justify-center flex-shrink-0">
+                <AlertTriangle className="w-8 h-8 text-destructive" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-xl font-bold text-foreground mb-2">
+                  Dental Emergency?
+                </h3>
+                <p className="text-muted-foreground">
+                  For urgent dental issues outside regular hours, including severe pain, 
+                  trauma, or swelling, contact our emergency line. We provide 24/7 
+                  guidance for existing patients and emergency walk-ins when possible.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3">
+                <a
+                  href="tel:+9779812345678"
+                  className="inline-flex items-center justify-center gap-2 bg-destructive text-destructive-foreground px-6 py-3 rounded-lg font-medium hover:bg-destructive/90 transition-colors"
+                >
+                  <Phone className="w-5 h-5" />
+                  Emergency: +977 98-1234-5678
+                </a>
+                <p className="text-xs text-muted-foreground text-center">
+                  Available 24/7 for emergencies
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Location & Map */}
+      <section className="section-padding bg-background">
+        <div className="container-wide mx-auto">
+          <motion.div
+            className="text-center mb-12"
+            {...fadeInUp}
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Visit Our Clinic
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Located in the heart of Kathmandu, our modern clinic is easily 
+              accessible from major hotels and the international airport.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Map Placeholder */}
+            <motion.div
+              className="aspect-[4/3] bg-muted rounded-2xl overflow-hidden relative"
+              {...fadeInUp}
+            >
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center p-8">
+                  <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
+                  <h3 className="font-bold text-foreground mb-2">
+                    Kundalini Dental Clinic
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Durbar Marg, Kathmandu, Nepal 44600
+                  </p>
+                  <a
+                    href="https://maps.google.com/?q=Durbar+Marg+Kathmandu+Nepal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                  >
+                    <MapPin className="w-4 h-4" />
+                    Open in Google Maps
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Location Details */}
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-card rounded-2xl p-6 border border-border/50">
+                <h3 className="font-bold text-foreground mb-4">Address</h3>
+                <p className="text-muted-foreground">
+                  Kundalini Dental Clinic<br />
+                  Durbar Marg, Near Hotel Annapurna<br />
+                  Kathmandu, Nepal 44600
+                </p>
+              </div>
+
+              <div className="bg-card rounded-2xl p-6 border border-border/50">
+                <h3 className="font-bold text-foreground mb-4">Getting Here</h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <p>
+                    <strong className="text-foreground">From Airport:</strong> 25-minute 
+                    drive from Tribhuvan International Airport. Taxi fare approximately $5-8 USD.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">From Thamel:</strong> 10-minute 
+                    walk or short taxi ride from the popular tourist area.
+                  </p>
+                  <p>
+                    <strong className="text-foreground">Landmarks:</strong> Near Hotel 
+                    Annapurna and the Royal Palace Museum.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-card rounded-2xl p-6 border border-border/50">
+                <h3 className="font-bold text-foreground mb-4">Airport Pickup</h3>
+                <p className="text-muted-foreground text-sm">
+                  For international patients, we offer complimentary airport pickup 
+                  for treatments over $1,000. Just let us know your flight details!
                 </p>
               </div>
             </motion.div>
@@ -285,23 +745,38 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map */}
-      <section className="h-96 bg-muted">
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">
-              Durbar Marg, Kathmandu, Nepal
+      {/* Final CTA */}
+      <section className="section-padding bg-primary">
+        <div className="container-wide mx-auto text-center">
+          <motion.div {...fadeInUp}>
+            <Smartphone className="w-12 h-12 text-primary-foreground/80 mx-auto mb-6" />
+            <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-4">
+              Ready to Transform Your Smile?
+            </h2>
+            <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8">
+              Take the first step today. Our friendly team is ready to answer your 
+              questions and help you begin your journey to a healthier, more 
+              confident smile.
             </p>
-            <a
-              href="https://maps.google.com/?q=Durbar+Marg+Kathmandu+Nepal"
-              target="_blank"
-              rel="noopener"
-              className="text-primary text-sm hover:underline"
-            >
-              Open in Google Maps
-            </a>
-          </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="https://wa.me/9779812345678"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors"
+              >
+                <MessageCircle className="w-5 h-5" />
+                WhatsApp Us Now
+              </a>
+              <a
+                href="#booking-form"
+                className="inline-flex items-center justify-center gap-2 border border-primary-foreground/30 text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary-foreground/10 transition-colors"
+              >
+                Fill Out Form
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </motion.div>
         </div>
       </section>
     </Layout>
