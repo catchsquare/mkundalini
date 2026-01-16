@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
-import { Menu, X, Phone, Globe, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -69,10 +69,10 @@ export function Header() {
           : "bg-background"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16 sm:h-18 lg:h-20">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16 lg:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
-          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-primary flex items-center justify-center transition-transform group-hover:scale-105">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full bg-primary flex items-center justify-center transition-transform group-hover:scale-105">
             <span className="text-primary-foreground font-bold text-lg sm:text-xl">K</span>
           </div>
           <div className="flex flex-col">
@@ -86,12 +86,12 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:gap-x-5 xl:gap-x-7">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-4 xl:gap-x-6 2xl:gap-x-8">
           {navigation.map((item) => (
             <Link
               key={item.name}
               to={item.href}
-              className={`text-sm font-medium transition-colors hover:text-primary relative py-2 ${
+              className={`text-sm font-medium transition-colors hover:text-primary relative py-2 whitespace-nowrap ${
                 location.pathname === item.href
                   ? "text-primary"
                   : "text-muted-foreground"
@@ -109,23 +109,22 @@ export function Header() {
         </div>
 
         {/* Desktop CTAs */}
-        <div className="hidden lg:flex lg:items-center lg:gap-2 xl:gap-3">
+        <div className="hidden lg:flex lg:items-center lg:gap-2 xl:gap-3 flex-shrink-0">
           <a
             href="tel:+9779802808008"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors px-2 py-2"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors px-2 py-2 whitespace-nowrap"
             aria-label="Call us"
           >
-            <Phone className="h-4 w-4" />
+            <Phone className="h-4 w-4 flex-shrink-0" />
             <span className="hidden xl:inline">+977-9802808008</span>
           </a>
-          <Button asChild variant="outline" size="sm">
+          <Button asChild variant="outline" size="sm" className="whitespace-nowrap">
             <Link to="/dental-tourism">
-              <Globe className="h-4 w-4 mr-1.5" />
-              <span className="hidden xl:inline">International</span>
-              <span className="xl:hidden">Intl</span>
+              <Globe className="h-4 w-4 mr-1.5 flex-shrink-0" />
+              International
             </Link>
           </Button>
-          <Button asChild size="sm">
+          <Button asChild size="sm" className="whitespace-nowrap">
             <Link to="/contact">Book Appointment</Link>
           </Button>
         </div>
@@ -157,7 +156,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden fixed inset-0 top-16 sm:top-18 bg-black/20 backdrop-blur-sm z-40"
+              className="lg:hidden fixed inset-0 top-16 bg-black/20 backdrop-blur-sm z-40"
               onClick={closeMobileMenu}
               aria-hidden="true"
             />
@@ -169,7 +168,7 @@ export function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden fixed left-0 right-0 top-16 sm:top-18 bg-background border-b border-border shadow-lg z-50 max-h-[calc(100vh-4rem)] sm:max-h-[calc(100vh-4.5rem)] overflow-y-auto"
+              className="lg:hidden fixed left-0 right-0 top-16 bg-background border-b border-border shadow-lg z-50 max-h-[calc(100vh-4rem)] overflow-y-auto"
             >
               <div className="px-4 py-4 space-y-1">
                 {navigation.map((item) => (
