@@ -690,7 +690,7 @@ export default function Blog() {
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         onConfirm={handleDelete}
-        loading={isSubmitting}
+        isDeleting={isSubmitting}
         title="Delete Blog Post"
         description="Are you sure you want to delete this post? This action cannot be undone."
       />

@@ -698,7 +698,7 @@ export default function Testimonials() {
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         onConfirm={handleDelete}
-        loading={isSubmitting}
+        isDeleting={isSubmitting}
         title="Delete Testimonial"
         description="Are you sure you want to delete this testimonial? This action cannot be undone."
       />
