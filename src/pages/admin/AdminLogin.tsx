@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -23,9 +24,11 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [needsEmailConfirm, setNeedsEmailConfirm] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const { signIn, signUp, user, loading } = useAuth();
@@ -41,6 +44,7 @@ export default function AdminLogin() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+    setNeedsEmailConfirm(false);
     setIsLoading(true);
 
     try {
@@ -224,6 +228,27 @@ export default function AdminLogin() {
               {isLogin ? "Sign In" : "Create Account"}
             </Button>
           </form>
+
+          {isLogin && needsEmailConfirm && (
+            <div className="mt-4 rounded-lg border border-border bg-muted/30 p-3">
+              <p className="text-sm font-medium text-foreground">Email not confirmed</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Click below to resend the confirmation link to <span className="font-medium">{email || "your email"}</span>.
+              </p>
+              <Button
+                type="button"
+                variant="secondary"
+                className="mt-3 w-full"
+                onClick={handleResendConfirmation}
+                disabled={resendLoading}
+              >
+                {resendLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                ) : null}
+                Resend confirmation email
+              </Button>
+            </div>
+          )}
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-6">

@@ -72,56 +72,58 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let isMounted = true;
 
-    const init = async () => {
-      setLoading(true);
+    setLoading(true);
 
-      let currentSession: Session | null = null;
-      try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        currentSession = session;
-      } catch (err) {
-        console.error("Failed to get session", err);
-      }
-
-      if (!isMounted) return;
-
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      setLoading(false);
-
-      if (currentSession?.user) {
-        const profileData = await fetchProfile(currentSession.user.id);
-        if (isMounted) setProfile(profileData);
-      } else {
-        setProfile(null);
-      }
-    };
-
-    init();
-
+    // IMPORTANT: keep this callback synchronous (no awaits / no other supabase calls)
+    // to avoid auth deadlocks.
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       if (!isMounted) return;
-
-      setSession(session);
-      setUser(session?.user ?? null);
-
-      if (session?.user) {
-        const profileData = await fetchProfile(session.user.id);
-        if (isMounted) setProfile(profileData);
-      } else {
-        setProfile(null);
-      }
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
     });
+
+    // Then fetch the initial session
+    supabase.auth
+      .getSession()
+      .then(({ data: { session: initialSession } }) => {
+        if (!isMounted) return;
+        setSession(initialSession);
+        setUser(initialSession?.user ?? null);
+      })
+      .catch((err) => {
+        console.error("Failed to get session", err);
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setLoading(false);
+      });
 
     return () => {
       isMounted = false;
       subscription.unsubscribe();
     };
   }, []);
+
+  // Fetch profile whenever user changes (separate from auth callback to avoid deadlocks)
+  useEffect(() => {
+    let active = true;
+
+    if (!user?.id) {
+      setProfile(null);
+      return;
+    }
+
+    (async () => {
+      const profileData = await fetchProfile(user.id);
+      if (active) setProfile(profileData);
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [user?.id]);
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
