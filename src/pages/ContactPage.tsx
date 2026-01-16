@@ -164,8 +164,51 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = "Please enter your name";
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = "Please enter your email";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Please enter your phone number";
+    } else if (formData.phone.replace(/\D/g, '').length < 7) {
+      newErrors.phone = "Please enter a valid phone number";
+    }
+    
+    if (!formData.country.trim()) {
+      newErrors.country = "Please enter your country";
+    }
+    
+    if (!formData.treatment) {
+      newErrors.treatment = "Please select a treatment type";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      toast({
+        title: "Please check the form",
+        description: "Some required fields are missing or invalid.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
 
     // Simulate form submission
@@ -187,6 +230,7 @@ export default function ContactPage() {
       hasXrays: false,
       message: "",
     });
+    setErrors({});
     setIsSubmitting(false);
   };
 
@@ -203,7 +247,7 @@ export default function ContactPage() {
 
   return (
     <Layout>
-      {/* Hero */}
+      {/* Hero - with proper padding for fixed header */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-muted/50 to-background overflow-hidden">
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
@@ -385,7 +429,12 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="Your full name"
                         required
+                        className={errors.name ? "border-destructive focus-visible:ring-destructive" : ""}
+                        aria-invalid={!!errors.name}
                       />
+                      {errors.name && (
+                        <p className="text-sm text-destructive mt-1.5">{errors.name}</p>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
@@ -398,7 +447,12 @@ export default function ContactPage() {
                         onChange={handleChange}
                         placeholder="your@email.com"
                         required
+                        className={errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
+                        aria-invalid={!!errors.email}
                       />
+                      {errors.email && (
+                        <p className="text-sm text-destructive mt-1.5">{errors.email}</p>
+                      )}
                     </div>
                   </div>
 

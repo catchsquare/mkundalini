@@ -159,8 +159,9 @@ export default function HomePage() {
         <div className="absolute inset-0 z-0">
           <img
             src={heroImage}
-            alt="Modern dental clinic with state-of-the-art equipment"
+            alt="Kundalini Dental Clinic - Modern dental treatment room with state-of-the-art equipment in Kathmandu, Nepal"
             className="w-full h-full object-cover"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/30" />
         </div>

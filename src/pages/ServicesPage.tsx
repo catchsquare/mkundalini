@@ -276,15 +276,15 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Quick Navigation */}
-      <section className="bg-muted/30 py-8 border-y border-border/50 sticky top-20 z-40">
+      {/* Quick Navigation - Fixed below header */}
+      <section className="bg-background/95 backdrop-blur-lg py-4 border-b border-border/50 sticky top-20 z-30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
             {treatmentCategories.map((category) => (
               <a
                 key={category.id}
                 href={`#${category.id}`}
-                className="px-4 py-2 rounded-full bg-background border border-border text-sm font-medium text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+                className="px-3 sm:px-4 py-2 rounded-full bg-muted/50 border border-border/50 text-xs sm:text-sm font-medium text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/5 transition-all"
               >
                 {category.name}
               </a>

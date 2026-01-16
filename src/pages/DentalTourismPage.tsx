@@ -317,7 +317,7 @@ export default function DentalTourismPage() {
                 </Link>
               </Button>
               <Button asChild variant="heroOutline" size="xl">
-                <a href="https://wa.me/9771234567890" target="_blank" rel="noopener">
+                <a href="https://wa.me/9779812345678" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
                   WhatsApp Us
                 </a>
