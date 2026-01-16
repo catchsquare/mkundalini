@@ -49,62 +49,60 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async (userId: string) => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("user_id", userId)
-      .maybeSingle();
+  const fetchProfile = async (userId: string): Promise<Profile | null> => {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", userId)
+        .maybeSingle();
 
-    if (error) {
-      console.error("Failed to fetch profile", error);
-      setProfile(null);
-      return;
+      if (error) {
+        console.error("Failed to fetch profile", error);
+        return null;
+      }
+
+      return data as Profile | null;
+    } catch (err) {
+      console.error("Profile fetch exception", err);
+      return null;
     }
-
-    setProfile(data ? (data as Profile) : null);
   };
 
   useEffect(() => {
     let isMounted = true;
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    // Initial session check
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!isMounted) return;
 
-      setLoading(true);
       setSession(session);
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        await fetchProfile(session.user.id);
-      } else {
-        setProfile(null);
+        const profileData = await fetchProfile(session.user.id);
+        if (isMounted) setProfile(profileData);
       }
 
       if (isMounted) setLoading(false);
     });
 
-    (async () => {
-      setLoading(true);
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (!isMounted) return;
 
       setSession(session);
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        await fetchProfile(session.user.id);
+        const profileData = await fetchProfile(session.user.id);
+        if (isMounted) setProfile(profileData);
       } else {
         setProfile(null);
       }
-
-      if (isMounted) setLoading(false);
-    })();
+    });
 
     return () => {
       isMounted = false;
