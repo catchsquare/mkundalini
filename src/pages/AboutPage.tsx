@@ -1,8 +1,72 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Award, GraduationCap, Heart, Users } from "lucide-react";
+import { 
+  ArrowRight, 
+  Award, 
+  GraduationCap, 
+  Heart, 
+  Users, 
+  Shield,
+  Sparkles,
+  Eye,
+  HandHeart,
+  Microscope,
+  BadgeCheck,
+  Clock,
+  Quote
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
+
+const coreValues = [
+  {
+    icon: Heart,
+    title: "Patient First, Always",
+    description:
+      "Every decision we make centers on your comfort, well-being, and long-term health. You are never just a number here.",
+  },
+  {
+    icon: Shield,
+    title: "Uncompromising Safety",
+    description:
+      "Hospital-grade sterilization, FDA-approved materials, and rigorous infection control protocols protect you at every visit.",
+  },
+  {
+    icon: Eye,
+    title: "Complete Transparency",
+    description:
+      "Clear explanations, honest assessments, and upfront pricing. We believe you deserve to understand every aspect of your care.",
+  },
+  {
+    icon: HandHeart,
+    title: "Gentle, Compassionate Care",
+    description:
+      "We understand dental anxiety. Our team creates a calm, supportive environment where you feel safe and respected.",
+  },
+];
+
+const safetyCommitments = [
+  {
+    icon: Microscope,
+    title: "Advanced Sterilization",
+    description: "Class B autoclaves, UV sterilization chambers, and single-use instruments where possible.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Certified Materials",
+    description: "Only FDA-approved, internationally certified implants, crowns, and restorative materials.",
+  },
+  {
+    icon: Clock,
+    title: "Strict Protocols",
+    description: "Documented infection control procedures following WHO and ADA guidelines.",
+  },
+  {
+    icon: Award,
+    title: "Regular Audits",
+    description: "Internal quality assessments and third-party audits ensure consistent standards.",
+  },
+];
 
 const team = [
   {
@@ -11,6 +75,7 @@ const team = [
     education: "BDS (TU), MDS Prosthodontics (AIIMS Delhi)",
     experience: "18 years",
     specialization: "Implantology & Full Mouth Rehabilitation",
+    bio: "After advanced training in India, Germany, and the USA, Dr. Sharma founded Kundalini Dental with a mission to bring world-class care to Nepal.",
   },
   {
     name: "Dr. Anita Thapa",
@@ -18,6 +83,7 @@ const team = [
     education: "BDS (KU), Fellowship in Aesthetic Dentistry (USA)",
     experience: "12 years",
     specialization: "Veneers, Smile Design & Whitening",
+    bio: "Trained in advanced aesthetic techniques in Los Angeles, Dr. Thapa specializes in creating natural, beautiful smile transformations.",
   },
   {
     name: "Dr. Sanjay Adhikari",
@@ -25,6 +91,7 @@ const team = [
     education: "BDS (BPKIHS), MDS Orthodontics (Manipal)",
     experience: "10 years",
     specialization: "Invisible Aligners & Complex Orthodontics",
+    bio: "An expert in modern orthodontic solutions, Dr. Adhikari helps patients of all ages achieve perfectly aligned smiles.",
   },
   {
     name: "Dr. Priya Gurung",
@@ -32,136 +99,118 @@ const team = [
     education: "BDS (TU), MDS Endodontics (KGMU)",
     experience: "8 years",
     specialization: "Microscopic Root Canal Treatment",
-  },
-];
-
-const values = [
-  {
-    icon: Heart,
-    title: "Patient-Centered Care",
-    description:
-      "Every treatment decision is made with your comfort, goals, and well-being as the priority.",
-  },
-  {
-    icon: Award,
-    title: "Excellence",
-    description:
-      "We continuously update our skills and technology to deliver the highest standard of care.",
-  },
-  {
-    icon: Users,
-    title: "Compassion",
-    description:
-      "We understand dental anxiety and create a calm, supportive environment for all patients.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Education",
-    description:
-      "We empower patients with knowledge to make informed decisions about their oral health.",
+    bio: "Using advanced microscopic techniques, Dr. Gurung performs precise, pain-free root canal treatments with exceptional success rates.",
   },
 ];
 
 const milestones = [
-  { year: "2009", event: "Kundalini Dental Clinic founded in Kathmandu" },
-  { year: "2012", event: "Expanded to 4-chair clinic with specialist team" },
-  { year: "2015", event: "Introduced digital dentistry & CAD/CAM technology" },
-  { year: "2018", event: "Launched Dental Tourism program for international patients" },
-  { year: "2021", event: "Moved to state-of-the-art facility at Durbar Marg" },
-  { year: "2024", event: "10,000+ successful treatments milestone" },
+  { year: "2009", event: "Founded with a vision to elevate dental care standards in Nepal" },
+  { year: "2012", event: "Expanded to a specialist team with dedicated treatment suites" },
+  { year: "2015", event: "Pioneered digital dentistry with CAD/CAM technology" },
+  { year: "2018", event: "Launched comprehensive dental tourism program" },
+  { year: "2021", event: "Opened state-of-the-art facility at Durbar Marg" },
+  { year: "2024", event: "Celebrated 10,000+ successful patient treatments" },
+];
+
+const philosophy = [
+  "We believe oral health is inseparable from overall well-being.",
+  "We treat people, not just teeth — understanding your concerns, fears, and goals.",
+  "We practice conservative dentistry, preserving natural tooth structure whenever possible.",
+  "We never recommend unnecessary procedures — your trust matters more than profit.",
+  "We invest in continuous education to bring you the latest, proven techniques.",
 ];
 
 export default function AboutPage() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="bg-muted/30 py-20 lg:py-28">
+      <section className="bg-gradient-to-b from-muted/50 to-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
+            className="max-w-3xl mx-auto text-center"
           >
-            <span className="text-primary font-medium text-sm uppercase tracking-wider">
-              About Us
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+              <Sparkles className="w-4 h-4" />
+              Our Story
             </span>
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mt-2 mb-6">
-              Your Smile, Our Mission
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+              Dentistry Built on{" "}
+              <span className="text-primary">Trust</span>
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Since 2009, Kundalini Dental Clinic has been transforming smiles in 
-              Nepal and beyond. We combine international expertise with genuine care 
-              to deliver exceptional dental experiences.
+            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              At Kundalini Dental Clinic, we believe exceptional dental care begins with 
+              genuine human connection. Since 2009, we've been building relationships 
+              that last — one smile at a time.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Story */}
-      <section className="section-padding">
+      {/* Philosophy Section */}
+      <section className="section-padding bg-background">
         <div className="mx-auto max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                  Kundalini Dental Clinic was founded by Dr. Rajesh Sharma with a 
-                  vision: to bring world-class dental care to Nepal. After completing 
-                  his advanced training at AIIMS Delhi and observerships in Germany 
-                  and USA, Dr. Sharma returned home determined to raise the bar for 
-                  dental treatment in the country.
-                </p>
-                <p>
-                  What started as a modest two-chair clinic has grown into Kathmandu's 
-                  premier dental destination. Today, we serve thousands of patients 
-                  annually, including a growing number of international visitors who 
-                  choose Nepal for affordable, high-quality dental tourism.
-                </p>
-                <p>
-                  Our name "Kundalini" reflects our belief in holistic wellness — 
-                  understanding that oral health is deeply connected to overall 
-                  physical and emotional well-being. We treat the whole person, 
-                  not just teeth.
-                </p>
+              <span className="text-primary font-medium text-sm uppercase tracking-wider">
+                Our Philosophy
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-3 mb-6 leading-tight">
+                More Than Dentistry — A Commitment to Your Well-Being
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                The name "Kundalini" reflects our holistic approach to care. We understand 
+                that your oral health is deeply connected to your physical health, 
+                confidence, and quality of life. This understanding shapes everything we do.
+              </p>
+              
+              <div className="space-y-4">
+                {philosophy.map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-3"
+                  >
+                    <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2.5" />
+                    <span className="text-foreground leading-relaxed">{item}</span>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
+
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="card-elevated p-8"
+              className="relative"
             >
-              <h3 className="text-xl font-semibold text-foreground mb-6">
-                Our Journey
-              </h3>
-              <div className="space-y-6">
-                {milestones.map((milestone, index) => (
-                  <div key={milestone.year} className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-3 h-3 rounded-full bg-primary" />
-                      {index < milestones.length - 1 && (
-                        <div className="w-0.5 h-full bg-border mt-1" />
-                      )}
-                    </div>
-                    <div className="pb-4">
-                      <div className="text-sm font-semibold text-primary">
-                        {milestone.year}
-                      </div>
-                      <div className="text-foreground">{milestone.event}</div>
-                    </div>
+              <div className="aspect-[4/5] rounded-3xl bg-gradient-to-br from-primary/10 via-accent/10 to-muted overflow-hidden relative">
+                <div className="absolute inset-0 flex items-center justify-center p-8">
+                  <div className="text-center">
+                    <Quote className="w-16 h-16 text-primary/30 mx-auto mb-6" />
+                    <blockquote className="text-xl sm:text-2xl font-medium text-foreground leading-relaxed italic mb-6">
+                      "We don't just fix teeth — we restore confidence, relieve pain, 
+                      and help people reclaim their quality of life."
+                    </blockquote>
+                    <div className="text-primary font-semibold">Dr. Rajesh Sharma</div>
+                    <div className="text-sm text-muted-foreground">Founder & Chief Dental Surgeon</div>
                   </div>
-                ))}
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Values */}
+      {/* Core Values */}
       <section className="section-padding bg-muted/30">
         <div className="mx-auto max-w-7xl">
           <motion.div
@@ -173,36 +222,204 @@ export default function AboutPage() {
             <span className="text-primary font-medium text-sm uppercase tracking-wider">
               Our Values
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-2">
-              What Drives Us
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-3 mb-5">
+              The Principles That Guide Us
             </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              These aren't just words on a wall. They're the foundation of every 
+              interaction, every treatment, and every decision we make.
+            </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {coreValues.map((value, index) => (
               <motion.div
                 key={value.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="text-center"
+                className="card-elevated p-8"
               >
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <value.icon className="w-8 h-8 text-primary" />
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5">
+                  <value.icon className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">
+                <h3 className="text-xl font-semibold text-foreground mb-3">
                   {value.title}
                 </h3>
-                <p className="text-sm text-muted-foreground">{value.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{value.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Safety & Hygiene Commitment */}
+      <section className="section-padding bg-background">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="order-2 lg:order-1"
+            >
+              <div className="grid sm:grid-cols-2 gap-5">
+                {safetyCommitments.map((item, index) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="bg-muted/50 rounded-2xl p-6 border border-border/50"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                      <item.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="order-1 lg:order-2"
+            >
+              <span className="text-primary font-medium text-sm uppercase tracking-wider">
+                Your Safety
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-3 mb-6 leading-tight">
+                Hospital-Grade Standards in Every Procedure
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Your safety is non-negotiable. We maintain sterilization and infection 
+                control protocols that meet or exceed international hospital standards. 
+                Every instrument, every surface, every procedure follows strict guidelines.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                We use only FDA-approved, internationally certified materials from 
+                reputable manufacturers in Germany, Switzerland, and Japan. You can 
+                request documentation for any material used in your treatment — 
+                we believe in complete transparency.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Ethical Care Approach */}
+      <section className="section-padding bg-secondary text-secondary-foreground">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium mb-6">
+              <HandHeart className="w-4 h-4" />
+              Ethical Care
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-foreground mb-6 leading-tight">
+              Honest Dentistry, Always
+            </h2>
+            <p className="text-lg sm:text-xl text-secondary-foreground/80 mb-10 leading-relaxed max-w-3xl mx-auto">
+              We believe trust is earned through honesty. That means giving you a 
+              truthful assessment of your dental health — not recommending procedures 
+              you don't need, and not minimizing problems that require attention.
+            </p>
+            
+            <div className="grid sm:grid-cols-3 gap-6 text-left">
+              <div className="bg-secondary-foreground/10 rounded-2xl p-6">
+                <h3 className="font-semibold text-secondary-foreground mb-2">
+                  Conservative Approach
+                </h3>
+                <p className="text-secondary-foreground/70 text-sm leading-relaxed">
+                  We preserve your natural tooth structure whenever possible, 
+                  recommending minimal intervention first.
+                </p>
+              </div>
+              <div className="bg-secondary-foreground/10 rounded-2xl p-6">
+                <h3 className="font-semibold text-secondary-foreground mb-2">
+                  Transparent Pricing
+                </h3>
+                <p className="text-secondary-foreground/70 text-sm leading-relaxed">
+                  Complete cost breakdown before any treatment. No surprises, 
+                  no hidden fees, no pressure.
+                </p>
+              </div>
+              <div className="bg-secondary-foreground/10 rounded-2xl p-6">
+                <h3 className="font-semibold text-secondary-foreground mb-2">
+                  Second Opinions Welcome
+                </h3>
+                <p className="text-secondary-foreground/70 text-sm leading-relaxed">
+                  We encourage you to seek second opinions. Your confidence in 
+                  your treatment plan matters to us.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Our Journey Timeline */}
+      <section className="section-padding bg-background">
+        <div className="mx-auto max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="text-primary font-medium text-sm uppercase tracking-wider">
+              Our Journey
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-5">
+              15 Years of Growth & Excellence
+            </h2>
+          </motion.div>
+
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-0.5 bg-border transform lg:-translate-x-0.5" />
+            
+            <div className="space-y-8">
+              {milestones.map((milestone, index) => (
+                <motion.div
+                  key={milestone.year}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className={`relative flex items-center gap-8 ${
+                    index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                  }`}
+                >
+                  <div className={`flex-1 ${index % 2 === 0 ? 'lg:text-right' : 'lg:text-left'} pl-20 lg:pl-0`}>
+                    <div className="card-elevated p-6 inline-block text-left">
+                      <div className="text-2xl font-bold text-primary mb-1">
+                        {milestone.year}
+                      </div>
+                      <div className="text-foreground">{milestone.event}</div>
+                    </div>
+                  </div>
+                  
+                  <div className="absolute left-8 lg:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background transform -translate-x-1/2 lg:-translate-x-2" />
+                  
+                  <div className="flex-1 hidden lg:block" />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Team */}
-      <section id="team" className="section-padding">
+      <section id="team" className="section-padding bg-muted/30">
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -213,16 +430,16 @@ export default function AboutPage() {
             <span className="text-primary font-medium text-sm uppercase tracking-wider">
               Our Team
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-2 mb-4">
-              Meet Your Dental Experts
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-3 mb-5">
+              Experienced, Compassionate Specialists
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Our team combines decades of experience with continuous education 
-              to stay at the forefront of dental medicine.
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Our team combines international training with genuine care. Each specialist 
+              is committed to your comfort and the best possible outcomes.
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map((member, index) => (
               <motion.div
                 key={member.name}
@@ -230,23 +447,65 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="card-elevated p-6 text-center"
+                className="card-elevated p-6 flex flex-col"
               >
-                <div className="w-24 h-24 rounded-full bg-muted mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-3xl">👨‍⚕️</span>
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 mx-auto mb-5 flex items-center justify-center">
+                  <GraduationCap className="w-10 h-10 text-primary" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-1">{member.name}</h3>
-                <p className="text-sm text-primary mb-3">{member.role}</p>
-                <div className="text-xs text-muted-foreground space-y-1">
-                  <p>{member.education}</p>
-                  <p>{member.experience} experience</p>
-                  <p className="font-medium text-foreground/70">
-                    {member.specialization}
-                  </p>
+                <h3 className="font-semibold text-foreground text-lg text-center">{member.name}</h3>
+                <p className="text-sm text-primary text-center mb-3">{member.role}</p>
+                <p className="text-sm text-muted-foreground text-center mb-4 flex-grow leading-relaxed">
+                  {member.bio}
+                </p>
+                <div className="text-xs text-muted-foreground border-t border-border pt-4 space-y-1">
+                  <p><span className="text-foreground/70">Education:</span> {member.education}</p>
+                  <p><span className="text-foreground/70">Experience:</span> {member.experience}</p>
+                  <p><span className="text-foreground/70">Focus:</span> {member.specialization}</p>
                 </div>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Patient-Centric Mindset */}
+      <section className="section-padding bg-background">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-primary font-medium text-sm uppercase tracking-wider">
+              Our Promise
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-3 mb-6 leading-tight">
+              You Are at the Center of Everything We Do
+            </h2>
+            <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
+              From the moment you contact us to your final follow-up, your experience 
+              matters. We listen. We explain. We respect your time, your concerns, 
+              and your decisions. This is dentistry done differently.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-4 text-sm">
+              {[
+                "Minimal wait times",
+                "Unhurried consultations",
+                "Clear treatment explanations",
+                "Flexible scheduling",
+                "Post-treatment support",
+                "Multilingual staff",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="px-4 py-2 rounded-full bg-primary/10 text-primary font-medium"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -258,23 +517,35 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-tight">
               Experience the Kundalini Difference
             </h2>
-            <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-              Join thousands of patients who've trusted us with their smiles. 
-              Book your appointment today and discover compassionate, expert dental care.
+            <p className="text-lg sm:text-xl text-primary-foreground/85 mb-10 max-w-2xl mx-auto leading-relaxed">
+              We invite you to visit our clinic, meet our team, and discover 
+              what patient-centered dental care truly feels like.
             </p>
-            <Button
-              asChild
-              size="xl"
-              className="bg-background text-primary hover:bg-background/90"
-            >
-              <Link to="/contact">
-                Book Appointment
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                asChild
+                size="xl"
+                className="bg-background text-primary hover:bg-background/90 shadow-lg"
+              >
+                <Link to="/contact">
+                  Book Your Consultation
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="xl"
+                variant="outline"
+                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+              >
+                <Link to="/services">
+                  Explore Our Services
+                </Link>
+              </Button>
+            </div>
           </motion.div>
         </div>
       </section>
