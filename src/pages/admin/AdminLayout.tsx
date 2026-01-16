@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { AdminSidebar, UserRole } from "@/components/admin/AdminSidebar";
@@ -7,8 +7,14 @@ import { cn } from "@/lib/utils";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { profile, loading, signOut } = useAuth();
+  const { user, profile, loading, signOut } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/admin/login", { replace: true });
+    }
+  }, [loading, user, navigate]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -35,6 +41,9 @@ export default function AdminLayout() {
       </div>
     );
   }
+
+  // Redirect is handled in useEffect above
+  if (!user) return null;
 
   return (
     <div className="min-h-screen bg-muted/30">
