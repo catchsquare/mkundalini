@@ -30,25 +30,25 @@ export function Footer() {
     <footer className="bg-secondary text-secondary-foreground">
       {/* CTA Section */}
       <div className="border-b border-secondary-foreground/10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-secondary-foreground mb-2">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 sm:gap-8">
+            <div className="text-center lg:text-left">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-secondary-foreground mb-2">
                 Ready to Transform Your Smile?
               </h3>
-              <p className="text-secondary-foreground/70 max-w-xl">
+              <p className="text-secondary-foreground/70 max-w-xl text-sm sm:text-base">
                 Whether you're across town or across the world, we're here to help. 
                 Book your free consultation today.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+            <div className="flex flex-col sm:flex-row gap-3 sm:justify-center lg:justify-end">
+              <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base">
                 <Link to="/contact">
                   Book Appointment
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 hover:text-secondary-foreground">
+              <Button asChild variant="outline" size="lg" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 hover:text-secondary-foreground h-12 text-base">
                 <Link to="/dental-tourism">
                   <Globe className="mr-2 h-4 w-4" />
                   International Patients
@@ -60,16 +60,16 @@ export function Footer() {
       </div>
 
       {/* Main Footer */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-8">
           {/* Brand */}
-          <div className="lg:col-span-2 space-y-6">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">K</span>
+          <div className="sm:col-span-2 lg:col-span-2 space-y-5">
+            <Link to="/" className="flex items-center gap-3 justify-center sm:justify-start">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-lg sm:text-xl">K</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-lg leading-tight text-secondary-foreground">
+                <span className="font-bold text-base sm:text-lg leading-tight text-secondary-foreground">
                   Kundalini
                 </span>
                 <span className="text-xs text-secondary-foreground/70 -mt-0.5">
@@ -77,80 +77,80 @@ export function Footer() {
                 </span>
               </div>
             </Link>
-<p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm">
+            <p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm text-center sm:text-left">
               World-class dental care in the heart of Kathmandu. Led by Dr. Nitin Aryal 
               with 15 years of experience, serving local and international patients 
               with premium treatments at accessible prices since 2023.
             </p>
             
             {/* Contact Quick Links */}
-            <div className="space-y-3">
-<a
+            <div className="space-y-2.5">
+              <a
                 href="https://wa.me/9779802808008"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors"
+                className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors justify-center sm:justify-start min-h-[44px] sm:min-h-0"
               >
-                <MessageCircle className="h-4 w-4 text-primary" />
+                <MessageCircle className="h-4 w-4 text-primary flex-shrink-0" />
                 WhatsApp: +977-9802808008
               </a>
               <a
                 href="tel:+9779802808008"
-                className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors"
+                className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors justify-center sm:justify-start min-h-[44px] sm:min-h-0"
               >
-                <Phone className="h-4 w-4 text-primary" />
+                <Phone className="h-4 w-4 text-primary flex-shrink-0" />
                 +977-9802808008
               </a>
               <a
                 href="mailto:info@kundalinidentalclinic.com.np"
-                className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors"
+                className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors justify-center sm:justify-start min-h-[44px] sm:min-h-0 break-all sm:break-normal"
               >
-                <Mail className="h-4 w-4 text-primary" />
-                info@kundalinidentalclinic.com.np
+                <Mail className="h-4 w-4 text-primary flex-shrink-0" />
+                <span className="text-xs sm:text-sm">info@kundalinidentalclinic.com.np</span>
               </a>
             </div>
 
             {/* Social Links */}
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-3 pt-2 justify-center sm:justify-start">
               <a
                 href="https://facebook.com/kundalinidental"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
                 aria-label="Facebook"
               >
-                <Facebook className="h-4 w-4" />
+                <Facebook className="h-5 w-5 sm:h-4 sm:w-4" />
               </a>
               <a
                 href="https://instagram.com/kundalinidental"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
                 aria-label="Instagram"
               >
-                <Instagram className="h-4 w-4" />
+                <Instagram className="h-5 w-5 sm:h-4 sm:w-4" />
               </a>
               <a
                 href="https://linkedin.com/company/kundalinidental"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="h-4 w-4" />
+                <Linkedin className="h-5 w-5 sm:h-4 sm:w-4" />
               </a>
             </div>
           </div>
 
           {/* Services */}
-          <div>
-            <h3 className="font-semibold text-secondary-foreground mb-5">Services</h3>
-            <ul className="space-y-3">
+          <div className="text-center sm:text-left">
+            <h3 className="font-semibold text-secondary-foreground mb-4 sm:mb-5">Services</h3>
+            <ul className="space-y-2 sm:space-y-3">
               {navigation.services.map((item) => (
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="text-sm text-secondary-foreground/70 hover:text-primary transition-colors"
+                    className="text-sm text-secondary-foreground/70 hover:text-primary transition-colors inline-block py-1"
                   >
                     {item.name}
                   </Link>
@@ -160,14 +160,14 @@ export function Footer() {
           </div>
 
           {/* Company */}
-          <div>
-            <h3 className="font-semibold text-secondary-foreground mb-5">Company</h3>
-            <ul className="space-y-3">
+          <div className="text-center sm:text-left">
+            <h3 className="font-semibold text-secondary-foreground mb-4 sm:mb-5">Company</h3>
+            <ul className="space-y-2 sm:space-y-3">
               {navigation.company.map((item) => (
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="text-sm text-secondary-foreground/70 hover:text-primary transition-colors"
+                    className="text-sm text-secondary-foreground/70 hover:text-primary transition-colors inline-block py-1"
                   >
                     {item.name}
                   </Link>
@@ -177,14 +177,14 @@ export function Footer() {
           </div>
 
           {/* For Patients */}
-          <div>
-            <h3 className="font-semibold text-secondary-foreground mb-5">For Patients</h3>
-            <ul className="space-y-3">
+          <div className="text-center sm:text-left">
+            <h3 className="font-semibold text-secondary-foreground mb-4 sm:mb-5">For Patients</h3>
+            <ul className="space-y-2 sm:space-y-3">
               {navigation.forPatients.map((item) => (
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="text-sm text-secondary-foreground/70 hover:text-primary transition-colors"
+                    className="text-sm text-secondary-foreground/70 hover:text-primary transition-colors inline-block py-1"
                   >
                     {item.name}
                   </Link>
@@ -193,8 +193,8 @@ export function Footer() {
             </ul>
             
             {/* Clinic Hours */}
-            <div className="mt-8">
-              <h4 className="font-medium text-secondary-foreground mb-3 flex items-center gap-2">
+            <div className="mt-6 sm:mt-8">
+              <h4 className="font-medium text-secondary-foreground mb-3 flex items-center gap-2 justify-center sm:justify-start">
                 <Clock className="h-4 w-4 text-primary" />
                 Clinic Hours
               </h4>
@@ -209,13 +209,13 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-secondary-foreground/10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-secondary-foreground/50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+            <p className="text-xs sm:text-sm text-secondary-foreground/50">
               © {new Date().getFullYear()} Kundalini Dental Clinic. All rights reserved.
             </p>
-            <div className="flex items-center gap-2 text-sm text-secondary-foreground/50">
-              <MapPin className="h-3.5 w-3.5" />
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-secondary-foreground/50">
+              <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
               <span>Goreto Bhawan, Chappal Karkhana, Kathmandu</span>
             </div>
           </div>
