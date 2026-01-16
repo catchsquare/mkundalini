@@ -258,7 +258,7 @@ const internationalComparison = [
 export default function PricingPage() {
   return (
     <Layout>
-      {/* Hero Section */}
+      {/* Hero Section - with proper padding for fixed header */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-muted/50 to-background overflow-hidden">
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
