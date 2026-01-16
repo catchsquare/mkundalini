@@ -47,19 +47,19 @@ const contactMethods = [
     icon: MessageCircle,
     title: "WhatsApp",
     subtitle: "Fastest Response",
-    value: "+977 98-1234-5678",
-    href: "https://wa.me/9779812345678",
+    value: "+977-9802808008",
+    href: "https://wa.me/9779802808008",
     description: "Get instant responses. Share photos, X-rays, and questions directly.",
     responseTime: "Usually within 1 hour",
     color: "bg-green-500",
   },
   {
     icon: Phone,
-    title: "Viber",
-    subtitle: "Free International Calls",
-    value: "+977 98-1234-5678",
-    href: "viber://chat?number=9779812345678",
-    description: "Free voice and video calls from anywhere in the world.",
+    title: "Phone",
+    subtitle: "Call Us Directly",
+    value: "+977-9802808008",
+    href: "tel:+9779802808008",
+    description: "Speak directly with our team during clinic hours.",
     responseTime: "During clinic hours",
     color: "bg-purple-500",
   },
@@ -69,7 +69,7 @@ const contactMethods = [
     subtitle: "Face-to-Face Online",
     value: "Book a Session",
     href: "#booking-form",
-    description: "Schedule a free 30-minute video call with our dental team.",
+    description: "Schedule a video call with our dental team.",
     responseTime: "By appointment",
     color: "bg-accent",
   },
@@ -77,8 +77,8 @@ const contactMethods = [
     icon: Mail,
     title: "Email",
     subtitle: "Detailed Inquiries",
-    value: "info@kundalinidental.com",
-    href: "mailto:info@kundalinidental.com",
+    value: "info@kundalinidentalclinic.com.np",
+    href: "mailto:info@kundalinidentalclinic.com.np",
     description: "Best for sending X-rays, photos, and detailed treatment histories.",
     responseTime: "Within 24 hours",
     color: "bg-primary",
@@ -596,8 +596,8 @@ export default function ContactPage() {
                   Skip the form! Send us a message directly and get a response 
                   within an hour during business hours.
                 </p>
-                <a
-                  href="https://wa.me/9779812345678?text=Hello!%20I'm%20interested%20in%20dental%20treatment%20at%20Kundalini%20Dental%20Clinic."
+<a
+                  href="https://wa.me/9779802808008?text=Hello!%20I'm%20interested%20in%20dental%20treatment%20at%20Kundalini%20Dental%20Clinic."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-white text-green-600 px-4 py-2 rounded-lg font-medium hover:bg-green-50 transition-colors"
@@ -693,12 +693,12 @@ export default function ContactPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-3">
-                <a
-                  href="tel:+9779812345678"
+<a
+                  href="tel:+9779802808008"
                   className="inline-flex items-center justify-center gap-2 bg-destructive text-destructive-foreground px-6 py-3 rounded-lg font-medium hover:bg-destructive/90 transition-colors"
                 >
                   <Phone className="w-5 h-5" />
-                  Emergency: +977 98-1234-5678
+                  Emergency: +977-9802808008
                 </a>
                 <p className="text-xs text-muted-foreground text-center">
                   Available 24/7 for emergencies
@@ -734,14 +734,14 @@ export default function ContactPage() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center p-8">
                   <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-                  <h3 className="font-bold text-foreground mb-2">
+<h3 className="font-bold text-foreground mb-2">
                     Kundalini Dental Clinic
                   </h3>
                   <p className="text-muted-foreground mb-4">
-                    Durbar Marg, Kathmandu, Nepal 44600
+                    Goreto Bhawan, Chappal Karkhana, Kathmandu
                   </p>
                   <a
-                    href="https://maps.google.com/?q=Durbar+Marg+Kathmandu+Nepal"
+                    href="https://maps.google.com/?q=Chappal+Karkhana+Kathmandu+Nepal"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
@@ -761,11 +761,11 @@ export default function ContactPage() {
               viewport={{ once: true }}
             >
               <div className="bg-card rounded-2xl p-6 border border-border/50">
-                <h3 className="font-bold text-foreground mb-4">Address</h3>
+<h3 className="font-bold text-foreground mb-4">Address</h3>
                 <p className="text-muted-foreground">
                   Kundalini Dental Clinic<br />
-                  Durbar Marg, Near Hotel Annapurna<br />
-                  Kathmandu, Nepal 44600
+                  Goreto Bhawan, Chappal Karkhana<br />
+                  Kathmandu, Nepal
                 </p>
               </div>
 
@@ -813,8 +813,8 @@ export default function ContactPage() {
               confident smile.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://wa.me/9779812345678"
+<a
+                href="https://wa.me/9779802808008"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors"

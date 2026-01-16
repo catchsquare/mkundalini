@@ -18,156 +18,26 @@ import { Layout } from "@/components/layout/Layout";
 
 const doctors = [
   {
-    name: "Dr. Rajesh Sharma",
-    role: "Chief Dental Surgeon & Founder",
+    name: "Dr. Nitin Aryal",
+    role: "Managing Director",
     image: null,
     qualifications: [
-      "BDS — Tribhuvan University, Nepal",
-      "MDS (Prosthodontics) — AIIMS, New Delhi, India",
-      "Fellowship in Implantology — ICOI, USA",
-      "Advanced Training — University of Freiburg, Germany",
+      "BDS — Bachelor of Dental Surgery",
     ],
-    experience: "18+ years",
+    experience: "15 years",
     specialties: [
-      "Dental Implants",
-      "Full Mouth Rehabilitation",
-      "Complex Prosthodontics",
-      "All-on-4 Implants",
+      "Comprehensive Dental Care",
+      "General Dentistry",
+      "Patient-Centered Treatment",
     ],
-    languages: ["English", "Nepali", "Hindi"],
-    bio: "Dr. Rajesh Sharma founded Kundalini Dental Clinic with a vision to bring world-class dental care to Nepal. After completing his advanced training at India's premier medical institution AIIMS and observerships in Germany and the USA, he returned home determined to raise the standard of dental treatment in the country. With over 3,000 successful implant procedures, Dr. Sharma is recognized as one of Nepal's leading implantologists.",
+    languages: ["English", "Nepali"],
+    bio: "Dr. Nitin Aryal founded Kundalini Dental Clinic in 2023 with a vision to provide quality dental care in Kathmandu. With 15 years of clinical experience, he leads the clinic with a commitment to patient-centered care and professional excellence.",
     achievements: [
-      "3,000+ successful implant procedures",
-      "Published researcher in prosthodontics",
-      "International speaker at dental conferences",
-      "Pioneer of CAD/CAM dentistry in Nepal",
+      "15 years of dental practice",
+      "Founder & Managing Director",
+      "Committed to quality patient care",
     ],
     featured: true,
-  },
-  {
-    name: "Dr. Anita Thapa",
-    role: "Lead Cosmetic Dentist",
-    image: null,
-    qualifications: [
-      "BDS — Kathmandu University, Nepal",
-      "Fellowship in Aesthetic Dentistry — UCLA, USA",
-      "Certification in Smile Design — DSD, Spain",
-    ],
-    experience: "12+ years",
-    specialties: [
-      "Porcelain Veneers",
-      "Smile Makeovers",
-      "Teeth Whitening",
-      "Composite Bonding",
-    ],
-    languages: ["English", "Nepali"],
-    bio: "Dr. Anita Thapa is a highly trained cosmetic dentist who studied advanced aesthetic techniques at UCLA in Los Angeles. She specializes in creating natural, beautiful smile transformations using the latest techniques including digital smile design. Her artistic eye and attention to detail have earned her a reputation as one of Nepal's finest cosmetic dentists.",
-    achievements: [
-      "500+ smile makeover transformations",
-      "Certified Digital Smile Design practitioner",
-      "Featured in national health publications",
-    ],
-    featured: false,
-  },
-  {
-    name: "Dr. Sanjay Adhikari",
-    role: "Consultant Orthodontist",
-    image: null,
-    qualifications: [
-      "BDS — BP Koirala Institute, Nepal",
-      "MDS (Orthodontics) — Manipal University, India",
-      "Invisalign Certified Provider",
-    ],
-    experience: "10+ years",
-    specialties: [
-      "Invisible Aligners",
-      "Traditional Braces",
-      "Complex Orthodontics",
-      "Adult Orthodontics",
-    ],
-    languages: ["English", "Nepali", "Hindi"],
-    bio: "Dr. Sanjay Adhikari is an expert in modern orthodontic solutions, helping patients of all ages achieve perfectly aligned smiles. As a certified Invisalign provider, he offers the latest in clear aligner technology alongside traditional braces for complex cases. His gentle approach makes him particularly popular with younger patients and those with dental anxiety.",
-    achievements: [
-      "1,000+ orthodontic cases completed",
-      "Invisalign Gold Provider",
-      "Specialist in adult orthodontics",
-    ],
-    featured: false,
-  },
-  {
-    name: "Dr. Priya Gurung",
-    role: "Consultant Endodontist",
-    image: null,
-    qualifications: [
-      "BDS — Tribhuvan University, Nepal",
-      "MDS (Endodontics) — KGMU, India",
-      "Microscopic Endodontics Training — Singapore",
-    ],
-    experience: "8+ years",
-    specialties: [
-      "Root Canal Treatment",
-      "Microscopic Endodontics",
-      "Retreatment Cases",
-      "Dental Trauma",
-    ],
-    languages: ["English", "Nepali"],
-    bio: "Dr. Priya Gurung uses advanced microscopic techniques to perform precise, pain-free root canal treatments with exceptional success rates. Her expertise in saving severely damaged teeth has helped countless patients avoid extraction. She is known for her calm demeanor and ability to put anxious patients at ease.",
-    achievements: [
-      "98% root canal success rate",
-      "Specialist in complex retreatment cases",
-      "Microscopic endodontics pioneer in Nepal",
-    ],
-    featured: false,
-  },
-  {
-    name: "Dr. Amit Shrestha",
-    role: "Oral & Maxillofacial Surgeon",
-    image: null,
-    qualifications: [
-      "BDS — Kathmandu University, Nepal",
-      "MDS (Oral Surgery) — Rajiv Gandhi University, India",
-      "Fellowship in Maxillofacial Surgery — Bangkok, Thailand",
-    ],
-    experience: "9+ years",
-    specialties: [
-      "Wisdom Tooth Extraction",
-      "Dental Implant Surgery",
-      "Jaw Surgery",
-      "Oral Pathology",
-    ],
-    languages: ["English", "Nepali", "Thai"],
-    bio: "Dr. Amit Shrestha is a skilled oral surgeon who handles complex surgical procedures including impacted wisdom teeth, implant placements, and corrective jaw surgery. His extensive training in Thailand and India has equipped him with expertise in the latest surgical techniques, ensuring minimal discomfort and optimal healing for patients.",
-    achievements: [
-      "2,000+ successful surgical extractions",
-      "Specialist in complex implant cases",
-      "Expert in bone grafting procedures",
-    ],
-    featured: false,
-  },
-  {
-    name: "Dr. Sunita Rai",
-    role: "Pediatric Dentist",
-    image: null,
-    qualifications: [
-      "BDS — Tribhuvan University, Nepal",
-      "MDS (Pediatric Dentistry) — Bangalore, India",
-      "Certification in Child Psychology",
-    ],
-    experience: "7+ years",
-    specialties: [
-      "Children's Dentistry",
-      "Preventive Care",
-      "Behavior Management",
-      "Special Needs Patients",
-    ],
-    languages: ["English", "Nepali"],
-    bio: "Dr. Sunita Rai specializes in making dental visits positive experiences for children. Her training in child psychology helps her communicate effectively with young patients and manage dental anxiety. She is passionate about preventive care and educating families about oral health habits that last a lifetime.",
-    achievements: [
-      "Specialist in anxious children",
-      "Certified in pediatric sedation",
-      "School oral health program leader",
-    ],
-    featured: false,
   },
 ];
 
@@ -386,9 +256,9 @@ export default function DoctorsPage() {
                   </div>
                 </div>
 
-                <Button asChild size="lg">
+<Button asChild size="lg">
                   <Link to="/contact">
-                    Book Consultation with Dr. Sharma
+                    Book Consultation with Dr. Aryal
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
                 </Button>

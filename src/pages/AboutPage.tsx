@@ -70,46 +70,19 @@ const safetyCommitments = [
 
 const team = [
   {
-    name: "Dr. Rajesh Sharma",
-    role: "Chief Dental Surgeon & Founder",
-    education: "BDS (TU), MDS Prosthodontics (AIIMS Delhi)",
-    experience: "18 years",
-    specialization: "Implantology & Full Mouth Rehabilitation",
-    bio: "After advanced training in India, Germany, and the USA, Dr. Sharma founded Kundalini Dental with a mission to bring world-class care to Nepal.",
-  },
-  {
-    name: "Dr. Anita Thapa",
-    role: "Lead Cosmetic Dentist",
-    education: "BDS (KU), Fellowship in Aesthetic Dentistry (USA)",
-    experience: "12 years",
-    specialization: "Veneers, Smile Design & Whitening",
-    bio: "Trained in advanced aesthetic techniques in Los Angeles, Dr. Thapa specializes in creating natural, beautiful smile transformations.",
-  },
-  {
-    name: "Dr. Sanjay Adhikari",
-    role: "Orthodontist",
-    education: "BDS (BPKIHS), MDS Orthodontics (Manipal)",
-    experience: "10 years",
-    specialization: "Invisible Aligners & Complex Orthodontics",
-    bio: "An expert in modern orthodontic solutions, Dr. Adhikari helps patients of all ages achieve perfectly aligned smiles.",
-  },
-  {
-    name: "Dr. Priya Gurung",
-    role: "Endodontist",
-    education: "BDS (TU), MDS Endodontics (KGMU)",
-    experience: "8 years",
-    specialization: "Microscopic Root Canal Treatment",
-    bio: "Using advanced microscopic techniques, Dr. Gurung performs precise, pain-free root canal treatments with exceptional success rates.",
+    name: "Dr. Nitin Aryal",
+    role: "Managing Director",
+    education: "BDS",
+    experience: "15 years",
+    specialization: "Comprehensive Dental Care",
+    bio: "With 15 years of clinical experience, Dr. Nitin Aryal founded Kundalini Dental Clinic in 2023 with a mission to provide quality dental care in Kathmandu. His patient-centered approach ensures every individual receives personalized attention and professional treatment.",
   },
 ];
 
 const milestones = [
-  { year: "2009", event: "Founded with a vision to elevate dental care standards in Nepal" },
-  { year: "2012", event: "Expanded to a specialist team with dedicated treatment suites" },
-  { year: "2015", event: "Pioneered digital dentistry with CAD/CAM technology" },
-  { year: "2018", event: "Launched comprehensive dental tourism program" },
-  { year: "2021", event: "Opened state-of-the-art facility at Durbar Marg" },
-  { year: "2024", event: "Celebrated 10,000+ successful patient treatments" },
+  { year: "2023", event: "Kundalini Dental Clinic established in Kathmandu" },
+  { year: "2023", event: "Equipped with modern dental technology and equipment" },
+  { year: "2024", event: "Expanded services for international patients" },
 ];
 
 const philosophy = [
@@ -139,10 +112,10 @@ export default function AboutPage() {
               Dentistry Built on{" "}
               <span className="text-primary">Trust</span>
             </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+<p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               At Kundalini Dental Clinic, we believe exceptional dental care begins with 
-              genuine human connection. Since 2009, we've been building relationships 
-              that last — one smile at a time.
+              genuine human connection. Founded in 2023, we combine Dr. Nitin Aryal's 
+              15 years of experience with modern facilities to serve you better.
             </p>
           </motion.div>
         </div>
@@ -196,12 +169,12 @@ export default function AboutPage() {
                 <div className="absolute inset-0 flex items-center justify-center p-8">
                   <div className="text-center">
                     <Quote className="w-16 h-16 text-primary/30 mx-auto mb-6" />
-                    <blockquote className="text-xl sm:text-2xl font-medium text-foreground leading-relaxed italic mb-6">
+<blockquote className="text-xl sm:text-2xl font-medium text-foreground leading-relaxed italic mb-6">
                       "We don't just fix teeth — we restore confidence, relieve pain, 
                       and help people reclaim their quality of life."
                     </blockquote>
-                    <div className="text-primary font-semibold">Dr. Rajesh Sharma</div>
-                    <div className="text-sm text-muted-foreground">Founder & Chief Dental Surgeon</div>
+                    <div className="text-primary font-semibold">Dr. Nitin Aryal</div>
+                    <div className="text-sm text-muted-foreground">Managing Director</div>
                   </div>
                 </div>
               </div>
@@ -375,11 +348,11 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="text-primary font-medium text-sm uppercase tracking-wider">
+<span className="text-primary font-medium text-sm uppercase tracking-wider">
               Our Journey
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-5">
-              15 Years of Growth & Excellence
+              Our Story
             </h2>
           </motion.div>
 

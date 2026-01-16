@@ -150,10 +150,10 @@ const beforeAfterCases = [
 ];
 
 const trustStats = [
-  { number: "5,000+", label: "Patients Treated" },
-  { number: "1,200+", label: "International Patients" },
-  { number: "98%", label: "Patient Satisfaction" },
-  { number: "15+", label: "Years Experience" },
+  { number: "2023", label: "Established" },
+  { number: "15", label: "Years Experience" },
+  { number: "Quality", label: "Care Guaranteed" },
+  { number: "Modern", label: "Facilities" },
 ];
 
 const photoGuidelines = [
