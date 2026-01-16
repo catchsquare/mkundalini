@@ -111,13 +111,9 @@ export default function AdminLogin() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-muted/30">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+  // Don't block the login UI if auth initialization hangs; users can still sign in.
+  // We still redirect in the effect above once the session is detected.
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">

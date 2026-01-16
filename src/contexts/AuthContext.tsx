@@ -72,22 +72,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let isMounted = true;
 
-    // Initial session check
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!isMounted) return;
+    const init = async () => {
+      setLoading(true);
 
-      setSession(session);
-      setUser(session?.user ?? null);
-
-      if (session?.user) {
-        const profileData = await fetchProfile(session.user.id);
-        if (isMounted) setProfile(profileData);
+      let currentSession: Session | null = null;
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        currentSession = session;
+      } catch (err) {
+        console.error("Failed to get session", err);
       }
 
-      if (isMounted) setLoading(false);
-    });
+      if (!isMounted) return;
 
-    // Listen for auth changes
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
+      setLoading(false);
+
+      if (currentSession?.user) {
+        const profileData = await fetchProfile(currentSession.user.id);
+        if (isMounted) setProfile(profileData);
+      } else {
+        setProfile(null);
+      }
+    };
+
+    init();
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
