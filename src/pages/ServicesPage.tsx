@@ -30,6 +30,7 @@ const treatmentCategories = [
         duration: "2-3 visits",
         tourismFriendly: true,
         features: ["German/Swiss implants", "Lifetime warranty", "3D-guided placement"],
+        link: "/services/dental-implants",
       },
       {
         id: "all-on-4",
@@ -40,6 +41,7 @@ const treatmentCategories = [
         duration: "3-5 visits",
         tourismFriendly: true,
         features: ["Same-day teeth possible", "Full upper or lower arch", "Premium prosthetics"],
+        link: "/services/dental-implants",
       },
       {
         id: "crowns-bridges",
@@ -436,14 +438,29 @@ export default function ServicesPage() {
                       )}
                     </div>
 
-                    {/* CTA */}
-                    <Link
-                      to="/contact"
-                      className="mt-5 flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-muted hover:bg-primary hover:text-primary-foreground text-sm font-medium text-foreground transition-colors group/btn"
-                    >
-                      Book Consultation
-                      <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                    </Link>
+                    {/* CTAs */}
+                    <div className="mt-5 space-y-2">
+                      {treatment.link && (
+                        <Link
+                          to={treatment.link}
+                          className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-primary text-primary-foreground text-sm font-medium transition-colors hover:bg-primary/90 group/btn"
+                        >
+                          Learn More
+                          <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
+                      )}
+                      <Link
+                        to="/contact"
+                        className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-medium transition-colors group/btn ${
+                          treatment.link 
+                            ? 'bg-muted text-foreground hover:bg-muted/80' 
+                            : 'bg-muted hover:bg-primary hover:text-primary-foreground text-foreground'
+                        }`}
+                      >
+                        Book Consultation
+                        <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
                   </div>
                 </motion.div>
               ))}
