@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { profile, signOut } = useAuth();
+  const { profile, loading, signOut } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -27,6 +27,14 @@ export default function AdminLayout() {
     if (role === "super_admin") return "super_admin";
     return "receptionist";
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center text-muted-foreground">
+        Loading admin...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-muted/30">

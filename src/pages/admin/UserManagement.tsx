@@ -130,36 +130,18 @@ export default function UserManagement() {
   // Create new user mutation
   const createUserMutation = useMutation({
     mutationFn: async (formData: typeof newUserForm) => {
-      // Create auth user
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            full_name: formData.fullName,
-            role: formData.role,
-          },
+      const { data, error } = await supabase.functions.invoke("admin-create-user", {
+        body: {
+          email: formData.email,
+          password: formData.password,
+          full_name: formData.fullName,
+          role: formData.role,
+          phone: formData.phone || null,
         },
       });
 
-      if (authError) throw authError;
-      if (!authData.user) throw new Error("Failed to create user");
-
-      // Wait a moment for the trigger to create the profile, then update it
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Update the profile with additional info
-      const { error: profileError } = await supabase
-        .from("profiles")
-        .update({
-          role: formData.role,
-          phone: formData.phone || null,
-        })
-        .eq("user_id", authData.user.id);
-
-      if (profileError) throw profileError;
-
-      return authData.user;
+      if (error) throw error;
+      return data;
     },
     onSuccess: () => {
       toast.success("User created successfully");
