@@ -24,6 +24,8 @@ import Dashboard from "./pages/admin/Dashboard";
 import Patients from "./pages/admin/Patients";
 import Appointments from "./pages/admin/Appointments";
 import Billing from "./pages/admin/Billing";
+import Inventory from "./pages/admin/Inventory";
+import Leads from "./pages/admin/Leads";
 
 // Placeholder components for new admin pages
 import { AdminPlaceholder } from "./pages/admin/AdminPlaceholder";
@@ -58,10 +60,10 @@ const App = () => (
               <Route path="quick-actions" element={<AdminPlaceholder title="Quick Actions" />} />
 
               {/* CRM & Leads */}
-              <Route path="leads" element={<AdminPlaceholder title="All Leads" />} />
-              <Route path="leads/pipeline" element={<AdminPlaceholder title="Lead Pipeline" />} />
-              <Route path="leads/forms" element={<AdminPlaceholder title="Contact Forms" />} />
-              <Route path="leads/followups" element={<AdminPlaceholder title="Follow-ups" />} />
+              <Route path="leads" element={<Leads />} />
+              <Route path="leads/pipeline" element={<Leads />} />
+              <Route path="leads/forms" element={<Leads />} />
+              <Route path="leads/followups" element={<Leads />} />
 
               {/* Appointments */}
               <Route path="appointments" element={<Appointments />} />
@@ -82,10 +84,10 @@ const App = () => (
               <Route path="billing/methods" element={<AdminPlaceholder title="Payment Methods" />} />
 
               {/* Inventory */}
-              <Route path="inventory" element={<AdminPlaceholder title="Stock Overview" />} />
-              <Route path="inventory/categories" element={<AdminPlaceholder title="Inventory Categories" />} />
-              <Route path="inventory/alerts" element={<AdminPlaceholder title="Low Stock Alerts" />} />
-              <Route path="inventory/transactions" element={<AdminPlaceholder title="Inventory Transactions" />} />
+              <Route path="inventory" element={<Inventory />} />
+              <Route path="inventory/categories" element={<Inventory />} />
+              <Route path="inventory/alerts" element={<Inventory />} />
+              <Route path="inventory/transactions" element={<Inventory />} />
 
               {/* Reports */}
               <Route path="reports/revenue" element={<AdminPlaceholder title="Revenue Analytics" />} />
