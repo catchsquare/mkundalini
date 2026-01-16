@@ -2,12 +2,15 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
+// Extended role types to match the database
+export type UserRole = "super_admin" | "admin" | "manager" | "receptionist" | "dentist" | "content_editor";
+
 interface Profile {
   id: string;
   user_id: string;
   email: string;
   full_name: string;
-  role: "admin" | "receptionist" | "dentist";
+  role: UserRole;
   phone: string | null;
   avatar_url: string | null;
   is_active: boolean;
@@ -21,9 +24,21 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string, fullName: string, role: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
+  // Role checks
   isAdmin: boolean;
+  isSuperAdmin: boolean;
+  isManager: boolean;
   isDentist: boolean;
   isReceptionist: boolean;
+  isContentEditor: boolean;
+  // Permission helpers
+  canAccessCMS: boolean;
+  canAccessSettings: boolean;
+  canAccessReports: boolean;
+  canManageUsers: boolean;
+  canManagePatients: boolean;
+  canManageBilling: boolean;
+  canManageInventory: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -103,6 +118,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setProfile(null);
   };
 
+  // Role checks
+  const role = profile?.role;
+  const isSuperAdmin = role === "super_admin";
+  const isAdmin = role === "admin" || isSuperAdmin;
+  const isManager = role === "manager";
+  const isDentist = role === "dentist";
+  const isReceptionist = role === "receptionist";
+  const isContentEditor = role === "content_editor";
+
+  // Permission checks
+  const canAccessCMS = isSuperAdmin || isAdmin || isContentEditor;
+  const canAccessSettings = isSuperAdmin || isAdmin;
+  const canAccessReports = isSuperAdmin || isAdmin || isManager;
+  const canManageUsers = isSuperAdmin || isAdmin;
+  const canManagePatients = isSuperAdmin || isAdmin || isManager || isReceptionist || isDentist;
+  const canManageBilling = isSuperAdmin || isAdmin || isManager || isReceptionist;
+  const canManageInventory = isSuperAdmin || isAdmin || isManager;
+
   const value = {
     user,
     session,
@@ -111,9 +144,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signIn,
     signUp,
     signOut,
-    isAdmin: profile?.role === "admin",
-    isDentist: profile?.role === "dentist",
-    isReceptionist: profile?.role === "receptionist",
+    // Role checks
+    isAdmin,
+    isSuperAdmin,
+    isManager,
+    isDentist,
+    isReceptionist,
+    isContentEditor,
+    // Permission helpers
+    canAccessCMS,
+    canAccessSettings,
+    canAccessReports,
+    canManageUsers,
+    canManagePatients,
+    canManageBilling,
+    canManageInventory,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
