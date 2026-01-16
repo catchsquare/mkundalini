@@ -81,13 +81,13 @@ export function Header() {
 
         {/* Desktop CTAs */}
         <div className="hidden lg:flex lg:items-center lg:gap-3">
-          <a
-            href="tel:+9771234567890"
+<a
+            href="tel:+9779802808008"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors px-3 py-2"
             aria-label="Call us"
           >
             <Phone className="h-4 w-4" />
-            <span className="hidden xl:inline">+977 1-234-5678</span>
+            <span className="hidden xl:inline">+977-9802808008</span>
           </a>
           <Button asChild variant="outline" size="sm">
             <Link to="/dental-tourism">
@@ -152,12 +152,12 @@ export function Header() {
                     Book Appointment
                   </Link>
                 </Button>
-                <a
-                  href="tel:+9771234567890"
+<a
+                  href="tel:+9779802808008"
                   className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors py-3"
                 >
                   <Phone className="h-4 w-4" />
-                  <span>+977 1-234-5678</span>
+                  <span>+977-9802808008</span>
                 </a>
               </div>
             </div>

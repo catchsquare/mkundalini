@@ -27,7 +27,7 @@ const trustIndicators = [
   {
     icon: Stethoscope,
     label: "Advanced Technology",
-    description: "German & Japanese equipment",
+    description: "Modern dental equipment",
   },
   {
     icon: Shield,
@@ -36,8 +36,8 @@ const trustIndicators = [
   },
   {
     icon: Award,
-    label: "15+ Years Experience",
-    description: "Trusted by 10,000+ patients",
+    label: "15 Years Experience",
+    description: "Led by Dr. Nitin Aryal",
   },
   {
     icon: HeartPulse,
@@ -97,11 +97,11 @@ const whyChooseUs = [
 ];
 
 const doctorCredentials = [
-  "Fellow, International Congress of Oral Implantologists (USA)",
-  "Advanced Training in Cosmetic Dentistry (UK)",
-  "15+ years of clinical excellence",
-  "Performed 3,000+ successful implant procedures",
-  "Published researcher in dental medicine",
+  "Bachelor of Dental Surgery (BDS)",
+  "15 years of clinical experience",
+  "Managing Director, Kundalini Dental Clinic",
+  "Committed to patient-centered care",
+  "Expertise in comprehensive dental treatments",
 ];
 
 const internationalBenefits = [
@@ -129,24 +129,24 @@ const internationalBenefits = [
 
 const testimonials = [
   {
-    name: "Sarah Mitchell",
-    location: "California, USA",
-    treatment: "Full Mouth Implants",
-    quote: "I saved over $15,000 compared to US prices. The clinic exceeded every expectation. Dr. Sharma and his team provided care that rivals the best clinics in Los Angeles.",
+    name: "International Patient",
+    location: "Overseas",
+    treatment: "Dental Treatment",
+    quote: "The clinic provided excellent care with modern facilities. Dr. Nitin Aryal and his team were professional and attentive throughout my treatment.",
     rating: 5,
   },
   {
-    name: "James Peterson",
-    location: "Sydney, Australia",
-    treatment: "Smile Makeover",
-    quote: "From the airport pickup to the final follow-up, everything was seamless. My veneers look completely natural. Best decision I ever made for my dental health.",
+    name: "Local Patient",
+    location: "Kathmandu, Nepal",
+    treatment: "Dental Care",
+    quote: "I've been coming to Kundalini Dental for my family's dental needs. The staff is friendly and the clinic maintains high standards of hygiene.",
     rating: 5,
   },
   {
-    name: "Emma Thompson",
-    location: "London, UK",
-    treatment: "Dental Implants",
-    quote: "The level of professionalism and care here is extraordinary. I felt completely safe and well-cared for. My new smile has transformed my confidence.",
+    name: "Returning Patient",
+    location: "Nepal",
+    treatment: "General Dentistry",
+    quote: "Dr. Nitin Aryal took the time to explain my treatment options clearly. The clinic's commitment to patient care is evident in every visit.",
     rating: 5,
   },
 ];
@@ -183,10 +183,10 @@ export default function HomePage() {
               <span className="text-primary">Exceptional Value</span>
             </h1>
             
-            <p className="text-lg sm:text-xl text-muted-foreground mb-8 leading-relaxed max-w-xl">
-              World-class dental treatments at a fraction of international costs. 
-              Trusted by patients from over 25 countries for premium care 
-              and beautiful, lasting results.
+<p className="text-lg sm:text-xl text-muted-foreground mb-8 leading-relaxed max-w-xl">
+              Quality dental treatments at accessible prices. 
+              Led by Dr. Nitin Aryal with 15 years of experience, 
+              we deliver professional care and beautiful, lasting results.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -204,19 +204,19 @@ export default function HomePage() {
               </Button>
             </div>
 
-            {/* Quick Stats */}
+{/* Quick Stats */}
             <div className="flex flex-wrap gap-8 pt-6 border-t border-border/50">
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-foreground">15+</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">15</div>
                 <div className="text-sm text-muted-foreground">Years Experience</div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-foreground">10,000+</div>
-                <div className="text-sm text-muted-foreground">Happy Patients</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">2023</div>
+                <div className="text-sm text-muted-foreground">Established</div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-foreground">25+</div>
-                <div className="text-sm text-muted-foreground">Countries Served</div>
+                <div className="text-2xl sm:text-3xl font-bold text-foreground">Premium</div>
+                <div className="text-sm text-muted-foreground">Quality Care</div>
               </div>
             </div>
           </motion.div>
@@ -413,7 +413,7 @@ export default function HomePage() {
                 </div>
               </div>
               
-              {/* Floating credential badge */}
+{/* Experience badge */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -423,9 +423,9 @@ export default function HomePage() {
               >
                 <div className="flex items-center gap-3 mb-2">
                   <Award className="w-8 h-8 text-primary" />
-                  <span className="font-bold text-2xl text-foreground">3000+</span>
+                  <span className="font-bold text-2xl text-foreground">15</span>
                 </div>
-                <p className="text-sm text-muted-foreground">Successful implant procedures performed</p>
+                <p className="text-sm text-muted-foreground">Years of clinical experience</p>
               </motion.div>
             </motion.div>
 
@@ -435,20 +435,20 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="order-1 lg:order-2"
             >
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">
+<span className="text-primary font-medium text-sm uppercase tracking-wider">
                 Meet Your Doctor
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-3 mb-4 leading-tight">
-                Dr. Rajesh Sharma
+                Dr. Nitin Aryal
               </h2>
               <p className="text-xl text-accent font-medium mb-6">
-                BDS, MDS (Prosthodontics) • Chief Dental Surgeon
+                BDS • Managing Director
               </p>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                With over 15 years of experience and advanced training from leading 
-                institutions worldwide, Dr. Sharma leads our team with a commitment 
-                to excellence and patient-centered care. His expertise in implantology 
-                and cosmetic dentistry has transformed thousands of smiles.
+                With 15 years of experience in dental care, Dr. Nitin Aryal leads 
+                Kundalini Dental Clinic with a commitment to excellence and 
+                patient-centered care. His expertise spans comprehensive dental 
+                treatments, ensuring every patient receives personalized attention.
               </p>
 
               <div className="space-y-3 mb-8">
@@ -640,15 +640,15 @@ export default function HomePage() {
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
-              <Button
+<Button
                 asChild
                 size="xl"
                 variant="outline"
                 className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
               >
-                <a href="tel:+9771234567890">
+                <a href="tel:+9779802808008">
                   <Phone className="w-5 h-5 mr-2" />
-                  Call: +977 1-234-567890
+                  Call: +977-9802808008
                 </a>
               </Button>
             </div>

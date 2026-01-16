@@ -77,36 +77,36 @@ export function Footer() {
                 </span>
               </div>
             </Link>
-            <p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm">
-              World-class dental care in the heart of Kathmandu. Serving local and 
-              international patients with premium treatments at accessible prices 
-              since 2009.
+<p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm">
+              World-class dental care in the heart of Kathmandu. Led by Dr. Nitin Aryal 
+              with 15 years of experience, serving local and international patients 
+              with premium treatments at accessible prices since 2023.
             </p>
             
             {/* Contact Quick Links */}
             <div className="space-y-3">
-              <a
-                href="https://wa.me/9779812345678"
+<a
+                href="https://wa.me/9779802808008"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors"
               >
                 <MessageCircle className="h-4 w-4 text-primary" />
-                WhatsApp: +977 98-1234-5678
+                WhatsApp: +977-9802808008
               </a>
               <a
-                href="tel:+9771234567890"
+                href="tel:+9779802808008"
                 className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors"
               >
                 <Phone className="h-4 w-4 text-primary" />
-                +977 1-234-5678
+                +977-9802808008
               </a>
               <a
-                href="mailto:info@kundalinidental.com"
+                href="mailto:info@kundalinidentalclinic.com.np"
                 className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors"
               >
                 <Mail className="h-4 w-4 text-primary" />
-                info@kundalinidental.com
+                info@kundalinidentalclinic.com.np
               </a>
             </div>
 
@@ -216,7 +216,7 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-2 text-sm text-secondary-foreground/50">
               <MapPin className="h-3.5 w-3.5" />
-              <span>Durbar Marg, Kathmandu, Nepal</span>
+              <span>Goreto Bhawan, Chappal Karkhana, Kathmandu</span>
             </div>
           </div>
         </div>

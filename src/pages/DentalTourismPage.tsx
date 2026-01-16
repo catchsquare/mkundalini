@@ -70,16 +70,16 @@ const whyNepal = [
 
 const whyKundalini = [
   {
-    title: "15+ Years of Excellence",
-    description: "Established in 2009, we've treated over 10,000 patients, including 500+ international visitors from 25+ countries.",
+    title: "15 Years of Experience",
+    description: "Led by Dr. Nitin Aryal with 15 years of dental expertise, our clinic established in 2023 combines experienced leadership with modern facilities.",
   },
   {
     title: "Specialist-Led Care",
-    description: "Your treatment is performed by qualified specialists, not general dentists. Each specialist focuses on their area of expertise.",
+    description: "Your treatment is performed by qualified dental professionals dedicated to their area of expertise.",
   },
   {
-    title: "Advanced Technology",
-    description: "3D CT imaging, CAD/CAM same-day crowns, and guided implant surgery — the same technology used by top clinics worldwide.",
+    title: "Modern Technology",
+    description: "We use contemporary dental technology for accurate diagnostics and efficient treatments.",
   },
   {
     title: "Transparent Pricing",
@@ -91,7 +91,7 @@ const whyKundalini = [
   },
   {
     title: "Comprehensive Documentation",
-    description: "Full treatment records, X-rays, and warranty certificates provided for your home dentist and insurance claims.",
+    description: "Full treatment records, X-rays, and care instructions provided for your home dentist.",
   },
 ];
 
@@ -316,8 +316,8 @@ export default function DentalTourismPage() {
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
-              <Button asChild variant="heroOutline" size="xl">
-                <a href="https://wa.me/9779812345678" target="_blank" rel="noopener noreferrer">
+<Button asChild variant="heroOutline" size="xl">
+                <a href="https://wa.me/9779802808008" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
                   WhatsApp Us
                 </a>
@@ -330,12 +330,12 @@ export default function DentalTourismPage() {
       {/* Quick Trust Indicators */}
       <section className="bg-secondary text-secondary-foreground py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+<div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             {[
-              { value: "500+", label: "International Patients Treated" },
-              { value: "25+", label: "Countries Served" },
-              { value: "97%", label: "Treatment Success Rate" },
-              { value: "15+", label: "Years of Experience" },
+              { value: "15", label: "Years Experience" },
+              { value: "2023", label: "Clinic Established" },
+              { value: "Quality", label: "Dental Care" },
+              { value: "Premium", label: "Materials Used" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
