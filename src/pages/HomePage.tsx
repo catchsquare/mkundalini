@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
+import { OfferBadge } from "@/components/ui/offer-badge";
 import heroImage from "@/assets/hero-dental.jpg";
 
 const trustIndicators = [
@@ -155,7 +156,7 @@ export default function HomePage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center pt-16 sm:pt-18 lg:pt-20">
+      <section className="relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center pt-24 sm:pt-28 lg:pt-32">
         <div className="absolute inset-0 z-0">
           <img
             src={heroImage}
@@ -165,6 +166,14 @@ export default function HomePage() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/30 sm:to-background/20" />
         </div>
+        
+        {/* Offer Badge - Desktop only */}
+        <OfferBadge
+          text="Limited Offer"
+          highlight="20% OFF Dental Implants"
+          link="/services/dental-implants"
+          position="bottom-right"
+        />
         
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
           <motion.div

@@ -63,7 +63,7 @@ export function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
           ? "bg-background shadow-md border-b border-border/50" 
           : "bg-background"
@@ -156,7 +156,8 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden fixed inset-0 top-16 bg-black/20 backdrop-blur-sm z-40"
+              className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+              style={{ top: '64px' }}
               onClick={closeMobileMenu}
               aria-hidden="true"
             />
@@ -168,7 +169,7 @@ export function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden fixed left-0 right-0 top-16 bg-background border-b border-border shadow-lg z-50 max-h-[calc(100vh-4rem)] overflow-y-auto"
+              className="lg:hidden absolute left-0 right-0 top-full bg-background border-b border-border shadow-lg z-50 max-h-[calc(100vh-8rem)] overflow-y-auto"
             >
               <div className="px-4 py-4 space-y-1">
                 {navigation.map((item) => (
