@@ -44,29 +44,28 @@ const doctors = [
 const trustFactors = [
   {
     icon: GraduationCap,
-    title: "International Training",
-    description: "Our doctors trained at leading institutions in USA, UK, India, Germany, and Singapore.",
+    title: "Experienced Leadership",
+    description: "Led by Dr. Nitin Aryal with 15 years of clinical experience.",
   },
   {
     icon: BadgeCheck,
-    title: "Board Certified",
-    description: "All specialists hold advanced degrees and certifications in their respective fields.",
+    title: "Qualified Professional",
+    description: "Bachelor of Dental Surgery (BDS) with extensive practical experience.",
   },
   {
     icon: Globe,
-    title: "Global Standards",
-    description: "We follow international protocols and use the same techniques as top clinics worldwide.",
+    title: "Quality Standards",
+    description: "We follow international protocols and maintain high standards of care.",
   },
   {
     icon: Languages,
     title: "Multilingual Team",
-    description: "Communicate comfortably in English, Nepali, Hindi, and other languages.",
+    description: "Communicate comfortably in English and Nepali.",
   },
 ];
 
 export default function DoctorsPage() {
   const featuredDoctor = doctors.find((d) => d.featured);
-  const otherDoctors = doctors.filter((d) => !d.featured);
 
   return (
     <Layout>
@@ -82,14 +81,13 @@ export default function DoctorsPage() {
               <Stethoscope className="w-4 h-4" />
               Our Medical Team
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+<h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
               Meet Your{" "}
-              <span className="text-primary">Dental Specialists</span>
+              <span className="text-primary">Dental Team</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Our team of internationally trained specialists brings world-class 
-              expertise to Nepal. Each doctor is committed to delivering exceptional 
-              care with compassion and precision.
+              Led by Dr. Nitin Aryal with 15 years of experience, our team 
+              is committed to delivering exceptional care with compassion and precision.
             </p>
           </motion.div>
         </div>
@@ -129,11 +127,11 @@ export default function DoctorsPage() {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">
-                Lead Specialist
+<span className="text-primary font-medium text-sm uppercase tracking-wider">
+                Leadership
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-3">
-                Clinic Director & Founder
+                Managing Director
               </h2>
             </motion.div>
 
@@ -268,7 +266,7 @@ export default function DoctorsPage() {
         </section>
       )}
 
-      {/* Other Specialists */}
+{/* Our Commitment Section */}
       <section className="section-padding bg-muted/30">
         <div className="mx-auto max-w-7xl">
           <motion.div
@@ -278,114 +276,64 @@ export default function DoctorsPage() {
             className="text-center mb-16"
           >
             <span className="text-primary font-medium text-sm uppercase tracking-wider">
-              Specialist Team
+              Our Promise
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-3 mb-5">
-              Our Expert Specialists
+              Quality Care You Can Trust
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Each specialist brings years of focused training and expertise to ensure 
-              you receive the best possible care in their field.
+              At Kundalini Dental Clinic, we are committed to providing personalized 
+              dental care with the highest standards of professionalism and hygiene.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {otherDoctors.map((doctor, index) => (
-              <motion.div
-                key={doctor.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card-elevated overflow-hidden"
-              >
-                {/* Doctor Image Placeholder */}
-                <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 via-accent/5 to-muted flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20">
-                    <Stethoscope className="w-12 h-12 text-primary/40" />
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-foreground mb-1">
-                    {doctor.name}
-                  </h3>
-                  <p className="text-primary font-medium text-sm mb-4">
-                    {doctor.role}
-                  </p>
-
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-5 line-clamp-3">
-                    {doctor.bio}
-                  </p>
-
-                  {/* Experience & Location */}
-                  <div className="flex items-center gap-4 mb-5 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-primary" />
-                      <span>{doctor.experience}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4 text-primary" />
-                      <span>Kathmandu</span>
-                    </div>
-                  </div>
-
-                  {/* Specialties */}
-                  <div className="mb-5">
-                    <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2">
-                      Specialties
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {doctor.specialties.slice(0, 3).map((specialty) => (
-                        <span
-                          key={specialty}
-                          className="px-2 py-1 rounded-full bg-primary/10 text-primary text-xs"
-                        >
-                          {specialty}
-                        </span>
-                      ))}
-                      {doctor.specialties.length > 3 && (
-                        <span className="px-2 py-1 rounded-full bg-muted text-muted-foreground text-xs">
-                          +{doctor.specialties.length - 3} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Languages */}
-                  <div className="mb-5">
-                    <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2">
-                      Languages
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {doctor.languages.map((lang) => (
-                        <span
-                          key={lang}
-                          className="px-2 py-1 rounded-full bg-muted text-muted-foreground text-xs"
-                        >
-                          {lang}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Achievements */}
-                  <div className="border-t border-border pt-4">
-                    <h4 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2">
-                      Key Achievements
-                    </h4>
-                    <ul className="space-y-1">
-                      {doctor.achievements.slice(0, 2).map((achievement) => (
-                        <li key={achievement} className="flex items-start gap-2 text-xs text-muted-foreground">
-                          <Award className="w-3 h-3 text-primary flex-shrink-0 mt-0.5" />
-                          <span>{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="card-elevated p-8 text-center"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+                <Award className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">15 Years Experience</h3>
+              <p className="text-muted-foreground">
+                Dr. Nitin Aryal brings 15 years of clinical experience to every patient consultation.
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              className="card-elevated p-8 text-center"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+                <BadgeCheck className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Modern Facilities</h3>
+              <p className="text-muted-foreground">
+                Our clinic is equipped with contemporary dental technology for accurate and efficient treatments.
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+              className="card-elevated p-8 text-center"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+                <Globe className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Patient-First Approach</h3>
+              <p className="text-muted-foreground">
+                Every treatment plan is customized to your unique needs, ensuring comfortable and effective care.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>

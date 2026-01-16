@@ -32,12 +32,12 @@ export function Header() {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  return (
+return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? "bg-background/98 backdrop-blur-lg shadow-sm border-b border-border/50" 
-          : "bg-background/95 backdrop-blur-md"
+          ? "bg-background shadow-md border-b border-border/50" 
+          : "bg-background"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-20">
