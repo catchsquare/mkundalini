@@ -10,6 +10,7 @@ import DoctorsPage from "./pages/DoctorsPage";
 import DentalTourismPage from "./pages/DentalTourismPage";
 import ContactPage from "./pages/ContactPage";
 import PricingPage from "./pages/PricingPage";
+import ReviewsPage from "./pages/ReviewsPage";
 import DentalImplantsPage from "./pages/treatments/DentalImplantsPage";
 import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/doctors" element={<DoctorsPage />} />
           <Route path="/dental-tourism" element={<DentalTourismPage />} />
           <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
