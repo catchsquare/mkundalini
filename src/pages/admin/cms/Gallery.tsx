@@ -610,7 +610,7 @@ export default function Gallery() {
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         onConfirm={handleDelete}
-        loading={isSubmitting}
+        isDeleting={isSubmitting}
         title="Delete Gallery Item"
         description="Are you sure you want to delete this case? This action cannot be undone."
       />
