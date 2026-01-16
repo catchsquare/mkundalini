@@ -114,8 +114,41 @@ export default function AdminLogin() {
     }
   };
 
-  // Don't block the login UI if auth initialization hangs; users can still sign in.
-  // We still redirect in the effect above once the session is detected.
+  const handleResendConfirmation = async () => {
+    const trimmedEmail = email.trim();
+    const validation = z.string().email().safeParse(trimmedEmail);
+    if (!validation.success) {
+      setErrors((prev) => ({ ...prev, email: "Enter your email to resend the confirmation link" }));
+      return;
+    }
+
+    setResendLoading(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email: trimmedEmail,
+        options: {
+          emailRedirectTo: `${window.location.origin}/admin`,
+        },
+      });
+
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Could not resend email",
+          description: error.message,
+        });
+        return;
+      }
+
+      toast({
+        title: "Confirmation email sent",
+        description: "Check your inbox (and spam/junk).",
+      });
+    } finally {
+      setResendLoading(false);
+    }
+  };
 
 
   return (
