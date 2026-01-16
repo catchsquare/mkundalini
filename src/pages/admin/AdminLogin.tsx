@@ -16,7 +16,6 @@ const signupSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   fullName: z.string().min(2, "Name must be at least 2 characters"),
-  role: z.enum(["admin", "receptionist", "dentist"]),
 });
 
 export default function AdminLogin() {
@@ -24,7 +23,7 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState<"admin" | "receptionist" | "dentist">("receptionist");
+  
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -70,7 +69,7 @@ export default function AdminLogin() {
           navigate("/admin");
         }
       } else {
-        const validation = signupSchema.safeParse({ email, password, fullName, role });
+        const validation = signupSchema.safeParse({ email, password, fullName });
         if (!validation.success) {
           const fieldErrors: Record<string, string> = {};
           validation.error.errors.forEach((err) => {
@@ -83,7 +82,7 @@ export default function AdminLogin() {
           return;
         }
 
-        const { error } = await signUp(email, password, fullName, role);
+        const { error } = await signUp(email, password, fullName);
         if (error) {
           if (error.message.includes("already registered")) {
             toast({
@@ -215,22 +214,8 @@ export default function AdminLogin() {
               )}
             </div>
 
-            {!isLogin && (
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">
-                  Role
-                </label>
-                <select
-                  value={role}
-                  onChange={(e) => setRole(e.target.value as typeof role)}
-                  className="w-full h-10 px-3 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                >
-                  <option value="receptionist">Receptionist</option>
-                  <option value="dentist">Dentist</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-            )}
+            {/* Note: Role selection removed for security. New accounts default to 'receptionist'. 
+                Admins can change roles via User Management after account creation. */}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? (

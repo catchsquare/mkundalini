@@ -22,7 +22,7 @@ interface AuthContextType {
   profile: Profile | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
-  signUp: (email: string, password: string, fullName: string, role: string) => Promise<{ error: Error | null }>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   // Role checks
   isAdmin: boolean;
@@ -131,7 +131,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error };
   };
 
-  const signUp = async (email: string, password: string, fullName: string, role: string) => {
+  const signUp = async (email: string, password: string, fullName: string) => {
+    // Role is NOT passed to prevent privilege escalation.
+    // The database trigger always defaults new users to 'receptionist'.
+    // Admins can change roles via User Management after account creation.
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -139,7 +142,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         emailRedirectTo: `${window.location.origin}/admin`,
         data: {
           full_name: fullName,
-          role: role,
         },
       },
     });
