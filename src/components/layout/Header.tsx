@@ -86,7 +86,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:items-center lg:gap-x-4 xl:gap-x-6 2xl:gap-x-8">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-6 xl:gap-x-8">
           {navigation.map((item) => (
             <Link
               key={item.name}
@@ -109,15 +109,7 @@ export function Header() {
         </div>
 
         {/* Desktop CTAs */}
-        <div className="hidden lg:flex lg:items-center lg:gap-2 xl:gap-3 flex-shrink-0">
-          <a
-            href="tel:+9779802808008"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors px-2 py-2 whitespace-nowrap"
-            aria-label="Call us"
-          >
-            <Phone className="h-4 w-4 flex-shrink-0" />
-            <span className="hidden xl:inline">+977-9802808008</span>
-          </a>
+        <div className="hidden lg:flex lg:items-center lg:gap-3 flex-shrink-0">
           <Button asChild variant="outline" size="sm" className="whitespace-nowrap">
             <Link to="/dental-tourism">
               <Globe className="h-4 w-4 mr-1.5 flex-shrink-0" />
@@ -146,7 +138,7 @@ export function Header() {
         </button>
       </nav>
 
-      {/* Mobile Menu - Full screen overlay */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -202,11 +194,11 @@ export function Header() {
                   </Button>
                   <a
                     href="tel:+9779802808008"
-                    className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors py-3 min-h-[48px]"
+                    className="flex items-center justify-center gap-2 text-sm text-primary font-medium hover:text-primary/80 transition-colors py-3 min-h-[48px] bg-primary/5 rounded-lg"
                     onClick={closeMobileMenu}
                   >
                     <Phone className="h-4 w-4" />
-                    <span>+977-9802808008</span>
+                    <span>Call: +977-9802808008</span>
                   </a>
                 </div>
               </div>
