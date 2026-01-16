@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { AnnouncementBar } from "./AnnouncementBar";
+import { FloatingCallButton } from "@/components/ui/floating-call-button";
 
 interface LayoutProps {
   children: ReactNode;
@@ -15,6 +16,7 @@ export function Layout({ children, showAnnouncement = true }: LayoutProps) {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
+      <FloatingCallButton />
     </div>
   );
 }
