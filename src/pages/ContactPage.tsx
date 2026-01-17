@@ -28,6 +28,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { submitLead } from "@/lib/leads";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
+import { usePageContent } from "@/hooks/use-page-content";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -154,6 +155,12 @@ const reassurances = [
 export default function ContactPage() {
   const { toast } = useToast();
   const { settings } = useGlobalSettings();
+  const { getSectionByType } = usePageContent("contact");
+  
+  const heroSection = getSectionByType("hero");
+  const contactMethodsSection = getSectionByType("contact_methods");
+  const bookingSection = getSectionByType("booking_process");
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -288,16 +295,14 @@ export default function ContactPage() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Calendar className="w-4 h-4" />
-              Book Your Appointment
+              {heroSection?.badge || "Book Your Appointment"}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Your Smile Journey{" "}
-              <span className="text-primary">Starts Here</span>
+              {heroSection?.title || "Your Smile Journey"}{" "}
+              <span className="text-primary">{heroSection?.titleHighlight || "Starts Here"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Whether you're across town or across the world, reaching us is easy. 
-              Choose your preferred way to connect, and we'll guide you through 
-              every step of your dental care journey.
+              {heroSection?.description || "Whether you're across town or across the world, reaching us is easy. Choose your preferred way to connect, and we'll guide you through every step of your dental care journey."}
             </p>
           </motion.div>
 

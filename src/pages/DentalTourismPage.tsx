@@ -34,6 +34,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { usePageContent } from "@/hooks/use-page-content";
 
 const whyNepal = [
   {
@@ -286,6 +287,13 @@ const faqs = [
 ];
 
 export default function DentalTourismPage() {
+  const { getSectionByType } = usePageContent("dental-tourism");
+  
+  const heroSection = getSectionByType("hero");
+  const statsSection = getSectionByType("quick_stats");
+  const whyNepalSection = getSectionByType("why_nepal");
+  const whyKundaliniSection = getSectionByType("why_kundalini");
+
   return (
     <Layout>
       {/* Hero */}
@@ -298,16 +306,14 @@ export default function DentalTourismPage() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Globe className="w-4 h-4" />
-              International Patients
+              {heroSection?.badge || "International Patients"}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              Your Complete Guide to{" "}
-              <span className="text-primary">Dental Care in Nepal</span>
+              {heroSection?.title || "Your Complete Guide to"}{" "}
+              <span className="text-primary">{heroSection?.titleHighlight || "Dental Care in Nepal"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-              Everything you need to know about receiving world-class dental treatment 
-              at Kundalini Dental Clinic. We believe in complete transparency — 
-              no surprises, no pressure, just honest information.
+              {heroSection?.description || "Everything you need to know about receiving world-class dental treatment at Kundalini Dental Clinic. We believe in complete transparency — no surprises, no pressure, just honest information."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="hero" size="xl">

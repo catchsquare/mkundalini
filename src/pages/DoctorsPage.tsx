@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
+import { usePageContent } from "@/hooks/use-page-content";
 
 const doctors = [
   {
@@ -65,7 +66,15 @@ const trustFactors = [
 ];
 
 export default function DoctorsPage() {
+  const { getSectionByType } = usePageContent("doctors");
   const featuredDoctor = doctors.find((d) => d.featured);
+  
+  const heroSection = getSectionByType("hero");
+  const doctorSection = getSectionByType("featured_doctor");
+  const commitmentSection = getSectionByType("commitment");
+  
+  // Use CMS data if available, fallback to static
+  const doctorData = doctorSection || featuredDoctor;
 
   return (
     <Layout>
@@ -79,15 +88,14 @@ export default function DoctorsPage() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Stethoscope className="w-4 h-4" />
-              Our Medical Team
+              {heroSection?.badge || "Our Medical Team"}
             </span>
-<h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              Meet Your{" "}
-              <span className="text-primary">Dental Team</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+              {heroSection?.title || "Meet Your"}{" "}
+              <span className="text-primary">{heroSection?.titleHighlight || "Dental Team"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Led by Dr. Nitin Aryal with 15 years of experience, our team 
-              is committed to delivering exceptional care with compassion and precision.
+              {heroSection?.description || "Led by Dr. Nitin Aryal with 15 years of experience, our team is committed to delivering exceptional care with compassion and precision."}
             </p>
           </motion.div>
         </div>

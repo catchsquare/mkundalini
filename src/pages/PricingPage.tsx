@@ -18,6 +18,7 @@ import {
   Users,
   Clock,
 } from "lucide-react";
+import { usePageContent } from "@/hooks/use-page-content";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -256,6 +257,11 @@ const internationalComparison = [
 ];
 
 export default function PricingPage() {
+  const { getSectionByType } = usePageContent("pricing");
+  
+  const heroSection = getSectionByType("hero");
+  const philosophySection = getSectionByType("philosophy");
+
   return (
     <Layout>
       {/* Hero Section - with proper padding for fixed header */}
@@ -274,16 +280,14 @@ export default function PricingPage() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <DollarSign className="w-4 h-4" />
-              Honest, Transparent Pricing
+              {heroSection?.badge || "Honest, Transparent Pricing"}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Clear Pricing,{" "}
-              <span className="text-primary">No Surprises</span>
+              {heroSection?.title || "Clear Pricing,"}{" "}
+              <span className="text-primary">{heroSection?.titleHighlight || "No Surprises"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              We believe you deserve to know exactly what your dental care will cost 
-              before treatment begins. No hidden fees, no unexpected charges—just 
-              honest pricing for world-class care.
+              {heroSection?.description || "We believe you deserve to know exactly what your dental care will cost before treatment begins. No hidden fees, no unexpected charges—just honest pricing for world-class care."}
             </p>
           </motion.div>
         </div>
