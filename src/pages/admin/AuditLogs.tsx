@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -47,7 +47,7 @@ interface AuditLog {
   user_email: string | null;
   old_values: any;
   new_values: any;
-  ip_address: string | null;
+  ip_address: unknown;
   user_agent: string | null;
   created_at: string;
 }
@@ -101,10 +101,7 @@ export default function AuditLogs() {
     return matchesSearch && matchesEntity && matchesAction;
   });
 
-  const { paginatedItems, ...paginationProps } = usePagination({
-    items: filteredLogs,
-    itemsPerPage: 20,
-  });
+  const pagination = usePagination(filteredLogs, 20);
 
   const handleExport = () => {
     const exportData = filteredLogs.map((log) => ({
@@ -212,7 +209,7 @@ export default function AuditLogs() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {paginatedItems.map((log) => (
+              {pagination.paginatedData.map((log) => (
                 <TableRow key={log.id}>
                   <TableCell className="whitespace-nowrap">
                     <div className="flex items-center gap-2">
@@ -256,7 +253,7 @@ export default function AuditLogs() {
                   </TableCell>
                 </TableRow>
               ))}
-              {paginatedItems.length === 0 && (
+              {pagination.paginatedData.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center py-8">
                     <Activity className="w-12 h-12 mx-auto text-muted-foreground/50 mb-3" />
@@ -266,7 +263,16 @@ export default function AuditLogs() {
               )}
             </TableBody>
           </Table>
-          <DataTablePagination {...paginationProps} />
+          <DataTablePagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            pageSize={pagination.pageSize}
+            totalItems={pagination.totalItems}
+            startIndex={pagination.startIndex}
+            endIndex={pagination.endIndex}
+            onPageChange={pagination.goToPage}
+            onPageSizeChange={pagination.setPageSize}
+          />
         </CardContent>
       </Card>
 

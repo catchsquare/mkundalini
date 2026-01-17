@@ -38,8 +38,6 @@ import {
   EyeOff,
   Globe,
   GripVertical,
-  Copy,
-  ExternalLink,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
@@ -206,10 +204,7 @@ export default function Pages() {
     return matchesSearch && matchesStatus;
   });
 
-  const { paginatedItems, ...paginationProps } = usePagination({
-    items: filteredPages,
-    itemsPerPage: 10,
-  });
+  const pagination = usePagination(filteredPages, 10);
 
   const resetForm = () => {
     setFormData({
@@ -284,7 +279,13 @@ export default function Pages() {
           .eq("id", selectedPage.id);
         if (error) throw error;
 
-        await logAction("update", "page", selectedPage.id, { title: selectedPage.title }, pageData);
+        await logAction({
+          action: "update",
+          entityType: "page",
+          entityId: selectedPage.id,
+          oldValues: { title: selectedPage.title },
+          newValues: pageData,
+        });
         toast({ title: "Page updated successfully" });
       } else {
         const { data, error } = await supabase
@@ -294,7 +295,12 @@ export default function Pages() {
           .single();
         if (error) throw error;
 
-        await logAction("create", "page", data.id, null, pageData);
+        await logAction({
+          action: "create",
+          entityType: "page",
+          entityId: data.id,
+          newValues: pageData,
+        });
         toast({ title: "Page created successfully" });
       }
 
@@ -323,7 +329,12 @@ export default function Pages() {
       const { error } = await supabase.from("pages").delete().eq("id", selectedPage.id);
       if (error) throw error;
 
-      await logAction("delete", "page", selectedPage.id, { title: selectedPage.title }, null);
+      await logAction({
+        action: "delete",
+        entityType: "page",
+        entityId: selectedPage.id,
+        oldValues: { title: selectedPage.title },
+      });
       toast({ title: "Page deleted successfully" });
       setIsDeleteDialogOpen(false);
       setSelectedPage(null);
@@ -351,7 +362,13 @@ export default function Pages() {
         .eq("id", page.id);
       if (error) throw error;
 
-      await logAction("publish", "page", page.id, { status: page.status }, { status: newStatus });
+      await logAction({
+        action: "publish",
+        entityType: "page",
+        entityId: page.id,
+        oldValues: { status: page.status },
+        newValues: { status: newStatus },
+      });
       toast({ title: `Page ${newStatus === "published" ? "published" : "unpublished"}` });
       fetchPages();
     } catch (error: any) {
@@ -769,7 +786,7 @@ export default function Pages() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {paginatedItems.map((page) => (
+                  {pagination.paginatedData.map((page) => (
                     <TableRow key={page.id}>
                       <TableCell className="font-medium">{page.title}</TableCell>
                       <TableCell>
@@ -831,7 +848,7 @@ export default function Pages() {
                       </TableCell>
                     </TableRow>
                   ))}
-                  {paginatedItems.length === 0 && (
+                  {pagination.paginatedData.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center py-8">
                         <FileText className="w-12 h-12 mx-auto text-muted-foreground/50 mb-3" />
@@ -844,7 +861,16 @@ export default function Pages() {
                   )}
                 </TableBody>
               </Table>
-              <DataTablePagination {...paginationProps} />
+              <DataTablePagination
+                currentPage={pagination.currentPage}
+                totalPages={pagination.totalPages}
+                pageSize={pagination.pageSize}
+                totalItems={pagination.totalItems}
+                startIndex={pagination.startIndex}
+                endIndex={pagination.endIndex}
+                onPageChange={pagination.goToPage}
+                onPageSizeChange={pagination.setPageSize}
+              />
             </CardContent>
           </Card>
         </TabsContent>
@@ -882,7 +908,7 @@ export default function Pages() {
                     </div>
                   ) : (
                     <div className="space-y-3">
-                      {sections.map((section, index) => (
+                      {sections.map((section) => (
                         <div
                           key={section.id}
                           className={`flex items-center gap-3 p-4 rounded-lg border ${

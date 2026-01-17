@@ -164,6 +164,8 @@ export default function Navigation() {
     setIsDialogOpen(true);
   };
 
+  const rootItems = items.filter((item) => !item.parent_id && item.location === activeTab);
+
   const handleSubmit = async () => {
     if (!formData.label) {
       toast({
@@ -204,7 +206,13 @@ export default function Navigation() {
           .eq("id", selectedItem.id);
         if (error) throw error;
 
-        await logAction("update", "navigation_item", selectedItem.id, { label: selectedItem.label }, navData);
+        await logAction({
+          action: "update",
+          entityType: "navigation_item",
+          entityId: selectedItem.id,
+          oldValues: { label: selectedItem.label },
+          newValues: navData,
+        });
         toast({ title: "Navigation item updated" });
       } else {
         const { data, error } = await supabase
@@ -214,7 +222,12 @@ export default function Navigation() {
           .single();
         if (error) throw error;
 
-        await logAction("create", "navigation_item", data.id, null, navData);
+        await logAction({
+          action: "create",
+          entityType: "navigation_item",
+          entityId: data.id,
+          newValues: navData,
+        });
         toast({ title: "Navigation item created" });
       }
 
@@ -243,7 +256,12 @@ export default function Navigation() {
       const { error } = await supabase.from("navigation_items").delete().eq("id", selectedItem.id);
       if (error) throw error;
 
-      await logAction("delete", "navigation_item", selectedItem.id, { label: selectedItem.label }, null);
+      await logAction({
+        action: "delete",
+        entityType: "navigation_item",
+        entityId: selectedItem.id,
+        oldValues: { label: selectedItem.label },
+      });
       toast({ title: "Navigation item deleted" });
       setIsDeleteDialogOpen(false);
       setSelectedItem(null);
@@ -380,8 +398,6 @@ export default function Navigation() {
       </div>
     );
   }
-
-  const rootItems = items.filter((item) => !item.parent_id && item.location === activeTab);
 
   return (
     <div className="space-y-6">

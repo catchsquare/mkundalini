@@ -16,7 +16,6 @@ import {
   Share2,
   Phone,
   Mail,
-  Globe,
   MapPin,
   Calendar,
   User,
@@ -24,15 +23,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
 import { Label } from "@/components/ui/label";
-
-interface Setting {
-  id: string;
-  setting_key: string;
-  setting_value: any;
-  setting_group: string;
-  description: string | null;
-  is_public: boolean;
-}
 
 interface WorkingHour {
   id: string;
@@ -169,7 +159,12 @@ export default function Settings() {
       await saveSetting("managing_director", settings.managing_director || "", "general", "Managing director name", true);
       await saveSetting("director_title", settings.director_title || "", "general", "Director title/credentials", true);
 
-      await logAction("update", "settings", "general", null, settings);
+      await logAction({
+        action: "update",
+        entityType: "setting",
+        entityId: "general",
+        newValues: settings,
+      });
       toast({ title: "General settings saved" });
     } catch (error: any) {
       toast({
@@ -191,7 +186,12 @@ export default function Settings() {
       await saveSetting("og_image", settings.og_image || "", "seo", "Default OG image URL", true);
       await saveSetting("google_analytics_id", settings.google_analytics_id || "", "seo", "Google Analytics ID", false);
 
-      await logAction("update", "settings", "seo", null, settings);
+      await logAction({
+        action: "update",
+        entityType: "setting",
+        entityId: "seo",
+        newValues: settings,
+      });
       toast({ title: "SEO settings saved" });
     } catch (error: any) {
       toast({
@@ -214,7 +214,12 @@ export default function Settings() {
       await saveSetting("whatsapp_number", settings.whatsapp_number || "", "social", "WhatsApp number", true);
       await saveSetting("viber_number", settings.viber_number || "", "social", "Viber number", true);
 
-      await logAction("update", "settings", "social", null, settings);
+      await logAction({
+        action: "update",
+        entityType: "setting",
+        entityId: "social",
+        newValues: settings,
+      });
       toast({ title: "Social links saved" });
     } catch (error: any) {
       toast({
@@ -258,7 +263,12 @@ export default function Settings() {
         }
       }
 
-      await logAction("update", "settings", "working_hours", null, { workingHours });
+      await logAction({
+        action: "update",
+        entityType: "setting",
+        entityId: "working_hours",
+        newValues: { workingHours },
+      });
       toast({ title: "Working hours saved" });
       fetchWorkingHours();
     } catch (error: any) {

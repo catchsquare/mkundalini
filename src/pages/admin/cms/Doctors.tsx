@@ -3,7 +3,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -179,7 +178,12 @@ export default function Doctors() {
           .eq("id", selectedDentist.id);
         if (error) throw error;
 
-        await logAction("update", "dentist", selectedDentist.id, null, dentistData);
+        await logAction({
+          action: "update",
+          entityType: "profile",
+          entityId: selectedDentist.id,
+          newValues: dentistData,
+        });
         toast({ title: "Dentist updated successfully" });
       } else {
         const { data, error } = await supabase
@@ -189,7 +193,12 @@ export default function Doctors() {
           .single();
         if (error) throw error;
 
-        await logAction("create", "dentist", data.id, null, dentistData);
+        await logAction({
+          action: "create",
+          entityType: "profile",
+          entityId: data.id,
+          newValues: dentistData,
+        });
         toast({ title: "Dentist created successfully" });
       }
 
@@ -215,7 +224,11 @@ export default function Doctors() {
       const { error } = await supabase.from("dentists").delete().eq("id", selectedDentist.id);
       if (error) throw error;
 
-      await logAction("delete", "dentist", selectedDentist.id, null, null);
+      await logAction({
+        action: "delete",
+        entityType: "profile",
+        entityId: selectedDentist.id,
+      });
       toast({ title: "Dentist deleted successfully" });
       setIsDeleteDialogOpen(false);
       setSelectedDentist(null);
