@@ -29,6 +29,9 @@ interface GlobalSettings {
   // Features
   whatsapp_enabled: boolean;
   viber_enabled: boolean;
+
+  // Branding
+  site_logo: string | null;
 }
 
 const defaultSettings: GlobalSettings = {
@@ -51,6 +54,7 @@ const defaultSettings: GlobalSettings = {
   default_seo_description: "Led by Dr. Nitin Aryal with 15 years experience. Modern dental clinic in Kathmandu offering quality treatments at accessible prices.",
   whatsapp_enabled: true,
   viber_enabled: true,
+  site_logo: null,
 };
 
 export function useGlobalSettings() {
@@ -111,6 +115,7 @@ export function useGlobalSettings() {
           default_seo_description: settingsMap.default_seo_description || defaultSettings.default_seo_description,
           whatsapp_enabled: settingsMap.whatsapp_enabled ?? defaultSettings.whatsapp_enabled,
           viber_enabled: settingsMap.viber_enabled ?? defaultSettings.viber_enabled,
+          site_logo: settingsMap.site_logo || defaultSettings.site_logo,
         });
       }
     } catch (error) {

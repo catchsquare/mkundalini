@@ -19,10 +19,12 @@ import {
   MapPin,
   Calendar,
   User,
+  ImageIcon,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
 import { Label } from "@/components/ui/label";
+import { LogoUploader } from "@/components/admin/LogoUploader";
 
 interface WorkingHour {
   id: string;
@@ -307,8 +309,12 @@ export default function Settings() {
         </div>
       </div>
 
-      <Tabs defaultValue="general">
-        <TabsList className="mb-4">
+      <Tabs defaultValue="branding">
+        <TabsList className="mb-4 flex-wrap">
+          <TabsTrigger value="branding" className="gap-2">
+            <ImageIcon className="w-4 h-4" />
+            Branding
+          </TabsTrigger>
           <TabsTrigger value="general" className="gap-2">
             <Building className="w-4 h-4" />
             General
@@ -326,6 +332,36 @@ export default function Settings() {
             Social & Messaging
           </TabsTrigger>
         </TabsList>
+
+        {/* Branding Settings */}
+        <TabsContent value="branding">
+          <LogoUploader
+            currentLogoUrl={settings.site_logo || null}
+            onLogoChange={(url) => updateSetting("site_logo", url)}
+            onSave={async () => {
+              setSaving(true);
+              try {
+                await saveSetting("site_logo", settings.site_logo || "", "branding", "Site logo URL", true);
+                await logAction({
+                  action: "update",
+                  entityType: "setting",
+                  entityId: "branding",
+                  newValues: { site_logo: settings.site_logo },
+                });
+                toast({ title: "Logo settings saved" });
+              } catch (error: any) {
+                toast({
+                  title: "Error saving logo",
+                  description: error.message,
+                  variant: "destructive",
+                });
+              } finally {
+                setSaving(false);
+              }
+            }}
+            saving={saving}
+          />
+        </TabsContent>
 
         {/* General Settings */}
         <TabsContent value="general">
