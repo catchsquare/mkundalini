@@ -26,6 +26,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Layout } from "@/components/layout/Layout";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { submitLead } from "@/lib/leads";
+import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -151,6 +153,7 @@ const reassurances = [
 
 export default function ContactPage() {
   const { toast } = useToast();
+  const { settings } = useGlobalSettings();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -211,26 +214,48 @@ export default function ContactPage() {
     
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    toast({
-      title: "Inquiry Received!",
-      description: "Our team will contact you within 24 hours to schedule your consultation.",
+    const result = await submitLead({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+      source: "website",
+      form_type: "contact",
+      treatment_interest: formData.treatment,
+      metadata: {
+        country: formData.country,
+        preferred_date: formData.preferredDate,
+        is_international: formData.isInternational,
+        has_xrays: formData.hasXrays,
+      },
     });
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      country: "",
-      treatment: "",
-      preferredDate: "",
-      isInternational: false,
-      hasXrays: false,
-      message: "",
-    });
-    setErrors({});
+    if (result.success) {
+      toast({
+        title: "Inquiry Received!",
+        description: "Our team will contact you within 24 hours to schedule your consultation.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        country: "",
+        treatment: "",
+        preferredDate: "",
+        isInternational: false,
+        hasXrays: false,
+        message: "",
+      });
+      setErrors({});
+    } else {
+      toast({
+        title: "Something went wrong",
+        description: result.error || "Please try again or contact us directly via WhatsApp.",
+        variant: "destructive",
+      });
+    }
+    
     setIsSubmitting(false);
   };
 

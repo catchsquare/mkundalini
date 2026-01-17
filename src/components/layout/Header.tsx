@@ -3,21 +3,15 @@ import { useState, useEffect, useCallback } from "react";
 import { Menu, X, Phone, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Services", href: "/services" },
-  { name: "Doctors", href: "/doctors" },
-  { name: "About", href: "/about" },
-  { name: "Dental Tourism", href: "/dental-tourism" },
-  { name: "Pricing", href: "/pricing" },
-  { name: "Reviews", href: "/reviews" },
-];
+import { useNavigation } from "@/hooks/use-navigation";
+import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { navigation } = useNavigation();
+  const { settings } = useGlobalSettings();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,18 +81,19 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex lg:items-center lg:gap-x-6 xl:gap-x-8">
-          {navigation.map((item) => (
+          {navigation.header.map((item) => (
             <Link
-              key={item.name}
-              to={item.href}
+              key={item.id}
+              to={item.url || "/"}
+              target={item.target === "_blank" ? "_blank" : undefined}
               className={`text-sm font-medium transition-colors hover:text-primary relative py-2 whitespace-nowrap ${
-                location.pathname === item.href
+                location.pathname === item.url
                   ? "text-primary"
                   : "text-muted-foreground"
               }`}
             >
-              {item.name}
-              {location.pathname === item.href && (
+              {item.label}
+              {location.pathname === item.url && (
                 <motion.div
                   layoutId="activeNav"
                   className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-primary rounded-full"
@@ -164,18 +159,19 @@ export function Header() {
               className="lg:hidden absolute left-0 right-0 top-full bg-background border-b border-border shadow-lg z-50 max-h-[calc(100vh-8rem)] overflow-y-auto"
             >
               <div className="px-4 py-4 space-y-1">
-                {navigation.map((item) => (
+                {navigation.header.map((item) => (
                   <Link
-                    key={item.name}
-                    to={item.href}
+                    key={item.id}
+                    to={item.url || "/"}
+                    target={item.target === "_blank" ? "_blank" : undefined}
                     onClick={closeMobileMenu}
                     className={`block text-base font-medium transition-colors py-3.5 px-4 rounded-lg min-h-[48px] flex items-center ${
-                      location.pathname === item.href
+                      location.pathname === item.url
                         ? "text-primary bg-primary/5"
                         : "text-foreground hover:bg-muted active:bg-muted/80"
                     }`}
                   >
-                    {item.name}
+                    {item.label}
                   </Link>
                 ))}
                 
@@ -193,12 +189,12 @@ export function Header() {
                     </Link>
                   </Button>
                   <a
-                    href="tel:+9779802808008"
+                    href={`tel:${settings.phone.replace(/[^+\d]/g, "")}`}
                     className="flex items-center justify-center gap-2 text-sm text-primary font-medium hover:text-primary/80 transition-colors py-3 min-h-[48px] bg-primary/5 rounded-lg"
                     onClick={closeMobileMenu}
                   >
                     <Phone className="h-4 w-4" />
-                    <span>Call: +977-9802808008</span>
+                    <span>Call: {settings.phone}</span>
                   </a>
                 </div>
               </div>
