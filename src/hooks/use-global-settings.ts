@@ -78,7 +78,10 @@ export function useGlobalSettings() {
 
         // Handle address - can be string or object with {line1, line2, city, country}
         let addressValue = defaultSettings.address;
-        if (settingsMap.address) {
+        if (settingsMap.clinic_address) {
+          // Prefer clinic_address (new key) over address (old key)
+          addressValue = String(settingsMap.clinic_address);
+        } else if (settingsMap.address) {
           if (typeof settingsMap.address === 'string') {
             addressValue = settingsMap.address;
           } else if (typeof settingsMap.address === 'object') {
@@ -91,10 +94,10 @@ export function useGlobalSettings() {
         setSettings({
           clinic_name: settingsMap.clinic_name || defaultSettings.clinic_name,
           address: addressValue,
-          phone: settingsMap.phone || defaultSettings.phone,
-          email: settingsMap.email || defaultSettings.email,
-          whatsapp: settingsMap.whatsapp || defaultSettings.whatsapp,
-          established_year: settingsMap.established_year || defaultSettings.established_year,
+          phone: settingsMap.clinic_phone || settingsMap.primary_phone || settingsMap.phone || defaultSettings.phone,
+          email: settingsMap.clinic_email || settingsMap.email || defaultSettings.email,
+          whatsapp: settingsMap.whatsapp_number || settingsMap.whatsapp || defaultSettings.whatsapp,
+          established_year: settingsMap.clinic_established || settingsMap.established_year || defaultSettings.established_year,
           managing_director: settingsMap.managing_director || defaultSettings.managing_director,
           managing_director_title: settingsMap.managing_director_title || defaultSettings.managing_director_title,
           managing_director_experience: settingsMap.managing_director_experience || defaultSettings.managing_director_experience,

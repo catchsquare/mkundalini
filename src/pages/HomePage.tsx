@@ -23,6 +23,8 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { OfferBadge } from "@/components/ui/offer-badge";
 import heroImage from "@/assets/hero-dental.jpg";
+import { usePageContent } from "@/hooks/use-page-content";
+import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 const trustIndicators = [
   {
@@ -153,6 +155,46 @@ const testimonials = [
 ];
 
 export default function HomePage() {
+  // Fetch CMS content with static fallback
+  const { page, getSectionByType } = usePageContent('home');
+  const { settings } = useGlobalSettings();
+  
+  // Get CMS content or use static defaults
+  const heroContent = getSectionByType('hero');
+  const servicesContent = getSectionByType('services_grid');
+  const testimonialContent = getSectionByType('testimonials');
+  const ctaContent = getSectionByType('cta_strip');
+  
+  // Use CMS hero or static
+  const heroData = {
+    badge: heroContent?.badge || "Nepal's Leading Dental Care Destination",
+    headline: heroContent?.headline || "Exceptional Dental Care,",
+    headlineHighlight: heroContent?.headline_highlight || "Exceptional Value",
+    description: heroContent?.description || `Quality dental treatments at accessible prices. Led by ${settings.managing_director} with ${settings.managing_director_experience} of experience, we deliver professional care and beautiful, lasting results.`,
+    stats: heroContent?.stats || [
+      { value: settings.managing_director_experience?.replace(' years', '') || "15", label: "Years Experience" },
+      { value: settings.established_year || "2023", label: "Established" },
+      { value: "Premium", label: "Quality Care" }
+    ]
+  };
+  
+  // Use CMS services or static
+  const servicesData = servicesContent?.services || services;
+  const servicesHeader = {
+    badge: servicesContent?.badge || "Our Expertise",
+    headline: servicesContent?.headline || "Premium Dental Services",
+    description: servicesContent?.description || "From routine care to complex restorations, we deliver exceptional results using the latest techniques and premium materials."
+  };
+  
+  // Use CMS testimonials or static
+  const testimonialsData = testimonialContent?.testimonials || testimonials;
+  
+  // Use CMS CTA or static
+  const ctaData = {
+    headline: ctaContent?.headline || "Ready to Transform Your Smile?",
+    description: ctaContent?.description || "Take the first step toward the smile you deserve. Book a free consultation today — no obligations, just honest advice."
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
