@@ -905,6 +905,57 @@ export type Database = {
         }
         Relationships: []
       }
+      offers: {
+        Row: {
+          badge_text: string | null
+          created_at: string
+          cta_label: string | null
+          cta_link: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          image_alt: string | null
+          image_url: string | null
+          sort_order: number | null
+          start_date: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          badge_text?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_link?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          image_alt?: string | null
+          image_url?: string | null
+          sort_order?: number | null
+          start_date?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          badge_text?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_link?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          image_alt?: string | null
+          image_url?: string | null
+          sort_order?: number | null
+          start_date?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       page_sections: {
         Row: {
           content: Json | null
@@ -1168,6 +1219,66 @@ export type Database = {
           role?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      team_members: {
+        Row: {
+          achievements: string[] | null
+          bio: string | null
+          created_at: string
+          experience_years: number | null
+          full_name: string
+          id: string
+          is_featured: boolean | null
+          languages: string[] | null
+          photo_alt: string | null
+          photo_url: string | null
+          qualifications: string[] | null
+          role: string
+          role_type: string
+          sort_order: number | null
+          specialties: string[] | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          achievements?: string[] | null
+          bio?: string | null
+          created_at?: string
+          experience_years?: number | null
+          full_name: string
+          id?: string
+          is_featured?: boolean | null
+          languages?: string[] | null
+          photo_alt?: string | null
+          photo_url?: string | null
+          qualifications?: string[] | null
+          role: string
+          role_type?: string
+          sort_order?: number | null
+          specialties?: string[] | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          achievements?: string[] | null
+          bio?: string | null
+          created_at?: string
+          experience_years?: number | null
+          full_name?: string
+          id?: string
+          is_featured?: boolean | null
+          languages?: string[] | null
+          photo_alt?: string | null
+          photo_url?: string | null
+          qualifications?: string[] | null
+          role?: string
+          role_type?: string
+          sort_order?: number | null
+          specialties?: string[] | null
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }

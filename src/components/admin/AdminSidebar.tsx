@@ -178,6 +178,14 @@ const cmsNavigationGroups: NavGroup[] = [
     ],
   },
   {
+    name: "Offers",
+    icon: Tags,
+    roles: ["super_admin", "admin", "content_editor"],
+    items: [
+      { name: "All Offers", href: "/admin/cms/offers", icon: Tags },
+    ],
+  },
+  {
     name: "Blog",
     icon: PenTool,
     roles: ["super_admin", "admin", "content_editor"],

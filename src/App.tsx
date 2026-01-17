@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 // Public pages
 import HomePage from "./pages/HomePage";
@@ -40,6 +41,8 @@ import Doctors from "./pages/admin/cms/Doctors";
 import Blog from "./pages/admin/cms/Blog";
 import Testimonials from "./pages/admin/cms/Testimonials";
 import Gallery from "./pages/admin/cms/Gallery";
+import Offers from "./pages/admin/cms/Offers";
+import Team from "./pages/admin/cms/Team";
 
 // Reports
 import Revenue from "./pages/admin/reports/Revenue";
@@ -53,6 +56,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
@@ -122,8 +126,12 @@ const App = () => (
 
               {/* CMS - Team */}
               <Route path="cms/doctors" element={<Doctors />} />
-              <Route path="cms/staff" element={<Doctors />} />
+              <Route path="cms/team" element={<Team />} />
+              <Route path="cms/staff" element={<Team />} />
               <Route path="cms/specializations" element={<Doctors />} />
+
+              {/* CMS - Offers */}
+              <Route path="cms/offers" element={<Offers />} />
 
               {/* CMS - Testimonials */}
               <Route path="cms/testimonials" element={<Testimonials />} />

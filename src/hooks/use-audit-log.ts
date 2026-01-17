@@ -25,7 +25,9 @@ export type EntityType =
   | "gallery_item"
   | "navigation_item"
   | "profile"
-  | "setting";
+  | "setting"
+  | "offer"
+  | "team_member";
 
 interface AuditLogParams {
   action: AuditAction;

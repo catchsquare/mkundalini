@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { X, Sparkles, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useOffers, Offer } from "@/hooks/use-offers";
 
 interface Announcement {
   id: string;
@@ -11,7 +12,19 @@ interface Announcement {
   highlight?: string;
 }
 
-const announcements: Announcement[] = [
+// Convert offers to announcement format
+function offersToAnnouncements(offers: Offer[]): Announcement[] {
+  return offers.map(offer => ({
+    id: offer.id,
+    text: offer.badge_text || 'Special Offer:',
+    highlight: offer.title,
+    link: offer.cta_link || '/contact',
+    linkText: offer.cta_label || 'Learn More',
+  }));
+}
+
+// Fallback static announcements
+const fallbackAnnouncements: Announcement[] = [
   {
     id: "1",
     text: "Limited Time Offer:",
@@ -36,8 +49,14 @@ const announcements: Announcement[] = [
 ];
 
 export function AnnouncementBar() {
+  const { offers, loading } = useOffers();
   const [isVisible, setIsVisible] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Convert CMS offers to announcements, fallback to static if none
+  const announcements = offers.length > 0 
+    ? offersToAnnouncements(offers) 
+    : fallbackAnnouncements;
 
   // Rotate announcements every 5 seconds
   useEffect(() => {
