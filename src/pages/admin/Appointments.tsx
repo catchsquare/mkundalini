@@ -29,6 +29,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { format, addDays, startOfWeek, isSameDay } from "date-fns";
 import { cn } from "@/lib/utils";
+import { getSafeErrorMessage } from "@/lib/errorHandling";
+import { appointmentSchema } from "@/lib/validationSchemas";
 
 interface Appointment {
   id: string;
@@ -143,9 +145,26 @@ export default function Appointments() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Validate form data
+    const validation = appointmentSchema.safeParse(formData);
+    if (!validation.success) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: validation.error.errors[0]?.message || "Please check your input",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const { error } = await supabase.from("appointments").insert([{
-        ...formData,
+        patient_id: formData.patient_id,
+        appointment_date: formData.appointment_date,
+        start_time: formData.start_time,
+        end_time: formData.end_time,
+        treatment_type: formData.treatment_type,
+        notes: formData.notes || null,
         status: "scheduled",
       }]);
 
@@ -154,11 +173,11 @@ export default function Appointments() {
       setIsDialogOpen(false);
       resetForm();
       fetchAppointments();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.message,
+        description: getSafeErrorMessage(error),
       });
     } finally {
       setIsSubmitting(false);
@@ -175,8 +194,8 @@ export default function Appointments() {
       if (error) throw error;
       toast({ title: "Status updated" });
       fetchAppointments();
-    } catch (error: any) {
-      toast({ variant: "destructive", title: "Error", description: error.message });
+    } catch (error: unknown) {
+      toast({ variant: "destructive", title: "Error", description: getSafeErrorMessage(error) });
     }
   };
 
