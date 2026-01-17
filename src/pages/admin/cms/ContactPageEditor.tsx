@@ -7,9 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Save, Loader2, Eye, EyeOff, Plus, Trash2, Sparkles, Phone, Calendar } from "lucide-react";
+import { Save, Loader2, Eye, EyeOff, Plus, Trash2, Sparkles, Phone, Calendar, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
+import { SEOSettingsEditor } from "@/components/admin/cms/SEOSettingsEditor";
 
 interface PageSection {
   id: string;
@@ -27,6 +28,7 @@ const sectionLabels: Record<string, { label: string; icon: any; description: str
   hero: { label: "Hero Section", icon: Sparkles, description: "Main banner with headline" },
   contact_methods: { label: "Contact Methods", icon: Phone, description: "Ways to get in touch" },
   booking_process: { label: "Booking Process", icon: Calendar, description: "Steps to book an appointment" },
+  seo: { label: "SEO Settings", icon: Search, description: "Search engine optimization" },
 };
 
 export default function ContactPageEditor() {
@@ -154,6 +156,10 @@ export default function ContactPageEditor() {
 
         <TabsContent value="booking_process" className="mt-6">
           <BookingProcessEditor section={getSectionByType('booking_process')} onSave={updateSection} onToggleVisibility={toggleVisibility} saving={saving} />
+        </TabsContent>
+
+        <TabsContent value="seo" className="mt-6">
+          <SEOSettingsEditor pageId={CONTACT_PAGE_ID} pageName="Contact Page" />
         </TabsContent>
       </Tabs>
     </div>

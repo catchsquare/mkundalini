@@ -7,9 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Save, Loader2, Eye, EyeOff, Plus, Trash2, Sparkles, Globe, Award, MapPin } from "lucide-react";
+import { Save, Loader2, Eye, EyeOff, Plus, Trash2, Sparkles, Globe, Award, MapPin, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
+import { SEOSettingsEditor } from "@/components/admin/cms/SEOSettingsEditor";
 
 interface PageSection {
   id: string;
@@ -28,6 +29,7 @@ const sectionLabels: Record<string, { label: string; icon: any; description: str
   quick_stats: { label: "Quick Stats", icon: Award, description: "Key statistics strip" },
   why_nepal: { label: "Why Nepal", icon: MapPin, description: "Benefits of dental care in Nepal" },
   why_kundalini: { label: "Why Kundalini", icon: Globe, description: "Why choose our clinic" },
+  seo: { label: "SEO Settings", icon: Search, description: "Search engine optimization" },
 };
 
 export default function DentalTourismPageEditor() {
@@ -159,6 +161,10 @@ export default function DentalTourismPageEditor() {
 
         <TabsContent value="why_kundalini" className="mt-6">
           <WhyKundaliniEditor section={getSectionByType('why_kundalini')} onSave={updateSection} onToggleVisibility={toggleVisibility} saving={saving} />
+        </TabsContent>
+
+        <TabsContent value="seo" className="mt-6">
+          <SEOSettingsEditor pageId={DENTAL_TOURISM_PAGE_ID} pageName="Dental Tourism Page" />
         </TabsContent>
       </Tabs>
     </div>

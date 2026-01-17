@@ -6,9 +6,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Save, Loader2, Eye, EyeOff, Plus, Trash2, Sparkles, Star, Users } from "lucide-react";
+import { Save, Loader2, Eye, EyeOff, Plus, Trash2, Sparkles, Star, Users, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
+import { SEOSettingsEditor } from "@/components/admin/cms/SEOSettingsEditor";
 
 interface PageSection {
   id: string;
@@ -26,6 +27,7 @@ const sectionLabels: Record<string, { label: string; icon: any; description: str
   hero: { label: "Hero Section", icon: Sparkles, description: "Main banner with headline" },
   trust_stats: { label: "Trust Stats", icon: Star, description: "Key statistics and numbers" },
   testimonials_section: { label: "Testimonials", icon: Users, description: "Testimonials display settings" },
+  seo: { label: "SEO Settings", icon: Search, description: "Search engine optimization" },
 };
 
 export default function ReviewsPageEditor() {
@@ -153,6 +155,10 @@ export default function ReviewsPageEditor() {
 
         <TabsContent value="testimonials_section" className="mt-6">
           <TestimonialsSectionEditor section={getSectionByType('testimonials_section')} onSave={updateSection} onToggleVisibility={toggleVisibility} saving={saving} />
+        </TabsContent>
+
+        <TabsContent value="seo" className="mt-6">
+          <SEOSettingsEditor pageId={REVIEWS_PAGE_ID} pageName="Reviews Page" />
         </TabsContent>
       </Tabs>
     </div>

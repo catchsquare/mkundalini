@@ -8,9 +8,10 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Save, Loader2, Eye, EyeOff, Plus, Trash2, Sparkles, Heart, Shield, Users } from "lucide-react";
+import { Save, Loader2, Eye, EyeOff, Plus, Trash2, Sparkles, Heart, Shield, Users, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
+import { SEOSettingsEditor } from "@/components/admin/cms/SEOSettingsEditor";
 
 interface PageSection {
   id: string;
@@ -31,6 +32,7 @@ const sectionLabels: Record<string, { label: string; icon: any; description: str
   safety: { label: "Safety & Hygiene", icon: Shield, description: "Our safety commitments" },
   timeline: { label: "Our Journey", icon: Users, description: "Milestones and history" },
   team: { label: "Team Section", icon: Users, description: "Team member display settings" },
+  seo: { label: "SEO Settings", icon: Search, description: "Search engine optimization" },
 };
 
 export default function AboutPageEditor() {
@@ -196,6 +198,10 @@ export default function AboutPageEditor() {
 
         <TabsContent value="team" className="mt-6">
           <TeamSettingsEditor section={getSectionByType('team')} onSave={updateSection} onToggleVisibility={toggleVisibility} saving={saving} />
+        </TabsContent>
+
+        <TabsContent value="seo" className="mt-6">
+          <SEOSettingsEditor pageId={ABOUT_PAGE_ID} pageName="About Page" />
         </TabsContent>
       </Tabs>
     </div>

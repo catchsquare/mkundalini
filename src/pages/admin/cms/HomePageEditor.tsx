@@ -23,10 +23,12 @@ import {
   Star,
   Phone,
   Settings,
-  ChevronRight
+  ChevronRight,
+  Search
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
+import { SEOSettingsEditor } from "@/components/admin/cms/SEOSettingsEditor";
 
 interface PageSection {
   id: string;
@@ -49,6 +51,7 @@ const sectionLabels: Record<string, { label: string; icon: any; description: str
   international: { label: "International Patients", icon: Globe, description: "Dental tourism benefits" },
   testimonials: { label: "Testimonials", icon: Star, description: "Patient reviews and stories" },
   cta_strip: { label: "Final CTA", icon: Phone, description: "Bottom call-to-action section" },
+  seo: { label: "SEO Settings", icon: Search, description: "Search engine optimization" },
 };
 
 export default function HomePageEditor() {
@@ -245,6 +248,11 @@ export default function HomePageEditor() {
             onToggleVisibility={toggleVisibility}
             saving={saving}
           />
+        </TabsContent>
+
+        {/* SEO Settings */}
+        <TabsContent value="seo" className="mt-6">
+          <SEOSettingsEditor pageId={HOME_PAGE_ID} pageName="Home Page" />
         </TabsContent>
       </Tabs>
     </div>

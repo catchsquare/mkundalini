@@ -6,9 +6,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Save, Loader2, Eye, EyeOff, Sparkles, Plane } from "lucide-react";
+import { Save, Loader2, Eye, EyeOff, Sparkles, Plane, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
+import { SEOSettingsEditor } from "@/components/admin/cms/SEOSettingsEditor";
 
 interface PageSection {
   id: string;
@@ -25,6 +26,7 @@ const SERVICES_PAGE_ID = '11111111-0001-0001-0001-000000000003';
 const sectionLabels: Record<string, { label: string; icon: any; description: string }> = {
   hero: { label: "Hero Section", icon: Sparkles, description: "Main banner with headline" },
   tourism_highlight: { label: "Tourism Highlight", icon: Plane, description: "Dental tourism highlight section" },
+  seo: { label: "SEO Settings", icon: Search, description: "Search engine optimization" },
 };
 
 export default function ServicesPageEditor() {
@@ -148,6 +150,10 @@ export default function ServicesPageEditor() {
 
         <TabsContent value="tourism_highlight" className="mt-6">
           <TourismHighlightEditor section={getSectionByType('tourism_highlight')} onSave={updateSection} onToggleVisibility={toggleVisibility} saving={saving} />
+        </TabsContent>
+
+        <TabsContent value="seo" className="mt-6">
+          <SEOSettingsEditor pageId={SERVICES_PAGE_ID} pageName="Services Page" />
         </TabsContent>
       </Tabs>
     </div>
