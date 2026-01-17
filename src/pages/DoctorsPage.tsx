@@ -16,31 +16,31 @@ import {
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useTeamMembers } from "@/hooks/use-team-members";
 
-const doctors = [
-  {
-    name: "Dr. Nitin Aryal",
-    role: "Managing Director",
-    image: null,
-    qualifications: [
-      "BDS — Bachelor of Dental Surgery",
-    ],
-    experience: "15 years",
-    specialties: [
-      "Comprehensive Dental Care",
-      "General Dentistry",
-      "Patient-Centered Treatment",
-    ],
-    languages: ["English", "Nepali"],
-    bio: "Dr. Nitin Aryal founded Kundalini Dental Clinic in 2023 with a vision to provide quality dental care in Kathmandu. With 15 years of clinical experience, he leads the clinic with a commitment to patient-centered care and professional excellence.",
-    achievements: [
-      "15 years of dental practice",
-      "Founder & Managing Director",
-      "Committed to quality patient care",
-    ],
-    featured: true,
-  },
-];
+// Fallback static doctor data
+const fallbackDoctor = {
+  name: "Dr. Nitin Aryal",
+  role: "Managing Director",
+  image: null,
+  qualifications: [
+    "BDS — Bachelor of Dental Surgery",
+  ],
+  experience: "15 years",
+  specialties: [
+    "Comprehensive Dental Care",
+    "General Dentistry",
+    "Patient-Centered Treatment",
+  ],
+  languages: ["English", "Nepali"],
+  bio: "Dr. Nitin Aryal founded Kundalini Dental Clinic in 2023 with a vision to provide quality dental care in Kathmandu. With 15 years of clinical experience, he leads the clinic with a commitment to patient-centered care and professional excellence.",
+  achievements: [
+    "15 years of dental practice",
+    "Founder & Managing Director",
+    "Committed to quality patient care",
+  ],
+  featured: true,
+};
 
 const trustFactors = [
   {
@@ -67,14 +67,25 @@ const trustFactors = [
 
 export default function DoctorsPage() {
   const { getSectionByType } = usePageContent("doctors");
-  const featuredDoctor = doctors.find((d) => d.featured);
+  const { members, featuredMember, loading } = useTeamMembers();
   
   const heroSection = getSectionByType("hero");
   const doctorSection = getSectionByType("featured_doctor");
   const commitmentSection = getSectionByType("commitment");
   
-  // Use CMS data if available, fallback to static
-  const doctorData = doctorSection || featuredDoctor;
+  // Use CMS team member data if available, fallback to static
+  const featuredDoctor = featuredMember ? {
+    name: featuredMember.full_name,
+    role: featuredMember.role,
+    image: featuredMember.photo_url,
+    qualifications: featuredMember.qualifications || [],
+    experience: featuredMember.experience_years ? `${featuredMember.experience_years} years` : '15 years',
+    specialties: featuredMember.specialties || [],
+    languages: featuredMember.languages || [],
+    bio: featuredMember.bio || '',
+    achievements: featuredMember.achievements || [],
+    featured: true,
+  } : fallbackDoctor;
 
   return (
     <Layout>
