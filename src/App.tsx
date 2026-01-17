@@ -30,6 +30,19 @@ import Leads from "./pages/admin/Leads";
 // Placeholder components for new admin pages
 import { AdminPlaceholder } from "./pages/admin/AdminPlaceholder";
 import UserManagement from "./pages/admin/UserManagement";
+import Settings from "./pages/admin/Settings";
+import AuditLogs from "./pages/admin/AuditLogs";
+
+// CMS Pages
+import CMSPages from "./pages/admin/cms/Pages";
+import Navigation from "./pages/admin/cms/Navigation";
+import Doctors from "./pages/admin/cms/Doctors";
+import Blog from "./pages/admin/cms/Blog";
+import Testimonials from "./pages/admin/cms/Testimonials";
+import Gallery from "./pages/admin/cms/Gallery";
+
+// Reports
+import Revenue from "./pages/admin/reports/Revenue";
 
 const queryClient = new QueryClient();
 
