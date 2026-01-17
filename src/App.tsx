@@ -103,58 +103,58 @@ const App = () => (
               <Route path="inventory/transactions" element={<Inventory />} />
 
               {/* Reports */}
-              <Route path="reports/revenue" element={<AdminPlaceholder title="Revenue Analytics" />} />
-              <Route path="reports/patients" element={<AdminPlaceholder title="Patient Analytics" />} />
-              <Route path="reports/treatments" element={<AdminPlaceholder title="Treatment Analytics" />} />
-              <Route path="reports/staff" element={<AdminPlaceholder title="Staff Performance" />} />
-              <Route path="reports/export" element={<AdminPlaceholder title="Export Data" />} />
+              <Route path="reports/revenue" element={<Revenue />} />
+              <Route path="reports/patients" element={<Revenue />} />
+              <Route path="reports/treatments" element={<Revenue />} />
+              <Route path="reports/staff" element={<Revenue />} />
+              <Route path="reports/export" element={<Revenue />} />
 
               {/* CMS - Pages */}
-              <Route path="cms/pages" element={<AdminPlaceholder title="All Pages" />} />
-              <Route path="cms/pages/new" element={<AdminPlaceholder title="Add New Page" />} />
-              <Route path="cms/pages/builder" element={<AdminPlaceholder title="Page Builder" />} />
-              <Route path="cms/templates" element={<AdminPlaceholder title="Page Templates" />} />
+              <Route path="cms/pages" element={<CMSPages />} />
+              <Route path="cms/pages/new" element={<CMSPages />} />
+              <Route path="cms/pages/builder" element={<CMSPages />} />
+              <Route path="cms/templates" element={<CMSPages />} />
 
               {/* CMS - Blog */}
-              <Route path="cms/blog" element={<AdminPlaceholder title="All Blog Posts" />} />
-              <Route path="cms/blog/new" element={<AdminPlaceholder title="Add New Post" />} />
-              <Route path="cms/blog/categories" element={<AdminPlaceholder title="Blog Categories" />} />
+              <Route path="cms/blog" element={<Blog />} />
+              <Route path="cms/blog/new" element={<Blog />} />
+              <Route path="cms/blog/categories" element={<Blog />} />
 
               {/* CMS - Team */}
-              <Route path="cms/doctors" element={<AdminPlaceholder title="Doctors" />} />
-              <Route path="cms/staff" element={<AdminPlaceholder title="Staff Directory" />} />
-              <Route path="cms/specializations" element={<AdminPlaceholder title="Specializations" />} />
+              <Route path="cms/doctors" element={<Doctors />} />
+              <Route path="cms/staff" element={<Doctors />} />
+              <Route path="cms/specializations" element={<Doctors />} />
 
               {/* CMS - Testimonials */}
-              <Route path="cms/testimonials" element={<AdminPlaceholder title="Reviews" />} />
-              <Route path="cms/testimonials/videos" element={<AdminPlaceholder title="Video Testimonials" />} />
-              <Route path="cms/testimonials/google" element={<AdminPlaceholder title="Google Reviews" />} />
+              <Route path="cms/testimonials" element={<Testimonials />} />
+              <Route path="cms/testimonials/videos" element={<Testimonials />} />
+              <Route path="cms/testimonials/google" element={<Testimonials />} />
 
               {/* CMS - Gallery */}
-              <Route path="cms/gallery" element={<AdminPlaceholder title="Before/After Cases" />} />
-              <Route path="cms/gallery/clinic" element={<AdminPlaceholder title="Clinic Photos" />} />
-              <Route path="cms/gallery/categories" element={<AdminPlaceholder title="Gallery Categories" />} />
+              <Route path="cms/gallery" element={<Gallery />} />
+              <Route path="cms/gallery/clinic" element={<Gallery />} />
+              <Route path="cms/gallery/categories" element={<Gallery />} />
 
               {/* CMS - Navigation */}
-              <Route path="cms/navigation/main" element={<AdminPlaceholder title="Main Menu" />} />
-              <Route path="cms/navigation/footer" element={<AdminPlaceholder title="Footer Links" />} />
-              <Route path="cms/navigation/mobile" element={<AdminPlaceholder title="Mobile Menu" />} />
+              <Route path="cms/navigation/main" element={<Navigation />} />
+              <Route path="cms/navigation/footer" element={<Navigation />} />
+              <Route path="cms/navigation/mobile" element={<Navigation />} />
 
               {/* Settings */}
-              <Route path="settings" element={<AdminPlaceholder title="General Settings" />} />
-              <Route path="settings/seo" element={<AdminPlaceholder title="SEO Defaults" />} />
-              <Route path="settings/social" element={<AdminPlaceholder title="Social Links" />} />
-              <Route path="settings/hours" element={<AdminPlaceholder title="Working Hours" />} />
-              <Route path="settings/messaging" element={<AdminPlaceholder title="WhatsApp/Viber" />} />
-              <Route path="settings/emails" element={<AdminPlaceholder title="Email Templates" />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="settings/seo" element={<Settings />} />
+              <Route path="settings/social" element={<Settings />} />
+              <Route path="settings/hours" element={<Settings />} />
+              <Route path="settings/messaging" element={<Settings />} />
+              <Route path="settings/emails" element={<Settings />} />
 
               {/* Users & Roles */}
               <Route path="users" element={<UserManagement />} />
-              <Route path="users/roles" element={<AdminPlaceholder title="Roles & Permissions" />} />
-              <Route path="users/activity" element={<AdminPlaceholder title="Activity Logs" />} />
+              <Route path="users/roles" element={<UserManagement />} />
+              <Route path="users/activity" element={<AuditLogs />} />
 
               {/* Profile */}
-              <Route path="profile" element={<AdminPlaceholder title="My Profile" />} />
+              <Route path="profile" element={<Settings />} />
             </Route>
 
             {/* 404 */}
