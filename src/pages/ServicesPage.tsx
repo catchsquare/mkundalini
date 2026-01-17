@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
+import { usePageContent } from "@/hooks/use-page-content";
 
 const treatmentCategories = [
   {
@@ -249,6 +250,11 @@ const popularTourismTreatments = [
 ];
 
 export default function ServicesPage() {
+  const { getSectionByType } = usePageContent("services");
+  
+  const heroSection = getSectionByType("hero");
+  const tourismSection = getSectionByType("tourism_highlight");
+
   return (
     <Layout>
       {/* Hero */}
@@ -261,16 +267,14 @@ export default function ServicesPage() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Sparkles className="w-4 h-4" />
-              Our Treatments
+              {heroSection?.badge || "Our Treatments"}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              World-Class Dental{" "}
-              <span className="text-primary">Treatments</span>
+              {heroSection?.title || "World-Class Dental"}{" "}
+              <span className="text-primary">{heroSection?.titleHighlight || "Treatments"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              From routine care to complex restorations, we offer comprehensive dental 
-              services using advanced technology and premium materials — all at a 
-              fraction of international costs.
+              {heroSection?.description || "From routine care to complex restorations, we offer comprehensive dental services using advanced technology and premium materials — all at a fraction of international costs."}
             </p>
           </motion.div>
         </div>

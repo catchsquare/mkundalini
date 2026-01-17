@@ -19,6 +19,7 @@ import {
   Eye,
   Sparkles,
 } from "lucide-react";
+import { usePageContent } from "@/hooks/use-page-content";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -184,6 +185,14 @@ const photoGuidelines = [
 ];
 
 export default function ReviewsPage() {
+  const { getSectionByType } = usePageContent("reviews");
+  
+  const heroSection = getSectionByType("hero");
+  const statsSection = getSectionByType("trust_stats");
+  const testimonialsSection = getSectionByType("testimonials_section");
+  
+  const displayStats = statsSection?.stats || trustStats;
+
   return (
     <Layout>
       {/* Hero Section - with proper padding for fixed header */}
@@ -202,16 +211,14 @@ export default function ReviewsPage() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Star className="w-4 h-4 fill-primary" />
-              Patient Stories & Results
+              {heroSection?.badge || "Patient Stories & Results"}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Real Patients,{" "}
-              <span className="text-primary">Real Results</span>
+              {heroSection?.title || "Real Patients,"}{" "}
+              <span className="text-primary">{heroSection?.titleHighlight || "Real Results"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Every smile has a story. Read authentic experiences from patients 
-              who trusted us with their dental care and see the transformations 
-              that changed their lives.
+              {heroSection?.description || "Every smile has a story. Read authentic experiences from patients who trusted us with their dental care and see the transformations that changed their lives."}
             </p>
           </motion.div>
 
@@ -222,7 +229,7 @@ export default function ReviewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {trustStats.map((stat, index) => (
+            {displayStats.map((stat: { number: string; label: string }, index: number) => (
               <div key={index} className="text-center">
                 <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">
                   {stat.number}
