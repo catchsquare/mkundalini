@@ -180,7 +180,7 @@ export default function HomePageEditor() {
         {/* Trust Indicators Editor */}
         <TabsContent value="trust_indicators" className="mt-6">
           <TrustIndicatorsEditor 
-            section={getSectionByType('features')} 
+            section={getSectionByType('trust_indicators')} 
             onSave={updateSection} 
             onToggleVisibility={toggleVisibility}
             saving={saving}
@@ -200,7 +200,7 @@ export default function HomePageEditor() {
         {/* Why Choose Us Editor */}
         <TabsContent value="why_choose_us" className="mt-6">
           <WhyChooseUsEditor 
-            section={sections.find(s => s.section_type === 'features' && s.sort_order === 4)} 
+            section={getSectionByType('why_choose_us')} 
             onSave={updateSection} 
             onToggleVisibility={toggleVisibility}
             saving={saving}
@@ -210,7 +210,7 @@ export default function HomePageEditor() {
         {/* Doctor Highlight Editor */}
         <TabsContent value="doctor_highlight" className="mt-6">
           <DoctorHighlightEditor 
-            section={getSectionByType('team')} 
+            section={getSectionByType('doctor_highlight')} 
             onSave={updateSection} 
             onToggleVisibility={toggleVisibility}
             saving={saving}
