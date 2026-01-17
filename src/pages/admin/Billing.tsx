@@ -38,6 +38,8 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
+import { getSafeErrorMessage } from "@/lib/errorHandling";
+import { invoiceSchema, paymentSchema } from "@/lib/validationSchemas";
 
 interface Invoice {
   id: string;
@@ -180,6 +182,32 @@ export default function Billing() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Validate form data
+    const itemsToValidate = formData.items
+      .filter((item) => item.description)
+      .map((item) => ({
+        treatment_id: item.treatment_id || undefined,
+        description: item.description,
+        quantity: item.quantity,
+        unit_price: item.unit_price,
+      }));
+
+    const validation = invoiceSchema.safeParse({
+      patient_id: formData.patient_id,
+      items: itemsToValidate,
+      discount: formData.discount,
+    });
+
+    if (!validation.success) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: validation.error.errors[0]?.message || "Please check your input",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const { subtotal, tax, total } = calculateTotals();
 
@@ -222,11 +250,11 @@ export default function Billing() {
       setIsDialogOpen(false);
       resetForm();
       fetchInvoices();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.message,
+        description: getSafeErrorMessage(error),
       });
     } finally {
       setIsSubmitting(false);
@@ -237,6 +265,23 @@ export default function Billing() {
     e.preventDefault();
     if (!selectedInvoice) return;
     setIsSubmitting(true);
+
+    // Validate payment data
+    const validation = paymentSchema.safeParse({
+      amount: paymentData.amount,
+      payment_method: paymentData.payment_method,
+      reference_number: paymentData.reference_number,
+    });
+
+    if (!validation.success) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: validation.error.errors[0]?.message || "Please check your input",
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       // Record payment
@@ -266,11 +311,11 @@ export default function Billing() {
       setSelectedInvoice(null);
       setPaymentData({ amount: 0, payment_method: "cash", reference_number: "" });
       fetchInvoices();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.message,
+        description: getSafeErrorMessage(error),
       });
     } finally {
       setIsSubmitting(false);

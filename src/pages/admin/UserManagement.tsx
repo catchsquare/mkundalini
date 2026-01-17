@@ -44,6 +44,8 @@ import {
   Users
 } from "lucide-react";
 import { format } from "date-fns";
+import { getSafeErrorMessage } from "@/lib/errorHandling";
+import { newUserSchema, editUserSchema } from "@/lib/validationSchemas";
 
 type UserRole = "super_admin" | "admin" | "manager" | "receptionist" | "dentist" | "content_editor";
 
@@ -130,6 +132,12 @@ export default function UserManagement() {
   // Create new user mutation
   const createUserMutation = useMutation({
     mutationFn: async (formData: typeof newUserForm) => {
+      // Validate form data
+      const validation = newUserSchema.safeParse(formData);
+      if (!validation.success) {
+        throw new Error(validation.error.errors[0]?.message || "Validation failed");
+      }
+
       const { data, error } = await supabase.functions.invoke("admin-create-user", {
         body: {
           email: formData.email,
@@ -155,14 +163,26 @@ export default function UserManagement() {
         phone: "",
       });
     },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to create user");
+    onError: (error: unknown) => {
+      toast.error(getSafeErrorMessage(error));
     },
   });
 
   // Update user mutation
   const updateUserMutation = useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: Partial<Profile> }) => {
+      // Validate updates if role/name being changed
+      if (updates.full_name || updates.role) {
+        const validation = editUserSchema.safeParse({
+          fullName: updates.full_name || "",
+          role: updates.role || "receptionist",
+          phone: updates.phone || "",
+        });
+        if (!validation.success) {
+          throw new Error(validation.error.errors[0]?.message || "Validation failed");
+        }
+      }
+
       const { error } = await supabase
         .from("profiles")
         .update(updates)
@@ -176,8 +196,8 @@ export default function UserManagement() {
       setIsEditDialogOpen(false);
       setSelectedUser(null);
     },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to update user");
+    onError: (error: unknown) => {
+      toast.error(getSafeErrorMessage(error));
     },
   });
 
@@ -195,8 +215,8 @@ export default function UserManagement() {
       toast.success(variables.isActive ? "User activated" : "User deactivated");
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
     },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to update user status");
+    onError: (error: unknown) => {
+      toast.error(getSafeErrorMessage(error));
     },
   });
 

@@ -44,6 +44,8 @@ import { DataTablePagination } from "@/components/admin/shared/DataTablePaginati
 import { ExportButton } from "@/components/admin/shared/ExportButton";
 import { DeleteConfirmDialog } from "@/components/admin/shared/DeleteConfirmDialog";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
+import { getSafeErrorMessage } from "@/lib/errorHandling";
+import { inventoryItemSchema } from "@/lib/validationSchemas";
 
 interface InventoryItem {
   id: string;
@@ -133,6 +135,31 @@ export default function Inventory() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Validate form data
+    const validation = inventoryItemSchema.safeParse({
+      name: formData.name,
+      sku: formData.sku,
+      description: formData.description,
+      category_id: formData.category_id,
+      quantity: formData.quantity,
+      min_stock_level: formData.min_stock_level,
+      unit: formData.unit,
+      cost_price: formData.cost_price ? parseFloat(formData.cost_price) : null,
+      supplier: formData.supplier,
+      location: formData.location,
+      expiry_date: formData.expiry_date,
+    });
+
+    if (!validation.success) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: validation.error.errors[0]?.message || "Please check your input",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const itemData = {
         name: formData.name,
@@ -187,11 +214,11 @@ export default function Inventory() {
       setIsDialogOpen(false);
       resetForm();
       fetchItems();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.message,
+        description: getSafeErrorMessage(error),
       });
     } finally {
       setIsSubmitting(false);
@@ -221,11 +248,11 @@ export default function Inventory() {
       setIsDeleteDialogOpen(false);
       setSelectedItem(null);
       fetchItems();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.message,
+        description: getSafeErrorMessage(error),
       });
     } finally {
       setIsSubmitting(false);
@@ -271,8 +298,8 @@ export default function Inventory() {
 
       toast({ title: `Stock ${type === "add" ? "added" : "removed"} successfully` });
       fetchItems();
-    } catch (error: any) {
-      toast({ variant: "destructive", title: "Error", description: error.message });
+    } catch (error: unknown) {
+      toast({ variant: "destructive", title: "Error", description: getSafeErrorMessage(error) });
     }
   };
 
