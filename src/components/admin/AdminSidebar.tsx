@@ -171,6 +171,7 @@ const cmsNavigationGroups: NavGroup[] = [
     icon: FileEdit,
     roles: ["super_admin", "admin", "content_editor"],
     items: [
+      { name: "Home Page", href: "/admin/cms/pages/home", icon: LayoutTemplate },
       { name: "All Pages", href: "/admin/cms/pages", icon: FileEdit },
       { name: "Add New Page", href: "/admin/cms/pages/new", icon: FileText },
       { name: "Page Builder", href: "/admin/cms/pages/builder", icon: LayoutTemplate },

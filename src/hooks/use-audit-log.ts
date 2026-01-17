@@ -20,6 +20,7 @@ export type EntityType =
   | "inventory_item"
   | "lead"
   | "page"
+  | "page_section"
   | "blog_post"
   | "testimonial"
   | "gallery_item"
