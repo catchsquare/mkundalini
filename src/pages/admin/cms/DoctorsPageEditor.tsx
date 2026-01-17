@@ -6,9 +6,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Save, Loader2, Eye, EyeOff, Sparkles, Users, Award } from "lucide-react";
+import { Save, Loader2, Eye, EyeOff, Sparkles, Users, Award, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
+import { SEOSettingsEditor } from "@/components/admin/cms/SEOSettingsEditor";
 
 interface PageSection {
   id: string;
@@ -26,6 +27,7 @@ const sectionLabels: Record<string, { label: string; icon: any; description: str
   hero: { label: "Hero Section", icon: Sparkles, description: "Main banner with headline" },
   featured_doctor: { label: "Featured Doctor", icon: Users, description: "Highlighted doctor section" },
   commitment: { label: "Our Commitment", icon: Award, description: "Quality care commitment section" },
+  seo: { label: "SEO Settings", icon: Search, description: "Search engine optimization" },
 };
 
 export default function DoctorsPageEditor() {
@@ -153,6 +155,10 @@ export default function DoctorsPageEditor() {
 
         <TabsContent value="commitment" className="mt-6">
           <CommitmentEditor section={getSectionByType('commitment')} onSave={updateSection} onToggleVisibility={toggleVisibility} saving={saving} />
+        </TabsContent>
+
+        <TabsContent value="seo" className="mt-6">
+          <SEOSettingsEditor pageId={DOCTORS_PAGE_ID} pageName="Doctors Page" />
         </TabsContent>
       </Tabs>
     </div>
