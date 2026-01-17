@@ -1,7 +1,14 @@
 import { Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 export function FloatingCallButton() {
+  const { settings } = useGlobalSettings();
+  
+  // Format phone for display (remove country code prefix if present)
+  const displayPhone = settings.phone || "+977-9802808008";
+  const callPhone = displayPhone.replace(/-/g, '');
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -10,7 +17,7 @@ export function FloatingCallButton() {
       className="fixed bottom-6 left-6 z-50"
     >
       <a
-        href="tel:+9779802808008"
+        href={`tel:${callPhone}`}
         className="group flex items-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
         aria-label="Call us now"
       >
@@ -29,7 +36,7 @@ export function FloatingCallButton() {
               Call Now
             </div>
             <div className="text-sm font-bold leading-tight">
-              +977-9802808008
+              {displayPhone}
             </div>
           </div>
         </div>

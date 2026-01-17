@@ -25,81 +25,105 @@ import { OfferBadge } from "@/components/ui/offer-badge";
 import heroImage from "@/assets/hero-dental.jpg";
 import { usePageContent } from "@/hooks/use-page-content";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
+import { useOffers } from "@/hooks/use-offers";
 
-const trustIndicators = [
+// Icon mapping for dynamic content
+const iconMap: Record<string, React.ElementType> = {
+  Stethoscope,
+  Shield,
+  Award,
+  HeartPulse,
+  BadgeCheck,
+  GraduationCap,
+  Clock,
+  Users,
+  Globe,
+  Plane,
+  Hotel,
+  Phone,
+  Star,
+  Sparkles,
+};
+
+// Default fallback data
+const defaultTrustIndicators = [
   {
-    icon: Stethoscope,
+    icon: "Stethoscope",
     label: "Advanced Technology",
     description: "Modern dental equipment",
   },
   {
-    icon: Shield,
+    icon: "Shield",
     label: "Hospital-Grade Hygiene",
     description: "Strict sterilization protocols",
   },
   {
-    icon: Award,
+    icon: "Award",
     label: "15 Years Experience",
     description: "Led by Dr. Nitin Aryal",
   },
   {
-    icon: HeartPulse,
+    icon: "HeartPulse",
     label: "Patient Safety First",
     description: "International safety standards",
   },
 ];
 
-const services = [
+const defaultServices = [
   {
     title: "Dental Implants",
     description: "Premium titanium implants with lifetime warranty. Same-day procedures available for qualified patients.",
     icon: "🦷",
     highlight: "Save up to 70%",
+    link: "/services/dental-implants",
   },
   {
     title: "Cosmetic Dentistry",
     description: "Veneers, professional whitening, and complete smile makeovers designed for natural, lasting beauty.",
     icon: "✨",
     highlight: "Hollywood Smile",
+    link: "/services",
   },
   {
     title: "Orthodontics",
     description: "Invisible aligners and modern braces for beautifully aligned teeth. Suitable for all ages.",
     icon: "😁",
     highlight: "Invisible Options",
+    link: "/services",
   },
   {
     title: "Full Mouth Restoration",
     description: "Comprehensive treatment plans for complex cases. Rebuild your smile with confidence.",
     icon: "💎",
     highlight: "Complete Care",
+    link: "/services",
   },
 ];
 
-const whyChooseUs = [
+const defaultWhyChooseUs = [
   {
-    icon: BadgeCheck,
+    icon: "BadgeCheck",
     title: "FDA-Approved Materials",
     description: "We exclusively use internationally certified, premium-grade materials for every procedure.",
   },
   {
-    icon: GraduationCap,
+    icon: "GraduationCap",
     title: "Internationally Trained Team",
     description: "Our specialists trained in the USA, UK, and Europe bring world-class expertise to Nepal.",
   },
   {
-    icon: Clock,
+    icon: "Clock",
     title: "Efficient Treatment",
     description: "Advanced technology means faster procedures, less chair time, and quicker recovery.",
   },
   {
-    icon: Users,
+    icon: "Users",
     title: "Personalized Care",
     description: "Every treatment plan is customized to your unique needs, goals, and budget.",
   },
 ];
 
-const doctorCredentials = [
+const defaultDoctorCredentials = [
   "Bachelor of Dental Surgery (BDS)",
   "15 years of clinical experience",
   "Managing Director, Kundalini Dental Clinic",
@@ -107,30 +131,30 @@ const doctorCredentials = [
   "Expertise in comprehensive dental treatments",
 ];
 
-const internationalBenefits = [
+const defaultInternationalBenefits = [
   {
-    icon: Plane,
+    icon: "Plane",
     title: "Airport Pickup",
     description: "Complimentary transportation from Tribhuvan International Airport",
   },
   {
-    icon: Hotel,
+    icon: "Hotel",
     title: "Hotel Arrangements",
     description: "Partnered hotels with special rates for our patients",
   },
   {
-    icon: Globe,
+    icon: "Globe",
     title: "Virtual Consultation",
     description: "Free video consultation before you travel",
   },
   {
-    icon: Phone,
+    icon: "Phone",
     title: "24/7 Support",
     description: "Dedicated coordinator throughout your stay",
   },
 ];
 
-const testimonials = [
+const defaultTestimonials = [
   {
     name: "International Patient",
     location: "Overseas",
@@ -154,27 +178,39 @@ const testimonials = [
   },
 ];
 
+const defaultWhyChooseBullets = [
+  "Same quality as clinics in USA, UK & Australia",
+  "Save 50-70% compared to Western prices",
+  "No waiting lists — appointments within days",
+  "English-speaking staff for international patients",
+];
+
 export default function HomePage() {
   // Fetch CMS content with static fallback
-  const { page, getSectionByType } = usePageContent('home');
+  const { getSectionByType } = usePageContent('home');
   const { settings } = useGlobalSettings();
+  const { offers } = useOffers();
   
-  // Get CMS content or use static defaults
+  // Get CMS content for each section
   const heroContent = getSectionByType('hero');
-  const trustContent = getSectionByType('features'); // First features section is trust indicators
+  const trustContent = getSectionByType('trust_indicators');
   const servicesContent = getSectionByType('services_grid');
-  const whyChooseContent = getSectionByType('features'); // Will need to check sort_order
-  const doctorContent = getSectionByType('team');
+  const whyChooseContent = getSectionByType('why_choose_us');
+  const doctorContent = getSectionByType('doctor_highlight');
   const internationalContent = getSectionByType('international');
   const testimonialContent = getSectionByType('testimonials');
   const ctaContent = getSectionByType('cta_strip');
   
-  // Use CMS hero or static
+  // Get first active offer for the floating badge
+  const featuredOffer = offers.length > 0 ? offers[0] : null;
+  
+  // Build dynamic data with CMS content or fallback to defaults
   const heroData = {
     badge: heroContent?.badge || "Nepal's Leading Dental Care Destination",
     headline: heroContent?.headline || "Exceptional Dental Care,",
     headlineHighlight: heroContent?.headline_highlight || "Exceptional Value",
     description: heroContent?.description || `Quality dental treatments at accessible prices. Led by ${settings.managing_director} with ${settings.managing_director_experience} of experience, we deliver professional care and beautiful, lasting results.`,
+    backgroundImage: heroContent?.background_image || heroImage,
     ctaPrimary: heroContent?.cta_primary || { label: "Book Your Appointment", link: "/contact" },
     ctaSecondary: heroContent?.cta_secondary || { label: "International Patient? Start Here", link: "/dental-tourism" },
     stats: heroContent?.stats || [
@@ -184,15 +220,11 @@ export default function HomePage() {
     ]
   };
   
-  // Use CMS trust indicators or static
-  const trustData = trustContent?.items || trustIndicators.map(t => ({
-    icon: t.icon.name || "Shield",
-    label: t.label,
-    description: t.description
-  }));
+  // Trust indicators
+  const trustData = trustContent?.items || defaultTrustIndicators;
   
-  // Use CMS services or static
-  const servicesData = servicesContent?.services || services;
+  // Services
+  const servicesData = servicesContent?.services || defaultServices;
   const servicesHeader = {
     badge: servicesContent?.badge || "Our Expertise",
     headline: servicesContent?.headline || "Premium Dental Services",
@@ -200,64 +232,57 @@ export default function HomePage() {
     cta: servicesContent?.cta || { label: "View All Services", link: "/services" }
   };
   
-  // Use CMS why choose us or static
+  // Why choose us
   const whyChooseData = {
     badge: whyChooseContent?.badge || "Why Kundalini Dental",
     headline: whyChooseContent?.headline || "Where World-Class Care Meets Compassionate Service",
     description: whyChooseContent?.description || "We combine the precision of international dental standards with the warmth of Nepali hospitality. Every patient receives personalized attention and treatment that exceeds expectations.",
-    bullets: whyChooseContent?.bullets || [
-      "Same quality as clinics in USA, UK & Australia",
-      "Save 50-70% compared to Western prices",
-      "No waiting lists — appointments within days",
-      "English-speaking staff for international patients",
-    ],
-    items: whyChooseContent?.items || whyChooseUs.map(item => ({
-      icon: item.icon.name || "BadgeCheck",
-      title: item.title,
-      description: item.description
-    })),
+    bullets: whyChooseContent?.bullets || defaultWhyChooseBullets,
+    items: whyChooseContent?.items || defaultWhyChooseUs,
     cta: whyChooseContent?.cta || { label: "Learn About Our Clinic", link: "/about" }
   };
   
-  // Use CMS doctor or static
+  // Doctor highlight
   const doctorData = {
     badge: doctorContent?.badge || "Meet Your Doctor",
-    headline: doctorContent?.headline || "Dr. Nitin Aryal",
-    subtitle: doctorContent?.subtitle || "BDS • Managing Director",
-    description: doctorContent?.description || "With 15 years of experience in dental care, Dr. Nitin Aryal leads Kundalini Dental Clinic with a commitment to excellence and patient-centered care. His expertise spans comprehensive dental treatments, ensuring every patient receives personalized attention.",
-    credentials: doctorContent?.credentials || doctorCredentials,
-    experienceBadge: doctorContent?.experience_badge || { value: "15", label: "Years of clinical experience" },
+    headline: doctorContent?.headline || settings.managing_director || "Dr. Nitin Aryal",
+    subtitle: doctorContent?.subtitle || `${settings.managing_director_title || "BDS"} • Managing Director`,
+    description: doctorContent?.description || `With ${settings.managing_director_experience || "15 years"} of experience in dental care, ${settings.managing_director || "Dr. Nitin Aryal"} leads Kundalini Dental Clinic with a commitment to excellence and patient-centered care. His expertise spans comprehensive dental treatments, ensuring every patient receives personalized attention.`,
+    credentials: doctorContent?.credentials || defaultDoctorCredentials,
+    experienceBadge: doctorContent?.experience_badge || { value: settings.managing_director_experience?.replace(' years', '') || "15", label: "Years of clinical experience" },
+    photo: doctorContent?.photo || null,
     cta: doctorContent?.cta || { label: "View Full Profile", link: "/doctors" }
   };
   
-  // Use CMS international or static
+  // International patients
   const internationalData = {
     badge: internationalContent?.badge || "Dental Tourism",
     headline: internationalContent?.headline || "Flying In for Treatment? We Make It Easy",
     description: internationalContent?.description || "Join the many international patients who've discovered world-class dental care in Nepal. We handle everything from your first inquiry to your flight home.",
-    benefits: internationalContent?.benefits || internationalBenefits.map(b => ({
-      icon: b.icon.name || "Plane",
-      title: b.title,
-      description: b.description
-    })),
+    benefits: internationalContent?.benefits || defaultInternationalBenefits,
     cta: internationalContent?.cta || { label: "Learn About Dental Tourism", link: "/dental-tourism" }
   };
   
-  // Use CMS testimonials or static
+  // Testimonials
   const testimonialsData = {
     badge: testimonialContent?.badge || "Patient Stories",
     headline: testimonialContent?.headline || "What Our Patients Say",
     description: testimonialContent?.description || "Real experiences from patients who trusted us with their dental care.",
-    testimonials: testimonialContent?.testimonials || testimonials,
+    testimonials: testimonialContent?.testimonials || defaultTestimonials,
     cta: testimonialContent?.cta || { label: "Read More Reviews", link: "/reviews" }
   };
   
-  // Use CMS CTA or static
+  // CTA strip
   const ctaData = {
     headline: ctaContent?.headline || "Ready to Start Your Smile Journey?",
     description: ctaContent?.description || "Book a free consultation today and discover how we can help you achieve the healthy, beautiful smile you deserve.",
     ctaPrimary: ctaContent?.cta_primary || { label: "Book Free Consultation", link: "/contact" },
-    ctaSecondary: ctaContent?.cta_secondary || { label: "Call Now", phone: "+9779802808008" }
+    ctaSecondary: ctaContent?.cta_secondary || { label: "Call Now", phone: settings.phone || "+9779802808008" }
+  };
+
+  // Helper to get icon component
+  const getIcon = (iconName: string): React.ElementType => {
+    return iconMap[iconName] || Shield;
   };
 
   return (
@@ -266,7 +291,7 @@ export default function HomePage() {
       <section className="relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center pt-24 sm:pt-28 lg:pt-32">
         <div className="absolute inset-0 z-0">
           <img
-            src={heroImage}
+            src={typeof heroData.backgroundImage === 'string' ? heroData.backgroundImage : heroImage}
             alt="Kundalini Dental Clinic - Modern dental treatment room with state-of-the-art equipment in Kathmandu, Nepal"
             className="w-full h-full object-cover"
             loading="eager"
@@ -274,13 +299,15 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/30 sm:to-background/20" />
         </div>
         
-        {/* Offer Badge - Desktop only */}
-        <OfferBadge
-          text="Limited Offer"
-          highlight="20% OFF Dental Implants"
-          link="/services/dental-implants"
-          position="bottom-right"
-        />
+        {/* Floating Offer Badge - Dynamic from CMS */}
+        {featuredOffer && (
+          <OfferBadge
+            text={featuredOffer.badge_text || "Limited Offer"}
+            highlight={featuredOffer.title}
+            link={featuredOffer.cta_link || "/contact"}
+            position="bottom-right"
+          />
+        )}
         
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
           <motion.div
@@ -291,31 +318,29 @@ export default function HomePage() {
           >
             <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
               <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              Nepal's Leading Dental Care Destination
+              {heroData.badge}
             </span>
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] mb-4 sm:mb-6">
-              Exceptional Dental Care,{" "}
-              <span className="text-primary">Exceptional Value</span>
+              {heroData.headline}{" "}
+              <span className="text-primary">{heroData.headlineHighlight}</span>
             </h1>
             
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed max-w-xl">
-              Quality dental treatments at accessible prices. 
-              Led by Dr. Nitin Aryal with 15 years of experience, 
-              we deliver professional care and beautiful, lasting results.
+              {heroData.description}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12">
               <Button asChild size="lg" className="h-12 sm:h-14 text-base sm:text-lg px-6 sm:px-8">
-                <Link to="/contact">
-                  Book Your Appointment
+                <Link to={heroData.ctaPrimary.link}>
+                  {heroData.ctaPrimary.label}
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="h-12 sm:h-14 text-base sm:text-lg px-6 sm:px-8">
-                <Link to="/dental-tourism">
+                <Link to={heroData.ctaSecondary.link}>
                   <span className="sm:hidden">International Patients</span>
-                  <span className="hidden sm:inline">International Patient? Start Here</span>
+                  <span className="hidden sm:inline">{heroData.ctaSecondary.label}</span>
                   <Globe className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </Link>
               </Button>
@@ -323,50 +348,47 @@ export default function HomePage() {
 
             {/* Quick Stats */}
             <div className="flex flex-wrap gap-6 sm:gap-8 pt-6 border-t border-border/50">
-              <div>
-                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">15</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Years Experience</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">2023</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Established</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">Premium</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Quality Care</div>
-              </div>
+              {heroData.stats.map((stat: { value: string; label: string }, index: number) => (
+                <div key={index}>
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">{stat.value}</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Trust Indicators */}
+      {/* Trust Indicators - Dynamic */}
       <section className="bg-muted/50 py-8 sm:py-10 lg:py-12 border-y border-border/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {trustIndicators.map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-4 text-center sm:text-left"
-              >
-                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center">
-                  <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-                </div>
-                <div>
-                  <div className="font-semibold text-foreground text-sm sm:text-base">{item.label}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground">{item.description}</div>
-                </div>
-              </motion.div>
-            ))}
+            {trustData.map((item: any, index: number) => {
+              const IconComponent = getIcon(item.icon);
+              return (
+                <motion.div
+                  key={item.label || index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-4 text-center sm:text-left"
+                >
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center">
+                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-foreground text-sm sm:text-base">{item.label}</div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">{item.description}</div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Services Overview */}
+      {/* Services Overview - Dynamic */}
       <section className="section-padding bg-background">
         <div className="mx-auto max-w-7xl">
           <motion.div
@@ -376,21 +398,20 @@ export default function HomePage() {
             className="text-center mb-10 sm:mb-12 lg:mb-16"
           >
             <span className="text-primary font-medium text-xs sm:text-sm uppercase tracking-wider">
-              Our Expertise
+              {servicesHeader.badge}
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground mt-2 sm:mt-3 mb-4 sm:mb-5">
-              Premium Dental Services
+              {servicesHeader.headline}
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              From routine care to complex restorations, we deliver exceptional results 
-              using the latest techniques and premium materials.
+              {servicesHeader.description}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {services.map((service, index) => (
+            {servicesData.map((service: any, index: number) => (
               <motion.div
-                key={service.title}
+                key={service.title || index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -408,7 +429,7 @@ export default function HomePage() {
                   {service.description}
                 </p>
                 <Link
-                  to="/services"
+                  to={service.link || "/services"}
                   className="inline-flex items-center text-sm text-primary font-medium group-hover:gap-2 transition-all"
                 >
                   Learn more <ChevronRight className="w-4 h-4 ml-1" />
@@ -424,8 +445,8 @@ export default function HomePage() {
             className="text-center mt-8 sm:mt-12"
           >
             <Button asChild variant="outline" size="lg" className="h-12">
-              <Link to="/services">
-                View All Services
+              <Link to={servicesHeader.cta.link}>
+                {servicesHeader.cta.label}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
@@ -433,7 +454,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why Choose Kundalini */}
+      {/* Why Choose Kundalini - Dynamic */}
       <section className="section-padding bg-muted/30">
         <div className="mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 xl:gap-20 items-center">
@@ -443,24 +464,17 @@ export default function HomePage() {
               viewport={{ once: true }}
             >
               <span className="text-primary font-medium text-xs sm:text-sm uppercase tracking-wider">
-                Why Kundalini Dental
+                {whyChooseData.badge}
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground mt-2 sm:mt-3 mb-4 sm:mb-6 leading-tight">
-                Where World-Class Care Meets Compassionate Service
+                {whyChooseData.headline}
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
-                We combine the precision of international dental standards with the warmth 
-                of Nepali hospitality. Every patient receives personalized attention and 
-                treatment that exceeds expectations.
+                {whyChooseData.description}
               </p>
               
               <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                {[
-                  "Same quality as clinics in USA, UK & Australia",
-                  "Save 50-70% compared to Western prices",
-                  "No waiting lists — appointments within days",
-                  "English-speaking staff for international patients",
-                ].map((item, index) => (
+                {whyChooseData.bullets.map((item: string, index: number) => (
                   <motion.div 
                     key={item} 
                     initial={{ opacity: 0, x: -20 }}
@@ -478,36 +492,39 @@ export default function HomePage() {
               </div>
 
               <Button asChild size="lg" className="h-12 w-full sm:w-auto">
-                <Link to="/about">
-                  Learn About Our Clinic
+                <Link to={whyChooseData.cta.link}>
+                  {whyChooseData.cta.label}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
             </motion.div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-              {whyChooseUs.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="card-elevated p-5 sm:p-6"
-                >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center mb-3 sm:mb-4">
-                    <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground text-base sm:text-lg mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
-                </motion.div>
-              ))}
+              {whyChooseData.items.map((item: any, index: number) => {
+                const IconComponent = getIcon(item.icon);
+                return (
+                  <motion.div
+                    key={item.title || index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="card-elevated p-5 sm:p-6"
+                  >
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-primary/10 flex items-center justify-center mb-3 sm:mb-4">
+                      <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-foreground text-base sm:text-lg mb-2">{item.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Doctor Highlight */}
+      {/* Doctor Highlight - Dynamic */}
       <section className="section-padding bg-background">
         <div className="mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
@@ -518,16 +535,24 @@ export default function HomePage() {
               className="relative order-2 lg:order-1"
             >
               <div className="aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-2xl sm:rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center p-6 sm:p-8">
-                    <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                      <Stethoscope className="w-12 h-12 sm:w-16 sm:h-16 text-primary" />
+                {doctorData.photo ? (
+                  <img 
+                    src={doctorData.photo} 
+                    alt={doctorData.headline}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center p-6 sm:p-8">
+                      <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                        <Stethoscope className="w-12 h-12 sm:w-16 sm:h-16 text-primary" />
+                      </div>
+                      <p className="text-muted-foreground text-sm">
+                        Professional portrait coming soon
+                      </p>
                     </div>
-                    <p className="text-muted-foreground text-sm">
-                      Professional portrait coming soon
-                    </p>
                   </div>
-                </div>
+                )}
               </div>
               
               {/* Experience badge */}
@@ -540,9 +565,9 @@ export default function HomePage() {
               >
                 <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
                   <Award className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-                  <span className="font-bold text-xl sm:text-2xl text-foreground">15</span>
+                  <span className="font-bold text-xl sm:text-2xl text-foreground">{doctorData.experienceBadge.value}</span>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground">Years of clinical experience</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">{doctorData.experienceBadge.label}</p>
               </motion.div>
             </motion.div>
 
@@ -553,23 +578,20 @@ export default function HomePage() {
               className="order-1 lg:order-2"
             >
               <span className="text-primary font-medium text-xs sm:text-sm uppercase tracking-wider">
-                Meet Your Doctor
+                {doctorData.badge}
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground mt-2 sm:mt-3 mb-3 sm:mb-4 leading-tight">
-                Dr. Nitin Aryal
+                {doctorData.headline}
               </h2>
               <p className="text-lg sm:text-xl text-accent font-medium mb-4 sm:mb-6">
-                BDS • Managing Director
+                {doctorData.subtitle}
               </p>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
-                With 15 years of experience in dental care, Dr. Nitin Aryal leads 
-                Kundalini Dental Clinic with a commitment to excellence and 
-                patient-centered care. His expertise spans comprehensive dental 
-                treatments, ensuring every patient receives personalized attention.
+                {doctorData.description}
               </p>
 
               <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
-                {doctorCredentials.map((credential, index) => (
+                {doctorData.credentials.map((credential: string, index: number) => (
                   <motion.div
                     key={credential}
                     initial={{ opacity: 0, x: 20 }}
@@ -585,8 +607,8 @@ export default function HomePage() {
               </div>
 
               <Button asChild size="lg" className="h-12 w-full sm:w-auto">
-                <Link to="/doctors">
-                  View Full Profile
+                <Link to={doctorData.cta.link}>
+                  {doctorData.cta.label}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -595,7 +617,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* International Patients Section */}
+      {/* International Patients Section - Dynamic */}
       <section className="section-padding bg-secondary text-secondary-foreground">
         <div className="mx-auto max-w-7xl">
           <motion.div
@@ -606,44 +628,46 @@ export default function HomePage() {
           >
             <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/20 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
               <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              Dental Tourism
+              {internationalData.badge}
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-secondary-foreground mb-4 sm:mb-6 leading-tight">
-              Flying In for Treatment?<br className="hidden sm:block" /> We Make It Easy
+              {internationalData.headline.split('?')[0]}?<br className="hidden sm:block" /> {internationalData.headline.split('?')[1] || 'We Make It Easy'}
             </h2>
             <p className="text-base sm:text-lg text-secondary-foreground/80 max-w-3xl mx-auto leading-relaxed">
-              Join the many international patients who've discovered world-class dental care 
-              in Nepal. We handle everything from your first inquiry to your flight home.
+              {internationalData.description}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
-            {internationalBenefits.map((benefit, index) => (
-              <motion.div
-                key={benefit.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-secondary-foreground/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center"
-              >
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                  <benefit.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
-                </div>
-                <h3 className="font-semibold text-secondary-foreground mb-1 sm:mb-2 text-sm sm:text-base">
-                  {benefit.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-secondary-foreground/70">
-                  {benefit.description}
-                </p>
-              </motion.div>
-            ))}
+            {internationalData.benefits.map((benefit: any, index: number) => {
+              const IconComponent = getIcon(benefit.icon);
+              return (
+                <motion.div
+                  key={benefit.title || index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-secondary-foreground/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center"
+                >
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-secondary-foreground mb-1 sm:mb-2 text-sm sm:text-base">
+                    {benefit.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-secondary-foreground/70">
+                    {benefit.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
 
           <div className="text-center">
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 h-12 w-full sm:w-auto">
-              <Link to="/dental-tourism">
-                Learn About Dental Tourism
+              <Link to={internationalData.cta.link}>
+                {internationalData.cta.label}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
@@ -651,7 +675,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials - Dynamic */}
       <section className="section-padding bg-background">
         <div className="mx-auto max-w-7xl">
           <motion.div
@@ -661,20 +685,20 @@ export default function HomePage() {
             className="text-center mb-10 sm:mb-12 lg:mb-16"
           >
             <span className="text-primary font-medium text-xs sm:text-sm uppercase tracking-wider">
-              Patient Stories
+              {testimonialsData.badge}
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground mt-2 sm:mt-3 mb-4 sm:mb-5">
-              What Our Patients Say
+              {testimonialsData.headline}
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Real experiences from patients who trusted us with their dental care.
+              {testimonialsData.description}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
-            {testimonials.map((testimonial, index) => (
+            {testimonialsData.testimonials.map((testimonial: any, index: number) => (
               <motion.div
-                key={testimonial.name}
+                key={testimonial.name || index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -682,7 +706,7 @@ export default function HomePage() {
                 className="card-elevated p-5 sm:p-6 lg:p-8"
               >
                 <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
+                  {[...Array(testimonial.rating || 5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-primary text-primary" />
                   ))}
                 </div>
@@ -706,8 +730,8 @@ export default function HomePage() {
             className="text-center mt-8 sm:mt-12"
           >
             <Button asChild variant="outline" size="lg" className="h-12">
-              <Link to="/reviews">
-                Read More Reviews
+              <Link to={testimonialsData.cta.link}>
+                {testimonialsData.cta.label}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
@@ -715,7 +739,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* Final CTA - Dynamic */}
       <section className="section-padding bg-gradient-to-b from-muted/50 to-background">
         <div className="mx-auto max-w-4xl text-center">
           <motion.div
@@ -724,23 +748,22 @@ export default function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
-              Ready to Start Your Smile Journey?
+              {ctaData.headline}
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
-              Book a free consultation today and discover how we can help you achieve 
-              the healthy, beautiful smile you deserve.
+              {ctaData.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Button asChild size="lg" className="h-12 sm:h-14 text-base sm:text-lg px-6 sm:px-8">
-                <Link to="/contact">
-                  Book Free Consultation
+                <Link to={ctaData.ctaPrimary.link}>
+                  {ctaData.ctaPrimary.label}
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="h-12 sm:h-14 text-base sm:text-lg px-6 sm:px-8">
-                <a href="tel:+9779802808008">
+                <a href={`tel:${ctaData.ctaSecondary.phone || settings.phone}`}>
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Call Now
+                  {ctaData.ctaSecondary.label}
                 </a>
               </Button>
             </div>
