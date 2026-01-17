@@ -161,7 +161,11 @@ export default function HomePage() {
   
   // Get CMS content or use static defaults
   const heroContent = getSectionByType('hero');
+  const trustContent = getSectionByType('features'); // First features section is trust indicators
   const servicesContent = getSectionByType('services_grid');
+  const whyChooseContent = getSectionByType('features'); // Will need to check sort_order
+  const doctorContent = getSectionByType('team');
+  const internationalContent = getSectionByType('international');
   const testimonialContent = getSectionByType('testimonials');
   const ctaContent = getSectionByType('cta_strip');
   
@@ -171,6 +175,8 @@ export default function HomePage() {
     headline: heroContent?.headline || "Exceptional Dental Care,",
     headlineHighlight: heroContent?.headline_highlight || "Exceptional Value",
     description: heroContent?.description || `Quality dental treatments at accessible prices. Led by ${settings.managing_director} with ${settings.managing_director_experience} of experience, we deliver professional care and beautiful, lasting results.`,
+    ctaPrimary: heroContent?.cta_primary || { label: "Book Your Appointment", link: "/contact" },
+    ctaSecondary: heroContent?.cta_secondary || { label: "International Patient? Start Here", link: "/dental-tourism" },
     stats: heroContent?.stats || [
       { value: settings.managing_director_experience?.replace(' years', '') || "15", label: "Years Experience" },
       { value: settings.established_year || "2023", label: "Established" },
@@ -178,21 +184,80 @@ export default function HomePage() {
     ]
   };
   
+  // Use CMS trust indicators or static
+  const trustData = trustContent?.items || trustIndicators.map(t => ({
+    icon: t.icon.name || "Shield",
+    label: t.label,
+    description: t.description
+  }));
+  
   // Use CMS services or static
   const servicesData = servicesContent?.services || services;
   const servicesHeader = {
     badge: servicesContent?.badge || "Our Expertise",
     headline: servicesContent?.headline || "Premium Dental Services",
-    description: servicesContent?.description || "From routine care to complex restorations, we deliver exceptional results using the latest techniques and premium materials."
+    description: servicesContent?.description || "From routine care to complex restorations, we deliver exceptional results using the latest techniques and premium materials.",
+    cta: servicesContent?.cta || { label: "View All Services", link: "/services" }
+  };
+  
+  // Use CMS why choose us or static
+  const whyChooseData = {
+    badge: whyChooseContent?.badge || "Why Kundalini Dental",
+    headline: whyChooseContent?.headline || "Where World-Class Care Meets Compassionate Service",
+    description: whyChooseContent?.description || "We combine the precision of international dental standards with the warmth of Nepali hospitality. Every patient receives personalized attention and treatment that exceeds expectations.",
+    bullets: whyChooseContent?.bullets || [
+      "Same quality as clinics in USA, UK & Australia",
+      "Save 50-70% compared to Western prices",
+      "No waiting lists — appointments within days",
+      "English-speaking staff for international patients",
+    ],
+    items: whyChooseContent?.items || whyChooseUs.map(item => ({
+      icon: item.icon.name || "BadgeCheck",
+      title: item.title,
+      description: item.description
+    })),
+    cta: whyChooseContent?.cta || { label: "Learn About Our Clinic", link: "/about" }
+  };
+  
+  // Use CMS doctor or static
+  const doctorData = {
+    badge: doctorContent?.badge || "Meet Your Doctor",
+    headline: doctorContent?.headline || "Dr. Nitin Aryal",
+    subtitle: doctorContent?.subtitle || "BDS • Managing Director",
+    description: doctorContent?.description || "With 15 years of experience in dental care, Dr. Nitin Aryal leads Kundalini Dental Clinic with a commitment to excellence and patient-centered care. His expertise spans comprehensive dental treatments, ensuring every patient receives personalized attention.",
+    credentials: doctorContent?.credentials || doctorCredentials,
+    experienceBadge: doctorContent?.experience_badge || { value: "15", label: "Years of clinical experience" },
+    cta: doctorContent?.cta || { label: "View Full Profile", link: "/doctors" }
+  };
+  
+  // Use CMS international or static
+  const internationalData = {
+    badge: internationalContent?.badge || "Dental Tourism",
+    headline: internationalContent?.headline || "Flying In for Treatment? We Make It Easy",
+    description: internationalContent?.description || "Join the many international patients who've discovered world-class dental care in Nepal. We handle everything from your first inquiry to your flight home.",
+    benefits: internationalContent?.benefits || internationalBenefits.map(b => ({
+      icon: b.icon.name || "Plane",
+      title: b.title,
+      description: b.description
+    })),
+    cta: internationalContent?.cta || { label: "Learn About Dental Tourism", link: "/dental-tourism" }
   };
   
   // Use CMS testimonials or static
-  const testimonialsData = testimonialContent?.testimonials || testimonials;
+  const testimonialsData = {
+    badge: testimonialContent?.badge || "Patient Stories",
+    headline: testimonialContent?.headline || "What Our Patients Say",
+    description: testimonialContent?.description || "Real experiences from patients who trusted us with their dental care.",
+    testimonials: testimonialContent?.testimonials || testimonials,
+    cta: testimonialContent?.cta || { label: "Read More Reviews", link: "/reviews" }
+  };
   
   // Use CMS CTA or static
   const ctaData = {
-    headline: ctaContent?.headline || "Ready to Transform Your Smile?",
-    description: ctaContent?.description || "Take the first step toward the smile you deserve. Book a free consultation today — no obligations, just honest advice."
+    headline: ctaContent?.headline || "Ready to Start Your Smile Journey?",
+    description: ctaContent?.description || "Book a free consultation today and discover how we can help you achieve the healthy, beautiful smile you deserve.",
+    ctaPrimary: ctaContent?.cta_primary || { label: "Book Free Consultation", link: "/contact" },
+    ctaSecondary: ctaContent?.cta_secondary || { label: "Call Now", phone: "+9779802808008" }
   };
 
   return (

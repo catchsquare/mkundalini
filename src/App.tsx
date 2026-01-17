@@ -43,6 +43,7 @@ import Testimonials from "./pages/admin/cms/Testimonials";
 import Gallery from "./pages/admin/cms/Gallery";
 import Offers from "./pages/admin/cms/Offers";
 import Team from "./pages/admin/cms/Team";
+import HomePageEditor from "./pages/admin/cms/HomePageEditor";
 
 // Reports
 import Revenue from "./pages/admin/reports/Revenue";
@@ -115,6 +116,7 @@ const App = () => (
 
               {/* CMS - Pages */}
               <Route path="cms/pages" element={<CMSPages />} />
+              <Route path="cms/pages/home" element={<HomePageEditor />} />
               <Route path="cms/pages/new" element={<CMSPages />} />
               <Route path="cms/pages/builder" element={<CMSPages />} />
               <Route path="cms/templates" element={<CMSPages />} />
