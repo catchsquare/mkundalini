@@ -76,9 +76,21 @@ export function useGlobalSettings() {
           settingsMap[item.setting_key] = item.setting_value;
         });
 
+        // Handle address - can be string or object with {line1, line2, city, country}
+        let addressValue = defaultSettings.address;
+        if (settingsMap.address) {
+          if (typeof settingsMap.address === 'string') {
+            addressValue = settingsMap.address;
+          } else if (typeof settingsMap.address === 'object') {
+            const addr = settingsMap.address;
+            const parts = [addr.line1, addr.line2, addr.city, addr.country].filter(Boolean);
+            addressValue = parts.join(', ') || defaultSettings.address;
+          }
+        }
+
         setSettings({
           clinic_name: settingsMap.clinic_name || defaultSettings.clinic_name,
-          address: settingsMap.address || defaultSettings.address,
+          address: addressValue,
           phone: settingsMap.phone || defaultSettings.phone,
           email: settingsMap.email || defaultSettings.email,
           whatsapp: settingsMap.whatsapp || defaultSettings.whatsapp,
