@@ -172,10 +172,14 @@ const cmsNavigationGroups: NavGroup[] = [
     roles: ["super_admin", "admin", "content_editor"],
     items: [
       { name: "Home Page", href: "/admin/cms/pages/home", icon: LayoutTemplate },
+      { name: "About Page", href: "/admin/cms/pages/about", icon: FileText },
+      { name: "Services Page", href: "/admin/cms/pages/services", icon: FileText },
+      { name: "Doctors Page", href: "/admin/cms/pages/doctors", icon: Stethoscope },
+      { name: "Pricing Page", href: "/admin/cms/pages/pricing", icon: CreditCard },
+      { name: "Reviews Page", href: "/admin/cms/pages/reviews", icon: Star },
+      { name: "Contact Page", href: "/admin/cms/pages/contact", icon: Phone },
+      { name: "Dental Tourism", href: "/admin/cms/pages/dental-tourism", icon: Globe },
       { name: "All Pages", href: "/admin/cms/pages", icon: FileEdit },
-      { name: "Add New Page", href: "/admin/cms/pages/new", icon: FileText },
-      { name: "Page Builder", href: "/admin/cms/pages/builder", icon: LayoutTemplate },
-      { name: "Templates", href: "/admin/cms/templates", icon: LayoutTemplate },
     ],
   },
   {

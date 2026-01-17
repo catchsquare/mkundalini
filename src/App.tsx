@@ -44,6 +44,13 @@ import Gallery from "./pages/admin/cms/Gallery";
 import Offers from "./pages/admin/cms/Offers";
 import Team from "./pages/admin/cms/Team";
 import HomePageEditor from "./pages/admin/cms/HomePageEditor";
+import AboutPageEditor from "./pages/admin/cms/AboutPageEditor";
+import ServicesPageEditor from "./pages/admin/cms/ServicesPageEditor";
+import ContactPageEditor from "./pages/admin/cms/ContactPageEditor";
+import DoctorsPageEditor from "./pages/admin/cms/DoctorsPageEditor";
+import PricingPageEditor from "./pages/admin/cms/PricingPageEditor";
+import ReviewsPageEditor from "./pages/admin/cms/ReviewsPageEditor";
+import DentalTourismPageEditor from "./pages/admin/cms/DentalTourismPageEditor";
 
 // Reports
 import Revenue from "./pages/admin/reports/Revenue";
@@ -117,6 +124,13 @@ const App = () => (
               {/* CMS - Pages */}
               <Route path="cms/pages" element={<CMSPages />} />
               <Route path="cms/pages/home" element={<HomePageEditor />} />
+              <Route path="cms/pages/about" element={<AboutPageEditor />} />
+              <Route path="cms/pages/services" element={<ServicesPageEditor />} />
+              <Route path="cms/pages/contact" element={<ContactPageEditor />} />
+              <Route path="cms/pages/doctors" element={<DoctorsPageEditor />} />
+              <Route path="cms/pages/pricing" element={<PricingPageEditor />} />
+              <Route path="cms/pages/reviews" element={<ReviewsPageEditor />} />
+              <Route path="cms/pages/dental-tourism" element={<DentalTourismPageEditor />} />
               <Route path="cms/pages/new" element={<CMSPages />} />
               <Route path="cms/pages/builder" element={<CMSPages />} />
               <Route path="cms/templates" element={<CMSPages />} />
