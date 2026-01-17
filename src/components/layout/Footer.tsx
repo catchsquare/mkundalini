@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin, ArrowRight, Globe, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 const navigation = {
   services: [
@@ -26,6 +27,7 @@ const navigation = {
 };
 
 export function Footer() {
+  const { settings } = useGlobalSettings();
   return (
     <footer className="bg-secondary text-secondary-foreground">
       {/* CTA Section */}
@@ -78,67 +80,75 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm text-center sm:text-left">
-              World-class dental care in the heart of Kathmandu. Led by Dr. Nitin Aryal 
-              with 15 years of experience, serving local and international patients 
-              with premium treatments at accessible prices since 2023.
+              World-class dental care in the heart of Kathmandu. Led by {settings.managing_director} 
+              with {settings.managing_director_experience} of experience, serving local and international patients 
+              with premium treatments at accessible prices since {settings.established_year}.
             </p>
             
             {/* Contact Quick Links */}
             <div className="space-y-2.5">
+              {settings.whatsapp_enabled && (
+                <a
+                  href={`https://wa.me/${settings.whatsapp.replace(/[^+\d]/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors justify-center sm:justify-start min-h-[44px] sm:min-h-0"
+                >
+                  <MessageCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                  WhatsApp: {settings.phone}
+                </a>
+              )}
               <a
-                href="https://wa.me/9779802808008"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors justify-center sm:justify-start min-h-[44px] sm:min-h-0"
-              >
-                <MessageCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                WhatsApp: +977-9802808008
-              </a>
-              <a
-                href="tel:+9779802808008"
+                href={`tel:${settings.phone.replace(/[^+\d]/g, "")}`}
                 className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors justify-center sm:justify-start min-h-[44px] sm:min-h-0"
               >
                 <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                +977-9802808008
+                {settings.phone}
               </a>
               <a
-                href="mailto:info@kundalinidentalclinic.com.np"
+                href={`mailto:${settings.email}`}
                 className="flex items-center gap-3 text-sm text-secondary-foreground/80 hover:text-primary transition-colors justify-center sm:justify-start min-h-[44px] sm:min-h-0 break-all sm:break-normal"
               >
                 <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="text-xs sm:text-sm">info@kundalinidentalclinic.com.np</span>
+                <span className="text-xs sm:text-sm">{settings.email}</span>
               </a>
             </div>
 
             {/* Social Links */}
             <div className="flex gap-3 pt-2 justify-center sm:justify-start">
-              <a
-                href="https://facebook.com/kundalinidental"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-5 w-5 sm:h-4 sm:w-4" />
-              </a>
-              <a
-                href="https://instagram.com/kundalinidental"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5 sm:h-4 sm:w-4" />
-              </a>
-              <a
-                href="https://linkedin.com/company/kundalinidental"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5 sm:h-4 sm:w-4" />
-              </a>
+              {settings.facebook_url && (
+                <a
+                  href={settings.facebook_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-5 w-5 sm:h-4 sm:w-4" />
+                </a>
+              )}
+              {settings.instagram_url && (
+                <a
+                  href={settings.instagram_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5 sm:h-4 sm:w-4" />
+                </a>
+              )}
+              {settings.linkedin_url && (
+                <a
+                  href={settings.linkedin_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-5 w-5 sm:h-4 sm:w-4" />
+                </a>
+              )}
             </div>
           </div>
 
@@ -199,8 +209,8 @@ export function Footer() {
                 Clinic Hours
               </h4>
               <div className="text-sm text-secondary-foreground/70 space-y-1">
-                <p>Sun - Fri: 9:00 AM - 6:00 PM</p>
-                <p>Saturday: 10:00 AM - 4:00 PM</p>
+                <p>Sun - Fri: {settings.weekday_hours}</p>
+                <p>Saturday: {settings.saturday_hours}</p>
               </div>
             </div>
           </div>
@@ -212,11 +222,11 @@ export function Footer() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
             <p className="text-xs sm:text-sm text-secondary-foreground/50">
-              © {new Date().getFullYear()} Kundalini Dental Clinic. All rights reserved.
+              © {new Date().getFullYear()} {settings.clinic_name}. All rights reserved.
             </p>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-secondary-foreground/50">
               <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
-              <span>Goreto Bhawan, Chappal Karkhana, Kathmandu</span>
+              <span>{settings.address}</span>
             </div>
           </div>
         </div>
