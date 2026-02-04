@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { PageLoader } from "@/components/ui/page-loader";
 
 // Public pages
 import HomePage from "./pages/HomePage";
@@ -61,130 +63,132 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/services/dental-implants" element={<DentalImplantsPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/doctors" element={<DoctorsPage />} />
-            <Route path="/dental-tourism" element={<DentalTourismPage />} />
-            <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/reviews" element={<ReviewsPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+        <Suspense fallback={<PageLoader text="Loading..." />}>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/services/dental-implants" element={<DentalImplantsPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/doctors" element={<DoctorsPage />} />
+              <Route path="/dental-tourism" element={<DentalTourismPage />} />
+              <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/reviews" element={<ReviewsPage />} />
+              <Route path="/contact" element={<ContactPage />} />
 
-            {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminLayout />}>
-              {/* Dashboard */}
-              <Route index element={<Dashboard />} />
-              <Route path="quick-actions" element={<AdminPlaceholder title="Quick Actions" />} />
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminLayout />}>
+                {/* Dashboard */}
+                <Route index element={<Dashboard />} />
+                <Route path="quick-actions" element={<AdminPlaceholder title="Quick Actions" />} />
 
-              {/* CRM & Leads */}
-              <Route path="leads" element={<Leads />} />
-              <Route path="leads/pipeline" element={<Leads />} />
-              <Route path="leads/forms" element={<Leads />} />
-              <Route path="leads/followups" element={<Leads />} />
+                {/* CRM & Leads */}
+                <Route path="leads" element={<Leads />} />
+                <Route path="leads/pipeline" element={<Leads />} />
+                <Route path="leads/forms" element={<Leads />} />
+                <Route path="leads/followups" element={<Leads />} />
 
-              {/* Appointments */}
-              <Route path="appointments" element={<Appointments />} />
-              <Route path="appointments/today" element={<AdminPlaceholder title="Today's Schedule" />} />
-              <Route path="appointments/upcoming" element={<AdminPlaceholder title="Upcoming Appointments" />} />
-              <Route path="appointments/history" element={<AdminPlaceholder title="Appointment History" />} />
+                {/* Appointments */}
+                <Route path="appointments" element={<Appointments />} />
+                <Route path="appointments/today" element={<AdminPlaceholder title="Today's Schedule" />} />
+                <Route path="appointments/upcoming" element={<AdminPlaceholder title="Upcoming Appointments" />} />
+                <Route path="appointments/history" element={<AdminPlaceholder title="Appointment History" />} />
 
-              {/* Patients */}
-              <Route path="patients" element={<Patients />} />
-              <Route path="patients/new" element={<AdminPlaceholder title="Add New Patient" />} />
-              <Route path="patients/treatments" element={<AdminPlaceholder title="Treatment History" />} />
-              <Route path="patients/records" element={<AdminPlaceholder title="Medical Records" />} />
+                {/* Patients */}
+                <Route path="patients" element={<Patients />} />
+                <Route path="patients/new" element={<AdminPlaceholder title="Add New Patient" />} />
+                <Route path="patients/treatments" element={<AdminPlaceholder title="Treatment History" />} />
+                <Route path="patients/records" element={<AdminPlaceholder title="Medical Records" />} />
 
-              {/* Billing */}
-              <Route path="billing" element={<Billing />} />
-              <Route path="billing/payments" element={<AdminPlaceholder title="Payments" />} />
-              <Route path="billing/pending" element={<AdminPlaceholder title="Pending Dues" />} />
-              <Route path="billing/methods" element={<AdminPlaceholder title="Payment Methods" />} />
+                {/* Billing */}
+                <Route path="billing" element={<Billing />} />
+                <Route path="billing/payments" element={<AdminPlaceholder title="Payments" />} />
+                <Route path="billing/pending" element={<AdminPlaceholder title="Pending Dues" />} />
+                <Route path="billing/methods" element={<AdminPlaceholder title="Payment Methods" />} />
 
-              {/* Inventory */}
-              <Route path="inventory" element={<Inventory />} />
-              <Route path="inventory/categories" element={<Inventory />} />
-              <Route path="inventory/alerts" element={<Inventory />} />
-              <Route path="inventory/transactions" element={<Inventory />} />
+                {/* Inventory */}
+                <Route path="inventory" element={<Inventory />} />
+                <Route path="inventory/categories" element={<Inventory />} />
+                <Route path="inventory/alerts" element={<Inventory />} />
+                <Route path="inventory/transactions" element={<Inventory />} />
 
-              {/* Reports */}
-              <Route path="reports/revenue" element={<Revenue />} />
-              <Route path="reports/patients" element={<Revenue />} />
-              <Route path="reports/treatments" element={<Revenue />} />
-              <Route path="reports/staff" element={<Revenue />} />
-              <Route path="reports/export" element={<Revenue />} />
+                {/* Reports */}
+                <Route path="reports/revenue" element={<Revenue />} />
+                <Route path="reports/patients" element={<Revenue />} />
+                <Route path="reports/treatments" element={<Revenue />} />
+                <Route path="reports/staff" element={<Revenue />} />
+                <Route path="reports/export" element={<Revenue />} />
 
-              {/* CMS - Pages */}
-              <Route path="cms/pages" element={<CMSPages />} />
-              <Route path="cms/pages/home" element={<HomePageEditor />} />
-              <Route path="cms/pages/about" element={<AboutPageEditor />} />
-              <Route path="cms/pages/services" element={<ServicesPageEditor />} />
-              <Route path="cms/pages/contact" element={<ContactPageEditor />} />
-              <Route path="cms/pages/doctors" element={<DoctorsPageEditor />} />
-              <Route path="cms/pages/pricing" element={<PricingPageEditor />} />
-              <Route path="cms/pages/reviews" element={<ReviewsPageEditor />} />
-              <Route path="cms/pages/dental-tourism" element={<DentalTourismPageEditor />} />
-              <Route path="cms/pages/new" element={<CMSPages />} />
-              <Route path="cms/pages/builder" element={<CMSPages />} />
-              <Route path="cms/templates" element={<CMSPages />} />
+                {/* CMS - Pages */}
+                <Route path="cms/pages" element={<CMSPages />} />
+                <Route path="cms/pages/home" element={<HomePageEditor />} />
+                <Route path="cms/pages/about" element={<AboutPageEditor />} />
+                <Route path="cms/pages/services" element={<ServicesPageEditor />} />
+                <Route path="cms/pages/contact" element={<ContactPageEditor />} />
+                <Route path="cms/pages/doctors" element={<DoctorsPageEditor />} />
+                <Route path="cms/pages/pricing" element={<PricingPageEditor />} />
+                <Route path="cms/pages/reviews" element={<ReviewsPageEditor />} />
+                <Route path="cms/pages/dental-tourism" element={<DentalTourismPageEditor />} />
+                <Route path="cms/pages/new" element={<CMSPages />} />
+                <Route path="cms/pages/builder" element={<CMSPages />} />
+                <Route path="cms/templates" element={<CMSPages />} />
 
-              {/* CMS - Blog */}
-              <Route path="cms/blog" element={<Blog />} />
-              <Route path="cms/blog/new" element={<Blog />} />
-              <Route path="cms/blog/categories" element={<Blog />} />
+                {/* CMS - Blog */}
+                <Route path="cms/blog" element={<Blog />} />
+                <Route path="cms/blog/new" element={<Blog />} />
+                <Route path="cms/blog/categories" element={<Blog />} />
 
-              {/* CMS - Team */}
-              <Route path="cms/doctors" element={<Doctors />} />
-              <Route path="cms/team" element={<Team />} />
-              <Route path="cms/staff" element={<Team />} />
-              <Route path="cms/specializations" element={<Doctors />} />
+                {/* CMS - Team */}
+                <Route path="cms/doctors" element={<Doctors />} />
+                <Route path="cms/team" element={<Team />} />
+                <Route path="cms/staff" element={<Team />} />
+                <Route path="cms/specializations" element={<Doctors />} />
 
-              {/* CMS - Offers */}
-              <Route path="cms/offers" element={<Offers />} />
+                {/* CMS - Offers */}
+                <Route path="cms/offers" element={<Offers />} />
 
-              {/* CMS - Testimonials */}
-              <Route path="cms/testimonials" element={<Testimonials />} />
-              <Route path="cms/testimonials/videos" element={<Testimonials />} />
-              <Route path="cms/testimonials/google" element={<Testimonials />} />
+                {/* CMS - Testimonials */}
+                <Route path="cms/testimonials" element={<Testimonials />} />
+                <Route path="cms/testimonials/videos" element={<Testimonials />} />
+                <Route path="cms/testimonials/google" element={<Testimonials />} />
 
-              {/* CMS - Gallery */}
-              <Route path="cms/gallery" element={<Gallery />} />
-              <Route path="cms/gallery/clinic" element={<Gallery />} />
-              <Route path="cms/gallery/categories" element={<Gallery />} />
+                {/* CMS - Gallery */}
+                <Route path="cms/gallery" element={<Gallery />} />
+                <Route path="cms/gallery/clinic" element={<Gallery />} />
+                <Route path="cms/gallery/categories" element={<Gallery />} />
 
-              {/* CMS - Navigation */}
-              <Route path="cms/navigation/main" element={<Navigation />} />
-              <Route path="cms/navigation/footer" element={<Navigation />} />
-              <Route path="cms/navigation/mobile" element={<Navigation />} />
+                {/* CMS - Navigation */}
+                <Route path="cms/navigation/main" element={<Navigation />} />
+                <Route path="cms/navigation/footer" element={<Navigation />} />
+                <Route path="cms/navigation/mobile" element={<Navigation />} />
 
-              {/* Settings */}
-              <Route path="settings" element={<Settings />} />
-              <Route path="settings/seo" element={<Settings />} />
-              <Route path="settings/social" element={<Settings />} />
-              <Route path="settings/hours" element={<Settings />} />
-              <Route path="settings/messaging" element={<Settings />} />
-              <Route path="settings/emails" element={<Settings />} />
+                {/* Settings */}
+                <Route path="settings" element={<Settings />} />
+                <Route path="settings/seo" element={<Settings />} />
+                <Route path="settings/social" element={<Settings />} />
+                <Route path="settings/hours" element={<Settings />} />
+                <Route path="settings/messaging" element={<Settings />} />
+                <Route path="settings/emails" element={<Settings />} />
 
-              {/* Users & Roles */}
-              <Route path="users" element={<UserManagement />} />
-              <Route path="users/roles" element={<UserManagement />} />
-              <Route path="users/activity" element={<AuditLogs />} />
+                {/* Users & Roles */}
+                <Route path="users" element={<UserManagement />} />
+                <Route path="users/roles" element={<UserManagement />} />
+                <Route path="users/activity" element={<AuditLogs />} />
 
-              {/* Profile */}
-              <Route path="profile" element={<Settings />} />
-            </Route>
+                {/* Profile */}
+                <Route path="profile" element={<Settings />} />
+              </Route>
 
-            {/* 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+              {/* 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </Suspense>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
