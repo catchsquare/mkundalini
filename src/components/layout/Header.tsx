@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { Menu, X, Phone, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigation } from "@/hooks/use-navigation";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
@@ -65,28 +66,8 @@ export function Header() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 h-16 lg:h-20">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
-          {settings.site_logo ? (
-            <img 
-              src={settings.site_logo} 
-              alt={settings.clinic_name || "Kundalini Dental Clinic"}
-              className="h-9 sm:h-10 lg:h-11 w-auto object-contain transition-transform group-hover:scale-105"
-            />
-          ) : (
-            <>
-              <div className="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full bg-primary flex items-center justify-center transition-transform group-hover:scale-105">
-                <span className="text-primary-foreground font-bold text-lg sm:text-xl">K</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-base sm:text-lg leading-tight text-foreground">
-                  Kundalini
-                </span>
-                <span className="text-[10px] sm:text-xs text-muted-foreground -mt-0.5">
-                  Dental Clinic
-                </span>
-              </div>
-            </>
-          )}
+        <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <AnimatedLogo size="sm" showGlow={false} animate={false} />
         </Link>
 
         {/* Desktop Navigation */}
