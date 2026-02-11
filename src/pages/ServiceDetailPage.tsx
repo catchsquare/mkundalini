@@ -197,24 +197,13 @@ export default function ServiceDetailPage() {
 
       {/* Rich Text Body Content */}
       {service.body_content && (
-        <section className="py-16 lg:py-20 bg-background">
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <section className="py-14 lg:py-20 bg-background">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="prose prose-lg max-w-none
-                prose-headings:text-foreground prose-headings:font-bold
-                prose-h2:text-2xl prose-h2:sm:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-l-4 prose-h2:border-primary prose-h2:pl-4
-                prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4
-                prose-strong:text-foreground
-                prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                prose-ul:my-4 prose-ul:space-y-1
-                prose-ol:my-4 prose-ol:space-y-1
-                prose-li:text-muted-foreground prose-li:leading-relaxed
-                prose-img:rounded-xl prose-img:shadow-lg
-                dark:prose-invert"
+              className="rich-content"
               dangerouslySetInnerHTML={{ __html: service.body_content }}
             />
           </div>
