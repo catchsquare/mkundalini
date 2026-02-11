@@ -1,259 +1,26 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
-  ArrowRight, 
-  Check, 
-  Clock, 
-  DollarSign, 
-  Sparkles,
-  Globe,
-  Star,
-  ChevronRight,
-  Plane
+  ArrowRight, Check, Clock, DollarSign, Sparkles,
+  Globe, Star, ChevronRight, Plane, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { usePageContent } from "@/hooks/use-page-content";
-
-const treatmentCategories = [
-  {
-    id: "implants-restorative",
-    name: "Implants & Restorative",
-    description: "Permanent solutions for missing or damaged teeth",
-    highlight: "Most Popular for Dental Tourism",
-    treatments: [
-      {
-        id: "single-implants",
-        title: "Single Tooth Implants",
-        shortDescription: "Replace individual missing teeth with natural-looking titanium implants.",
-        price: "From $350",
-        comparisonPrice: "$3,000+ in USA",
-        duration: "2-3 visits",
-        tourismFriendly: true,
-        features: ["German/Swiss implants", "Lifetime warranty", "3D-guided placement"],
-        link: "/services/dental-implants",
-      },
-      {
-        id: "all-on-4",
-        title: "All-on-4 Full Arch",
-        shortDescription: "Complete smile restoration with just 4 implants supporting a full arch.",
-        price: "From $4,500",
-        comparisonPrice: "$25,000+ in USA",
-        duration: "3-5 visits",
-        tourismFriendly: true,
-        features: ["Same-day teeth possible", "Full upper or lower arch", "Premium prosthetics"],
-        link: "/services/dental-implants",
-      },
-      {
-        id: "crowns-bridges",
-        title: "Crowns & Bridges",
-        shortDescription: "Restore damaged teeth or bridge gaps with precision-crafted restorations.",
-        price: "From $150",
-        comparisonPrice: "$1,200+ in USA",
-        duration: "2 visits",
-        tourismFriendly: true,
-        features: ["Zirconia & E-max options", "CAD/CAM precision", "Same-day available"],
-      },
-      {
-        id: "full-mouth",
-        title: "Full Mouth Rehabilitation",
-        shortDescription: "Comprehensive restoration for severely damaged or worn dentition.",
-        price: "Custom quote",
-        comparisonPrice: "Save 60-70%",
-        duration: "Multiple visits",
-        tourismFriendly: true,
-        features: ["Complete assessment", "Phased treatment", "Smile design included"],
-      },
-    ],
-  },
-  {
-    id: "cosmetic",
-    name: "Cosmetic Dentistry",
-    description: "Transform your smile with aesthetic enhancements",
-    highlight: "Hollywood Smile Specialists",
-    treatments: [
-      {
-        id: "veneers",
-        title: "Porcelain Veneers",
-        shortDescription: "Ultra-thin shells that transform the appearance of your teeth instantly.",
-        price: "From $250/tooth",
-        comparisonPrice: "$1,500+ in USA",
-        duration: "2-3 visits",
-        tourismFriendly: true,
-        features: ["E-max porcelain", "Custom shade matching", "Minimal prep options"],
-      },
-      {
-        id: "smile-makeover",
-        title: "Complete Smile Makeover",
-        shortDescription: "Comprehensive aesthetic transformation combining multiple treatments.",
-        price: "From $2,000",
-        comparisonPrice: "$15,000+ in USA",
-        duration: "3-5 visits",
-        tourismFriendly: true,
-        features: ["Digital smile design", "Multiple treatment options", "Personalized plan"],
-      },
-      {
-        id: "whitening",
-        title: "Teeth Whitening",
-        shortDescription: "Professional-grade whitening for a brighter, more youthful smile.",
-        price: "From $150",
-        comparisonPrice: "$500+ in USA",
-        duration: "1 visit",
-        tourismFriendly: true,
-        features: ["In-office treatment", "Take-home kits available", "Up to 8 shades lighter"],
-      },
-      {
-        id: "bonding",
-        title: "Composite Bonding",
-        shortDescription: "Quick, affordable repairs for chips, gaps, and minor imperfections.",
-        price: "From $80/tooth",
-        comparisonPrice: "$300+ in USA",
-        duration: "1 visit",
-        tourismFriendly: false,
-        features: ["Same-day results", "Tooth-colored material", "No drilling required"],
-      },
-    ],
-  },
-  {
-    id: "orthodontics",
-    name: "Orthodontics",
-    description: "Straighten teeth for a perfect, aligned smile",
-    highlight: "Invisible Options Available",
-    treatments: [
-      {
-        id: "invisalign",
-        title: "Clear Aligners",
-        shortDescription: "Virtually invisible aligners that straighten teeth without metal braces.",
-        price: "From $1,500",
-        comparisonPrice: "$5,000+ in USA",
-        duration: "6-18 months",
-        tourismFriendly: false,
-        features: ["Removable aligners", "3D treatment preview", "Suitable for adults"],
-      },
-      {
-        id: "braces",
-        title: "Traditional Braces",
-        shortDescription: "Time-tested solution for complex orthodontic cases at any age.",
-        price: "From $800",
-        comparisonPrice: "$4,000+ in USA",
-        duration: "12-24 months",
-        tourismFriendly: false,
-        features: ["Metal or ceramic options", "Complex case expertise", "All ages welcome"],
-      },
-      {
-        id: "retainers",
-        title: "Retainers",
-        shortDescription: "Maintain your perfect smile after orthodontic treatment.",
-        price: "From $100",
-        comparisonPrice: "$300+ in USA",
-        duration: "1 visit",
-        tourismFriendly: true,
-        features: ["Fixed or removable", "Custom-made", "Long-term maintenance"],
-      },
-    ],
-  },
-  {
-    id: "general",
-    name: "General & Preventive",
-    description: "Essential care for optimal oral health",
-    highlight: "Foundation of Healthy Smiles",
-    treatments: [
-      {
-        id: "root-canal",
-        title: "Root Canal Treatment",
-        shortDescription: "Save infected teeth with gentle, effective endodontic treatment.",
-        price: "From $100",
-        comparisonPrice: "$1,000+ in USA",
-        duration: "1-2 visits",
-        tourismFriendly: true,
-        features: ["Microscope-enhanced", "Rotary instruments", "Pain-free experience"],
-      },
-      {
-        id: "extractions",
-        title: "Tooth Extractions",
-        shortDescription: "Safe, comfortable removal of damaged or problematic teeth.",
-        price: "From $30",
-        comparisonPrice: "$200+ in USA",
-        duration: "1 visit",
-        tourismFriendly: true,
-        features: ["Wisdom teeth included", "Sedation available", "Same-day service"],
-      },
-      {
-        id: "cleaning",
-        title: "Professional Cleaning",
-        shortDescription: "Deep cleaning and scaling for healthy gums and fresh breath.",
-        price: "From $40",
-        comparisonPrice: "$150+ in USA",
-        duration: "1 visit",
-        tourismFriendly: true,
-        features: ["Ultrasonic scaling", "Polishing included", "Oral hygiene guidance"],
-      },
-      {
-        id: "fillings",
-        title: "Dental Fillings",
-        shortDescription: "Tooth-colored restorations that blend seamlessly with natural teeth.",
-        price: "From $25",
-        comparisonPrice: "$200+ in USA",
-        duration: "1 visit",
-        tourismFriendly: true,
-        features: ["Composite material", "Mercury-free", "Natural appearance"],
-      },
-    ],
-  },
-  {
-    id: "surgical",
-    name: "Oral Surgery",
-    description: "Advanced surgical procedures by specialists",
-    highlight: "Expert Surgical Care",
-    treatments: [
-      {
-        id: "wisdom-teeth",
-        title: "Wisdom Tooth Surgery",
-        shortDescription: "Expert removal of impacted or problematic wisdom teeth.",
-        price: "From $80/tooth",
-        comparisonPrice: "$400+ in USA",
-        duration: "1 visit",
-        tourismFriendly: true,
-        features: ["Surgical extraction", "Sedation options", "Quick recovery"],
-      },
-      {
-        id: "bone-grafting",
-        title: "Bone Grafting",
-        shortDescription: "Rebuild jaw bone for implant placement or structural support.",
-        price: "From $200",
-        comparisonPrice: "$1,500+ in USA",
-        duration: "1-2 visits",
-        tourismFriendly: true,
-        features: ["Synthetic & natural options", "Implant preparation", "Sinus lift available"],
-      },
-      {
-        id: "gum-surgery",
-        title: "Gum Treatment",
-        shortDescription: "Treat gum disease and restore periodontal health.",
-        price: "From $150",
-        comparisonPrice: "$800+ in USA",
-        duration: "1-3 visits",
-        tourismFriendly: true,
-        features: ["Deep cleaning", "Gum grafting", "Laser treatment available"],
-      },
-    ],
-  },
-];
-
-const popularTourismTreatments = [
-  { name: "Dental Implants", savings: "Save 70-80%" },
-  { name: "Veneers", savings: "Save 75-85%" },
-  { name: "All-on-4", savings: "Save 80%" },
-  { name: "Crowns", savings: "Save 70-80%" },
-  { name: "Root Canals", savings: "Save 85-90%" },
-  { name: "Smile Makeovers", savings: "Save 70%" },
-];
+import { useServicesByCategory } from "@/hooks/use-services";
 
 export default function ServicesPage() {
   const { getSectionByType } = usePageContent("services");
+  const { data: categories, isLoading } = useServicesByCategory();
   
   const heroSection = getSectionByType("hero");
   const tourismSection = getSectionByType("tourism_highlight");
+
+  // Get tourism-friendly services for the highlight section
+  const tourismServices = categories
+    ?.flatMap(c => c.treatments)
+    .filter(t => t.tourism_friendly && t.comparison_price)
+    .slice(0, 6) || [];
 
   return (
     <Layout>
@@ -280,260 +47,295 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Quick Navigation - Fixed below header */}
-      <section className="bg-background/95 backdrop-blur-lg py-4 border-b border-border/50 sticky top-20 z-30">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-            {treatmentCategories.map((category) => (
-              <a
-                key={category.id}
-                href={`#${category.id}`}
-                className="px-3 sm:px-4 py-2 rounded-full bg-muted/50 border border-border/50 text-xs sm:text-sm font-medium text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/5 transition-all"
-              >
-                {category.name}
-              </a>
-            ))}
-          </div>
+      {/* Loading state */}
+      {isLoading && (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
-      </section>
+      )}
 
-      {/* Dental Tourism Highlight */}
-      <section className="section-padding bg-secondary text-secondary-foreground">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium mb-6">
-              <Plane className="w-4 h-4" />
-              Dental Tourism
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-secondary-foreground mb-4">
-              High-Value Treatments for International Patients
-            </h2>
-            <p className="text-lg text-secondary-foreground/80 max-w-2xl mx-auto">
-              These treatments offer the greatest savings for patients traveling from 
-              abroad while maintaining the same quality as top clinics worldwide.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {popularTourismTreatments.map((treatment, index) => (
-              <motion.div
-                key={treatment.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                viewport={{ once: true }}
-                className="bg-secondary-foreground/10 rounded-2xl p-5 text-center"
-              >
-                <h3 className="font-semibold text-secondary-foreground mb-1 text-sm">
-                  {treatment.name}
-                </h3>
-                <p className="text-primary font-bold text-sm">{treatment.savings}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
-            >
-              <Link to="/dental-tourism">
-                View Dental Tourism Packages
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Treatment Categories */}
-      {treatmentCategories.map((category, categoryIndex) => (
-        <section
-          key={category.id}
-          id={category.id}
-          className={`section-padding ${categoryIndex % 2 === 0 ? 'bg-background' : 'bg-muted/30'}`}
-        >
-          <div className="mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-12"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-                <div>
-                  <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium mb-3">
-                    {category.highlight}
-                  </span>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+      {!isLoading && categories && categories.length > 0 && (
+        <>
+          {/* Quick Navigation */}
+          <section className="bg-background/95 backdrop-blur-lg py-4 border-b border-border/50 sticky top-20 z-30">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                {categories.map((category) => (
+                  <a
+                    key={category.id}
+                    href={`#${category.slug}`}
+                    className="px-3 sm:px-4 py-2 rounded-full bg-muted/50 border border-border/50 text-xs sm:text-sm font-medium text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/5 transition-all"
+                  >
                     {category.name}
-                  </h2>
-                  <p className="text-lg text-muted-foreground">
-                    {category.description}
-                  </p>
-                </div>
+                  </a>
+                ))}
               </div>
-            </motion.div>
+            </div>
+          </section>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {category.treatments.map((treatment, index) => (
+          {/* Dental Tourism Highlight */}
+          {tourismServices.length > 0 && (
+            <section className="section-padding bg-secondary text-secondary-foreground">
+              <div className="mx-auto max-w-7xl">
                 <motion.div
-                  key={treatment.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="card-elevated card-hover overflow-hidden group"
+                  className="text-center mb-12"
                 >
-                  {/* Tourism Badge */}
-                  {treatment.tourismFriendly && (
-                    <div className="bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground flex items-center justify-center gap-1">
-                      <Globe className="w-3 h-3" />
-                      Ideal for Dental Tourism
-                    </div>
-                  )}
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary text-sm font-medium mb-6">
+                    <Plane className="w-4 h-4" />
+                    {tourismSection?.badge || "Dental Tourism"}
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-bold text-secondary-foreground mb-4">
+                    {tourismSection?.title || "High-Value Treatments for International Patients"}
+                  </h2>
+                  <p className="text-lg text-secondary-foreground/80 max-w-2xl mx-auto">
+                    {tourismSection?.description || "These treatments offer the greatest savings for patients traveling from abroad while maintaining the same quality as top clinics worldwide."}
+                  </p>
+                </motion.div>
 
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                      {treatment.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                      {treatment.shortDescription}
-                    </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                  {tourismServices.map((treatment, index) => (
+                    <motion.div
+                      key={treatment.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                      viewport={{ once: true }}
+                      className="bg-secondary-foreground/10 rounded-2xl p-5 text-center"
+                    >
+                      <h3 className="font-semibold text-secondary-foreground mb-1 text-sm">
+                        {treatment.title}
+                      </h3>
+                      <p className="text-primary font-bold text-sm">{treatment.comparison_price}</p>
+                    </motion.div>
+                  ))}
+                </div>
 
-                    {/* Features */}
-                    <ul className="space-y-2 mb-5">
-                      {treatment.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-2 text-sm">
-                          <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-muted-foreground">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                <div className="text-center mt-10">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    <Link to={tourismSection?.ctaLink || "/dental-tourism"}>
+                      {tourismSection?.ctaLabel || "View Dental Tourism Packages"}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </section>
+          )}
 
-                    {/* Pricing */}
-                    <div className="border-t border-border pt-4 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <DollarSign className="w-4 h-4" />
-                          <span>Price</span>
-                        </div>
-                        <span className="font-semibold text-primary">{treatment.price}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <Clock className="w-4 h-4" />
-                          <span>Duration</span>
-                        </div>
-                        <span className="text-sm text-foreground">{treatment.duration}</span>
-                      </div>
-                      {treatment.comparisonPrice && (
-                        <div className="bg-primary/5 rounded-lg px-3 py-2 text-center">
-                          <span className="text-xs text-primary font-medium">
-                            {treatment.comparisonPrice}
-                          </span>
-                        </div>
+          {/* Treatment Categories */}
+          {categories.map((category, categoryIndex) => (
+            <section
+              key={category.id}
+              id={category.slug}
+              className={`section-padding ${categoryIndex % 2 === 0 ? 'bg-background' : 'bg-muted/30'}`}
+            >
+              <div className="mx-auto max-w-7xl">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="mb-12"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                    <div>
+                      {category.highlight && (
+                        <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium mb-3">
+                          {category.highlight}
+                        </span>
                       )}
-                    </div>
-
-                    {/* CTAs */}
-                    <div className="mt-5 space-y-2">
-                      {treatment.link && (
-                        <Link
-                          to={treatment.link}
-                          className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-primary text-primary-foreground text-sm font-medium transition-colors hover:bg-primary/90 group/btn"
-                        >
-                          Learn More
-                          <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                        </Link>
+                      <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
+                        {category.name}
+                      </h2>
+                      {category.description && (
+                        <p className="text-lg text-muted-foreground">
+                          {category.description}
+                        </p>
                       )}
-                      <Link
-                        to="/contact"
-                        className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-medium transition-colors group/btn ${
-                          treatment.link 
-                            ? 'bg-muted text-foreground hover:bg-muted/80' 
-                            : 'bg-muted hover:bg-primary hover:text-primary-foreground text-foreground'
-                        }`}
-                      >
-                        Book Consultation
-                        <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                      </Link>
                     </div>
                   </div>
                 </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
 
-      {/* Price Comparison Table */}
-      <section className="section-padding bg-background">
-        <div className="mx-auto max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <span className="text-primary font-medium text-sm uppercase tracking-wider">
-              Value Comparison
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-4">
-              Your Savings at Kundalini Dental
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Same quality materials, same international standards — significantly lower costs.
-            </p>
-          </motion.div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {category.treatments.map((treatment, index) => (
+                    <motion.div
+                      key={treatment.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="card-elevated card-hover overflow-hidden group"
+                    >
+                      {/* Tourism Badge */}
+                      {treatment.tourism_friendly && (
+                        <div className="bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground flex items-center justify-center gap-1">
+                          <Globe className="w-3 h-3" />
+                          Ideal for Dental Tourism
+                        </div>
+                      )}
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="card-elevated overflow-hidden"
-          >
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-muted/50">
-                    <th className="text-left p-4 font-semibold text-foreground">Treatment</th>
-                    <th className="text-center p-4 font-semibold text-foreground">USA Price</th>
-                    <th className="text-center p-4 font-semibold text-primary bg-primary/5">Our Price</th>
-                    <th className="text-center p-4 font-semibold text-foreground">You Save</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { treatment: "Single Dental Implant", usa: "$4,000", nepal: "$350", savings: "$3,650" },
-                    { treatment: "Porcelain Veneer", usa: "$1,500", nepal: "$250", savings: "$1,250" },
-                    { treatment: "All-on-4 (per arch)", usa: "$25,000", nepal: "$4,500", savings: "$20,500" },
-                    { treatment: "Zirconia Crown", usa: "$1,200", nepal: "$180", savings: "$1,020" },
-                    { treatment: "Root Canal", usa: "$1,000", nepal: "$100", savings: "$900" },
-                    { treatment: "Teeth Whitening", usa: "$500", nepal: "$150", savings: "$350" },
-                  ].map((row, index) => (
-                    <tr key={row.treatment} className={index % 2 === 0 ? '' : 'bg-muted/20'}>
-                      <td className="p-4 font-medium text-foreground">{row.treatment}</td>
-                      <td className="p-4 text-center text-muted-foreground line-through">{row.usa}</td>
-                      <td className="p-4 text-center font-semibold text-primary bg-primary/5">{row.nepal}</td>
-                      <td className="p-4 text-center font-semibold text-accent">{row.savings}</td>
-                    </tr>
+                      {/* Service Image */}
+                      {treatment.image_url && (
+                        <div className="aspect-video overflow-hidden">
+                          <img 
+                            src={treatment.image_url} 
+                            alt={treatment.image_alt || treatment.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      )}
+
+                      <div className="p-6">
+                        <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                          {treatment.title}
+                        </h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                          {treatment.short_description}
+                        </p>
+
+                        {/* Features */}
+                        {treatment.features.length > 0 && (
+                          <ul className="space-y-2 mb-5">
+                            {treatment.features.map((feature) => (
+                              <li key={feature} className="flex items-start gap-2 text-sm">
+                                <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                                <span className="text-muted-foreground">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        {/* Pricing */}
+                        <div className="border-t border-border pt-4 space-y-2">
+                          {treatment.price && (
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                <DollarSign className="w-4 h-4" />
+                                <span>Price</span>
+                              </div>
+                              <span className="font-semibold text-primary">{treatment.price}</span>
+                            </div>
+                          )}
+                          {treatment.duration && (
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                <Clock className="w-4 h-4" />
+                                <span>Duration</span>
+                              </div>
+                              <span className="text-sm text-foreground">{treatment.duration}</span>
+                            </div>
+                          )}
+                          {treatment.comparison_price && (
+                            <div className="bg-primary/5 rounded-lg px-3 py-2 text-center">
+                              <span className="text-xs text-primary font-medium">
+                                {treatment.comparison_price}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* CTAs */}
+                        <div className="mt-5 space-y-2">
+                          {treatment.body_content && (
+                            <Link
+                              to={`/services/${treatment.slug}`}
+                              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-primary text-primary-foreground text-sm font-medium transition-colors hover:bg-primary/90 group/btn"
+                            >
+                              Learn More
+                              <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                            </Link>
+                          )}
+                          <Link
+                            to="/contact"
+                            className={`flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-medium transition-colors group/btn ${
+                              treatment.body_content 
+                                ? 'bg-muted text-foreground hover:bg-muted/80' 
+                                : 'bg-muted hover:bg-primary hover:text-primary-foreground text-foreground'
+                            }`}
+                          >
+                            Book Consultation
+                            <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.div>
                   ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="bg-muted/30 p-4 text-center text-sm text-muted-foreground">
-              * Prices are approximate and may vary based on complexity. Final pricing provided after consultation.
-            </div>
-          </motion.div>
-        </div>
-      </section>
+                </div>
+              </div>
+            </section>
+          ))}
+
+          {/* Price Comparison Table - dynamic from services data */}
+          {(() => {
+            const comparisonData = categories
+              .flatMap(c => c.treatments)
+              .filter(t => t.price && t.comparison_price && t.price !== 'Custom quote')
+              .slice(0, 6);
+            
+            if (comparisonData.length === 0) return null;
+
+            return (
+              <section className="section-padding bg-background">
+                <div className="mx-auto max-w-5xl">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-12"
+                  >
+                    <span className="text-primary font-medium text-sm uppercase tracking-wider">
+                      Value Comparison
+                    </span>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-4">
+                      Your Savings at Kundalini Dental
+                    </h2>
+                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                      Same quality materials, same international standards — significantly lower costs.
+                    </p>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="card-elevated overflow-hidden"
+                  >
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="bg-muted/50">
+                            <th className="text-left p-4 font-semibold text-foreground">Treatment</th>
+                            <th className="text-center p-4 font-semibold text-foreground">Comparison</th>
+                            <th className="text-center p-4 font-semibold text-primary bg-primary/5">Our Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {comparisonData.map((row, index) => (
+                            <tr key={row.id} className={index % 2 === 0 ? '' : 'bg-muted/20'}>
+                              <td className="p-4 font-medium text-foreground">{row.title}</td>
+                              <td className="p-4 text-center text-muted-foreground line-through">{row.comparison_price}</td>
+                              <td className="p-4 text-center font-semibold text-primary bg-primary/5">{row.price}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="bg-muted/30 p-4 text-center text-sm text-muted-foreground">
+                      * Prices are approximate and may vary based on complexity. Final pricing provided after consultation.
+                    </div>
+                  </motion.div>
+                </div>
+              </section>
+            );
+          })()}
+        </>
+      )}
 
       {/* Not Sure CTA */}
       <section className="section-padding bg-accent">

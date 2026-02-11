@@ -1222,6 +1222,143 @@ export type Database = {
         }
         Relationships: []
       }
+      service_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          highlight: string | null
+          icon: string | null
+          id: string
+          image_url: string | null
+          is_visible: boolean | null
+          name: string
+          slug: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          highlight?: string | null
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          is_visible?: boolean | null
+          name: string
+          slug: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          highlight?: string | null
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          is_visible?: boolean | null
+          name?: string
+          slug?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          body_content: string | null
+          category_id: string | null
+          comparison_price: string | null
+          created_at: string
+          duration: string | null
+          faqs: Json | null
+          features: string[] | null
+          hero_badge: string | null
+          hero_description: string | null
+          hero_image_url: string | null
+          hero_title: string | null
+          id: string
+          image_alt: string | null
+          image_url: string | null
+          is_active: boolean | null
+          is_featured: boolean | null
+          og_image: string | null
+          price: string | null
+          seo_description: string | null
+          seo_title: string | null
+          short_description: string | null
+          slug: string
+          sort_order: number | null
+          title: string
+          tourism_friendly: boolean | null
+          updated_at: string
+        }
+        Insert: {
+          body_content?: string | null
+          category_id?: string | null
+          comparison_price?: string | null
+          created_at?: string
+          duration?: string | null
+          faqs?: Json | null
+          features?: string[] | null
+          hero_badge?: string | null
+          hero_description?: string | null
+          hero_image_url?: string | null
+          hero_title?: string | null
+          id?: string
+          image_alt?: string | null
+          image_url?: string | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          og_image?: string | null
+          price?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          short_description?: string | null
+          slug: string
+          sort_order?: number | null
+          title: string
+          tourism_friendly?: boolean | null
+          updated_at?: string
+        }
+        Update: {
+          body_content?: string | null
+          category_id?: string | null
+          comparison_price?: string | null
+          created_at?: string
+          duration?: string | null
+          faqs?: Json | null
+          features?: string[] | null
+          hero_badge?: string | null
+          hero_description?: string | null
+          hero_image_url?: string | null
+          hero_title?: string | null
+          id?: string
+          image_alt?: string | null
+          image_url?: string | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          og_image?: string | null
+          price?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          short_description?: string | null
+          slug?: string
+          sort_order?: number | null
+          title?: string
+          tourism_friendly?: boolean | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "services_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "service_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       team_members: {
         Row: {
           achievements: string[] | null
