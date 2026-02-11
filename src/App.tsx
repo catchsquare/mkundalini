@@ -17,7 +17,7 @@ import DentalTourismPage from "./pages/DentalTourismPage";
 import ContactPage from "./pages/ContactPage";
 import PricingPage from "./pages/PricingPage";
 import ReviewsPage from "./pages/ReviewsPage";
-import DentalImplantsPage from "./pages/treatments/DentalImplantsPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -72,7 +72,7 @@ const App = () => (
               {/* Public Routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/services" element={<ServicesPage />} />
-              <Route path="/services/dental-implants" element={<DentalImplantsPage />} />
+              <Route path="/services/:slug" element={<ServiceDetailPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/doctors" element={<DoctorsPage />} />
               <Route path="/dental-tourism" element={<DentalTourismPage />} />
