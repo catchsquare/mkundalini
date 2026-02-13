@@ -39,6 +39,19 @@ export async function submitLead(data: LeadData): Promise<{ success: boolean; er
 
     if (error) throw error;
 
+    // Send email notification (fire-and-forget)
+    supabase.functions.invoke("notify-lead", {
+      body: {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message: data.message,
+        form_type: data.form_type,
+        treatment_interest: data.treatment_interest,
+        source: data.source,
+      },
+    }).catch((err) => console.error("Email notification failed:", err));
+
     return { success: true };
   } catch (error: any) {
     console.error("Error submitting lead:", error);
