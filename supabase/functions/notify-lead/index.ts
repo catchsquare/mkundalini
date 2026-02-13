@@ -6,7 +6,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const NOTIFY_EMAILS = ["gouraff@gmail.com", "nitindent@gmail.com"];
+// Until domain is verified on Resend, only the account owner email works
+const NOTIFY_EMAILS = ["gouraff@gmail.com"];
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
