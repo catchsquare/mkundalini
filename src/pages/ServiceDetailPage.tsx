@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { sanitizeHTML } from "@/lib/sanitize";
 import { motion } from "framer-motion";
 import { 
   ArrowRight, ArrowLeft, Phone, Globe, Check, 
@@ -204,7 +205,7 @@ export default function ServiceDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="rich-content"
-              dangerouslySetInnerHTML={{ __html: service.body_content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(service.body_content) }}
             />
           </div>
         </section>
