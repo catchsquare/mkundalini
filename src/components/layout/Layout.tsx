@@ -1,8 +1,14 @@
-import { ReactNode } from "react";
+import { ReactNode, lazy, Suspense } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { AnnouncementBar } from "./AnnouncementBar";
 import { FloatingCallButton } from "@/components/ui/floating-call-button";
+
+const DentalAssistantWidget = lazy(() =>
+  import("@/components/dental-assistant/DentalAssistantWidget").then((m) => ({
+    default: m.DentalAssistantWidget,
+  }))
+);
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,6 +23,9 @@ export function Layout({ children, showAnnouncement = true }: LayoutProps) {
       <main className="flex-1">{children}</main>
       <Footer />
       <FloatingCallButton />
+      <Suspense fallback={null}>
+        <DentalAssistantWidget />
+      </Suspense>
     </div>
   );
 }
