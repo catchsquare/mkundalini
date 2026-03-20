@@ -27,10 +27,12 @@ export function DentalAssistantWidget() {
     return () => clearTimeout(promptTimerRef.current);
   }, []);
 
-  // Scroll to bottom on new messages
+  // Scroll to bottom on new messages (but not for the initial welcome message)
   useEffect(() => {
-    if (scrollRef.current) {
+    if (scrollRef.current && messages.length > 1) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    } else if (scrollRef.current && messages.length === 1) {
+      scrollRef.current.scrollTop = 0;
     }
   }, [messages]);
 
