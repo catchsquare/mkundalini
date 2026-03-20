@@ -288,7 +288,7 @@ export default function HomePage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center pt-24 sm:pt-28 lg:pt-32">
+      <section className="relative min-h-[auto] sm:min-h-[85vh] lg:min-h-[92vh] flex items-center pt-20 sm:pt-28 lg:pt-32 pb-8 sm:pb-0">
         <div className="absolute inset-0 z-0">
           <img
             src={typeof heroData.backgroundImage === 'string' ? heroData.backgroundImage : heroImage}
@@ -309,7 +309,7 @@ export default function HomePage() {
           />
         )}
         
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-16 lg:py-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
