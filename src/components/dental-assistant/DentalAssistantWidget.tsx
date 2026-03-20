@@ -19,11 +19,11 @@ export function DentalAssistantWidget() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const promptTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
-  // Auto-prompt after 8 seconds
+  // Auto-prompt after 3 seconds (faster to grab attention)
   useEffect(() => {
     promptTimerRef.current = setTimeout(() => {
       setShowPrompt(true);
-    }, 8000);
+    }, 3000);
     return () => clearTimeout(promptTimerRef.current);
   }, []);
 
