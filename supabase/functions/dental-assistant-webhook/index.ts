@@ -9,12 +9,43 @@ const corsHeaders = {
 // Same recipients as notify-lead (Resend free tier limitation)
 const NOTIFY_EMAILS = ["gouraff@gmail.com"];
 
+// Per-IP rate limiting: max 5 requests per 10 minutes
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+const ipRequestLog = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = (ipRequestLog.get(ip) || []).filter(
+    (t) => now - t < RATE_LIMIT_WINDOW_MS
+  );
+  if (timestamps.length >= RATE_LIMIT_MAX) {
+    ipRequestLog.set(ip, timestamps);
+    return true;
+  }
+  timestamps.push(now);
+  ipRequestLog.set(ip, timestamps);
+  return false;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Rate limiting
+    const clientIp =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("cf-connecting-ip") ||
+      "unknown";
+    if (isRateLimited(clientIp)) {
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const { name, phone, date, issue } = await req.json();
 
     if (!name || !phone) {
@@ -24,11 +55,31 @@ serve(async (req) => {
       );
     }
 
+    // Input length validation
+    if (String(name).length > 200 || String(phone).length > 50) {
+      return new Response(
+        JSON.stringify({ error: "Input too long" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    if (date && String(date).length > 100) {
+      return new Response(
+        JSON.stringify({ error: "Input too long" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    if (issue && String(issue).length > 1000) {
+      return new Response(
+        JSON.stringify({ error: "Input too long" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY");
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
-    // 1. Save as a lead in the database
+    // 1. Save as a lead in the database (using anon key — RLS INSERT policy allows public inserts)
     if (supabaseUrl && supabaseKey) {
       try {
         await fetch(`${supabaseUrl}/rest/v1/leads`, {
@@ -40,12 +91,12 @@ serve(async (req) => {
             Prefer: "return=minimal",
           },
           body: JSON.stringify({
-            name,
-            phone,
-            message: issue || null,
+            name: String(name).slice(0, 200),
+            phone: String(phone).slice(0, 50),
+            message: issue ? String(issue).slice(0, 1000) : null,
             source: "ai_assistant",
             form_type: "ai_booking",
-            treatment_interest: issue || null,
+            treatment_interest: issue ? String(issue).slice(0, 1000) : null,
             status: "new",
             priority: "high",
           }),
@@ -105,7 +156,7 @@ serve(async (req) => {
           body: JSON.stringify({
             from: "Kundalini Dental <onboarding@resend.dev>",
             to: NOTIFY_EMAILS,
-            subject: `🦷 AI Booking: ${name} — ${date || "Date TBD"}`,
+            subject: `🦷 AI Booking: ${String(name).slice(0, 100)} — ${date ? String(date).slice(0, 50) : "Date TBD"}`,
             html,
           }),
         });
@@ -116,7 +167,6 @@ serve(async (req) => {
         }
       } catch (emailErr) {
         console.error("Email notification failed:", emailErr);
-        // Fail silently — lead is already saved
       }
     } else {
       console.log("RESEND_API_KEY not configured — lead saved to DB only.");
