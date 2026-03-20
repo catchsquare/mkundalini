@@ -193,7 +193,7 @@ export function DentalAssistantWidget() {
       setMessages([
         {
           role: "assistant",
-          content: "Hi there! 👋 Welcome to Kundalini Dental Clinic. I'm here to help you with any dental questions or to book an appointment. How can I help you today? 😊",
+          content: "Hi there! 👋 Welcome to **Kundalini Dental Clinic**. I can help you:\n\n🔹 **Book an appointment** right here in chat\n🔹 Answer dental questions\n🔹 Guide you on treatments & pricing\n\nHow can I help you today? 😊",
         },
       ]);
     }
@@ -212,12 +212,12 @@ export function DentalAssistantWidget() {
       {/* Floating prompt bubble */}
       {showPrompt && !isOpen && (
         <div
-          className="fixed bottom-[88px] right-4 z-[9998] max-w-[280px] animate-in fade-in slide-in-from-bottom-4 duration-700 cursor-pointer"
+          className="fixed bottom-20 sm:bottom-[88px] right-4 z-[9998] max-w-[260px] sm:max-w-[280px] animate-in fade-in slide-in-from-bottom-4 duration-700 cursor-pointer"
           onClick={openChat}
         >
           <div className="bg-white rounded-2xl rounded-br-sm shadow-2xl border border-primary/20 px-4 py-3.5 text-sm text-foreground relative">
-            <div className="font-medium">Hi 👋 Need dental help?</div>
-            <div className="text-muted-foreground text-xs mt-1">Chat with our AI assistant — get instant answers & book appointments!</div>
+            <div className="font-medium">👋 Need dental help?</div>
+            <div className="text-muted-foreground text-xs mt-1">Chat with our AI — get answers & <span className="font-semibold text-primary">book appointments instantly!</span></div>
             <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-white border-r border-b border-primary/20 rotate-45" />
           </div>
         </div>
@@ -227,28 +227,27 @@ export function DentalAssistantWidget() {
       {!isOpen && (
         <button
           onClick={openChat}
-          className="group fixed bottom-4 right-4 z-[9999] flex items-center gap-2.5 bg-primary text-primary-foreground shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover:scale-105 active:scale-95 rounded-full pl-5 pr-6 py-3.5"
+          className="group fixed bottom-4 right-4 z-[9999] flex items-center gap-2.5 bg-primary text-primary-foreground shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover:scale-105 active:scale-95 rounded-full px-4 py-3 sm:pl-5 sm:pr-6 sm:py-3.5"
           aria-label="Open dental assistant chat"
         >
           {/* Pulse ring */}
           <span className="absolute inset-0 rounded-full animate-ping bg-primary/30 opacity-60" style={{ animationDuration: '2.5s' }} />
           
           <div className="relative flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center text-lg shrink-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center text-base sm:text-lg shrink-0">
               🦷
             </div>
-            <div className="text-left hidden sm:block">
-              <div className="text-sm font-bold leading-tight">AI Dental Assistant</div>
-              <div className="text-[11px] opacity-80">Ask me anything!</div>
+            <div className="text-left">
+              <div className="text-xs sm:text-sm font-bold leading-tight">AI Dental Assistant</div>
+              <div className="text-[10px] sm:text-[11px] opacity-80">Book appointments & ask questions</div>
             </div>
-            <MessageCircle className="w-5 h-5 sm:hidden" />
           </div>
         </button>
       )}
 
       {/* Chat window */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 z-[9999] w-[370px] max-w-[calc(100vw-2rem)] h-[560px] max-h-[calc(100vh-2rem)] flex flex-col bg-white rounded-2xl shadow-2xl border border-border/30 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div className="fixed bottom-0 right-0 sm:bottom-4 sm:right-4 z-[9999] w-full sm:w-[370px] sm:max-w-[calc(100vw-2rem)] h-[100dvh] sm:h-[560px] sm:max-h-[calc(100vh-2rem)] flex flex-col bg-white sm:rounded-2xl shadow-2xl border border-border/30 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
           {/* Header */}
           <div className="flex items-center gap-3 px-4 py-3 bg-primary text-primary-foreground shrink-0">
             <div className="w-9 h-9 rounded-full bg-primary-foreground/20 flex items-center justify-center text-lg">
