@@ -193,7 +193,7 @@ export function DentalAssistantWidget() {
       setMessages([
         {
           role: "assistant",
-          content: "Hi there! 👋 Welcome to Kundalini Dental Clinic. I'm here to help you with any dental questions or to book an appointment. How can I help you today? 😊",
+          content: "Hi there! 👋 Welcome to **Kundalini Dental Clinic**. I can help you:\n\n🔹 **Book an appointment** right here in chat\n🔹 Answer dental questions\n🔹 Guide you on treatments & pricing\n\nHow can I help you today? 😊",
         },
       ]);
     }
