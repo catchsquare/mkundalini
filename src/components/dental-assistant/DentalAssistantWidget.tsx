@@ -212,23 +212,37 @@ export function DentalAssistantWidget() {
       {/* Floating prompt bubble */}
       {showPrompt && !isOpen && (
         <div
-          className="fixed bottom-24 right-4 z-[9998] max-w-[260px] animate-in fade-in slide-in-from-bottom-2 duration-500 cursor-pointer"
+          className="fixed bottom-[88px] right-4 z-[9998] max-w-[280px] animate-in fade-in slide-in-from-bottom-4 duration-700 cursor-pointer"
           onClick={openChat}
         >
-          <div className="bg-white rounded-2xl rounded-br-sm shadow-xl border border-border/50 px-4 py-3 text-sm text-foreground">
-            Hi 👋 Need help with a dental issue?
+          <div className="bg-white rounded-2xl rounded-br-sm shadow-2xl border border-primary/20 px-4 py-3.5 text-sm text-foreground relative">
+            <div className="font-medium">Hi 👋 Need dental help?</div>
+            <div className="text-muted-foreground text-xs mt-1">Chat with our AI assistant — get instant answers & book appointments!</div>
+            <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-white border-r border-b border-primary/20 rotate-45" />
           </div>
         </div>
       )}
 
-      {/* Chat bubble button */}
+      {/* Chat bubble button — large & eye-catching */}
       {!isOpen && (
         <button
           onClick={openChat}
-          className="fixed bottom-4 right-4 z-[9999] w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-105 active:scale-95"
+          className="group fixed bottom-4 right-4 z-[9999] flex items-center gap-2.5 bg-primary text-primary-foreground shadow-2xl hover:shadow-primary/40 transition-all duration-300 hover:scale-105 active:scale-95 rounded-full pl-5 pr-6 py-3.5"
           aria-label="Open dental assistant chat"
         >
-          <MessageCircle className="w-6 h-6" />
+          {/* Pulse ring */}
+          <span className="absolute inset-0 rounded-full animate-ping bg-primary/30 opacity-60" style={{ animationDuration: '2.5s' }} />
+          
+          <div className="relative flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center text-lg shrink-0">
+              🦷
+            </div>
+            <div className="text-left hidden sm:block">
+              <div className="text-sm font-bold leading-tight">AI Dental Assistant</div>
+              <div className="text-[11px] opacity-80">Ask me anything!</div>
+            </div>
+            <MessageCircle className="w-5 h-5 sm:hidden" />
+          </div>
         </button>
       )}
 
