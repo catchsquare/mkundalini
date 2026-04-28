@@ -31,9 +31,8 @@ export function useGallery(options?: { featured?: boolean; categorySlug?: string
   const fetchGallery = async () => {
     try {
       let query = supabase
-        .from("gallery_items")
+        .from("gallery_items_public")
         .select("id, title, description, before_image, after_image, category_id, is_featured, category:gallery_categories(name, slug)")
-        .eq("is_visible", true)
         .order("is_featured", { ascending: false })
         .order("sort_order");
 
