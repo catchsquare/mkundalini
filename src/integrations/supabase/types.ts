@@ -1561,7 +1561,82 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      gallery_items_public: {
+        Row: {
+          after_image: string | null
+          before_image: string | null
+          category_id: string | null
+          consent_obtained: boolean | null
+          created_at: string | null
+          dentist_id: string | null
+          description: string | null
+          id: string | null
+          is_featured: boolean | null
+          is_visible: boolean | null
+          sort_order: number | null
+          tags: string[] | null
+          title: string | null
+          treatment_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          after_image?: string | null
+          before_image?: string | null
+          category_id?: string | null
+          consent_obtained?: boolean | null
+          created_at?: string | null
+          dentist_id?: string | null
+          description?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          is_visible?: boolean | null
+          sort_order?: number | null
+          tags?: string[] | null
+          title?: string | null
+          treatment_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          after_image?: string | null
+          before_image?: string | null
+          category_id?: string | null
+          consent_obtained?: boolean | null
+          created_at?: string | null
+          dentist_id?: string | null
+          description?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          is_visible?: boolean | null
+          sort_order?: number | null
+          tags?: string[] | null
+          title?: string | null
+          treatment_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_items_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "gallery_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "gallery_items_dentist_id_fkey"
+            columns: ["dentist_id"]
+            isOneToOne: false
+            referencedRelation: "dentists"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "gallery_items_treatment_id_fkey"
+            columns: ["treatment_id"]
+            isOneToOne: false
+            referencedRelation: "treatments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       has_cms_access: { Args: { _user_id: string }; Returns: boolean }
