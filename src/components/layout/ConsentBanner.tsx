@@ -39,9 +39,9 @@ export function ConsentBanner() {
       role="dialog"
       aria-live="polite"
       aria-label="Cookie consent"
-      className="fixed inset-x-0 bottom-0 z-[60] px-3 pb-3 sm:px-4 sm:pb-4 animate-in fade-in slide-in-from-bottom-4"
+      className="fixed inset-x-0 bottom-0 z-[70] px-3 pb-3 sm:px-4 sm:pb-4 pr-3 sm:pr-24 md:pr-28 animate-in fade-in slide-in-from-bottom-4"
     >
-      <div className="mx-auto max-w-4xl rounded-xl border border-border bg-background/95 backdrop-blur-md shadow-lg p-4 sm:p-5">
+      <div className="mx-auto max-w-4xl rounded-xl border border-border bg-background/95 backdrop-blur-md shadow-lg p-4 sm:p-5 mb-20 sm:mb-0">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
           <div className="flex-1 text-sm text-foreground/90 leading-relaxed">
             <p className="font-semibold mb-1 text-foreground">We value your privacy</p>
