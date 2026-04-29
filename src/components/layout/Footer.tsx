@@ -5,7 +5,7 @@ import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 const navigation = {
   services: [
-    { name: "Dental Implants", href: "/services/dental-implants" },
+    { name: "Dental Implants", href: "/services/single-implants" },
     { name: "Cosmetic Dentistry", href: "/services#cosmetic" },
     { name: "Orthodontics", href: "/services#orthodontics" },
     { name: "Root Canal Treatment", href: "/services#general" },

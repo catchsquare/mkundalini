@@ -72,7 +72,7 @@ export default function RefundPage() {
           </div>
 
           <div>
-            <h2 className="text-2xl function-bold font-bold text-foreground mb-3">5. Dental Tourism Packages</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-3">5. Dental Tourism Packages</h2>
             <p className="text-muted-foreground leading-relaxed">
               Dental tourism deposits cover treatment planning, slot reservation, and coordination services. Refund
               eligibility:
