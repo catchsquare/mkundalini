@@ -11,6 +11,89 @@ const KNOWN_ROUTES = [
   "/refund", "/faq",
 ];
 
+// Valid service slugs (keep in sync with DB)
+const VALID_SERVICE_SLUGS = new Set([
+  "all-on-4", "bonding", "bone-grafting", "braces", "cleaning",
+  "clear-aligners", "crowns-bridges", "extractions", "fillings",
+  "full-mouth", "gum-surgery", "retainers", "root-canal",
+  "single-implants", "smile-makeover", "veneers", "whitening",
+  "wisdom-teeth",
+]);
+
+// Legacy / alternate service slug aliases -> current valid slug
+const SERVICE_SLUG_ALIASES: Record<string, string> = {
+  "dental-implants": "single-implants",
+  "implants": "single-implants",
+  "tooth-implant": "single-implants",
+  "implant": "single-implants",
+  "all-on-four": "all-on-4",
+  "all-on-6": "all-on-4",
+  "full-mouth-implants": "full-mouth",
+  "full-mouth-rehabilitation": "full-mouth",
+  "full-mouth-reconstruction": "full-mouth",
+  "crowns": "crowns-bridges",
+  "bridges": "crowns-bridges",
+  "dental-crowns": "crowns-bridges",
+  "dental-bridges": "crowns-bridges",
+  "cap": "crowns-bridges",
+  "rct": "root-canal",
+  "root-canal-treatment": "root-canal",
+  "endodontics": "root-canal",
+  "teeth-whitening": "whitening",
+  "bleaching": "whitening",
+  "dental-veneers": "veneers",
+  "porcelain-veneers": "veneers",
+  "invisalign": "clear-aligners",
+  "aligners": "clear-aligners",
+  "orthodontics": "braces",
+  "orthodontic": "braces",
+  "metal-braces": "braces",
+  "ceramic-braces": "braces",
+  "scaling": "cleaning",
+  "scaling-polishing": "cleaning",
+  "teeth-cleaning": "cleaning",
+  "prophylaxis": "cleaning",
+  "extraction": "extractions",
+  "tooth-extraction": "extractions",
+  "wisdom-tooth": "wisdom-teeth",
+  "wisdom-tooth-removal": "wisdom-teeth",
+  "third-molar": "wisdom-teeth",
+  "filling": "fillings",
+  "tooth-filling": "fillings",
+  "composite-filling": "fillings",
+  "cavity": "fillings",
+  "gum-treatment": "gum-surgery",
+  "periodontics": "gum-surgery",
+  "periodontal": "gum-surgery",
+  "gingivectomy": "gum-surgery",
+  "smile-design": "smile-makeover",
+  "cosmetic-dentistry": "smile-makeover",
+  "dental-bonding": "bonding",
+  "tooth-bonding": "bonding",
+  "bone-graft": "bone-grafting",
+  "sinus-lift": "bone-grafting",
+  "retainer": "retainers",
+  "dentures": "smile-makeover",
+  "denture": "smile-makeover",
+  "pediatric": "cleaning",
+  "kids-dentistry": "cleaning",
+  "childrens-dentistry": "cleaning",
+};
+
+function resolveServiceSlug(slug: string): string | null {
+  const s = slug.toLowerCase().trim();
+  if (VALID_SERVICE_SLUGS.has(s)) return s;
+  if (SERVICE_SLUG_ALIASES[s]) return SERVICE_SLUG_ALIASES[s];
+  // Fuzzy: try matching against known slugs
+  for (const valid of VALID_SERVICE_SLUGS) {
+    if (s.includes(valid) || valid.includes(s)) return valid;
+  }
+  for (const [alias, target] of Object.entries(SERVICE_SLUG_ALIASES)) {
+    if (s.includes(alias) || alias.includes(s)) return target;
+  }
+  return null;
+}
+
 // Pattern-based redirects: keyword in path -> destination
 const REDIRECT_PATTERNS: Array<{ test: RegExp; to: string }> = [
   // Services / treatments
@@ -62,10 +145,16 @@ function findRedirect(pathname: string): string | null {
   // Exact match without trailing slash
   if (KNOWN_ROUTES.includes(cleaned) && cleaned !== pathname) return cleaned;
 
-  // If first segment looks like a service slug, route to service detail
+  // If first segment looks like a service slug, resolve to a real service or /services
   const segments = cleaned.split("/").filter(Boolean);
   if (segments.length >= 2 && segments[0] === "services") {
-    return `/services/${segments[1]}`;
+    const resolved = resolveServiceSlug(segments[1]);
+    return resolved ? `/services/${resolved}` : "/services";
+  }
+  // Bare slug at root that matches a service alias
+  if (segments.length === 1) {
+    const resolved = resolveServiceSlug(segments[0]);
+    if (resolved) return `/services/${resolved}`;
   }
 
   // Pattern matching across full path
