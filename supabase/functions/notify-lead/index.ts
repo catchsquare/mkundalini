@@ -7,8 +7,12 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Until domain is verified on Resend, only the account owner email works
-const NOTIFY_EMAILS = ["gouraff@gmail.com"];
+// Notification recipients are configured via the NOTIFY_EMAILS env var (comma-separated).
+// Falls back to the account owner email until a verified Resend domain is configured.
+const NOTIFY_EMAILS = (Deno.env.get("NOTIFY_EMAILS") || "gouraff@gmail.com")
+  .split(",")
+  .map((e) => e.trim())
+  .filter(Boolean);
 
 // Simple in-memory rate limiter (per function instance)
 const rateLimitMap = new Map<string, number[]>();

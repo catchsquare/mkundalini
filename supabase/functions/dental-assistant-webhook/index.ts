@@ -6,8 +6,11 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Same recipients as notify-lead (Resend free tier limitation)
-const NOTIFY_EMAILS = ["gouraff@gmail.com"];
+// Notification recipients are configured via the NOTIFY_EMAILS env var (comma-separated).
+const NOTIFY_EMAILS = (Deno.env.get("NOTIFY_EMAILS") || "gouraff@gmail.com")
+  .split(",")
+  .map((e) => e.trim())
+  .filter(Boolean);
 
 // Per-IP rate limiting: max 5 requests per 10 minutes
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
