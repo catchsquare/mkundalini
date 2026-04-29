@@ -224,6 +224,15 @@ export function Footer() {
             <p className="text-xs sm:text-sm text-secondary-foreground/50">
               © {new Date().getFullYear()} {settings.clinic_name}. All rights reserved.
             </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs sm:text-sm text-secondary-foreground/60">
+              <Link to="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
+              <span className="text-secondary-foreground/20">·</span>
+              <Link to="/terms" className="hover:text-primary transition-colors">Terms</Link>
+              <span className="text-secondary-foreground/20">·</span>
+              <Link to="/refund" className="hover:text-primary transition-colors">Refund</Link>
+              <span className="text-secondary-foreground/20">·</span>
+              <Link to="/faq" className="hover:text-primary transition-colors">FAQ</Link>
+            </div>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-secondary-foreground/50">
               <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
               <span>{settings.address}</span>
