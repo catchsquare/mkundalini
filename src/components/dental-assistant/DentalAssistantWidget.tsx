@@ -43,7 +43,7 @@ export function DentalAssistantWidget() {
     }
   }, [isOpen]);
 
-  const processAssistantMessage = useCallback((content: string) => {
+  const processAssistantMessage = useCallback(async (content: string) => {
     // Check for appointment booking data
     const bookingMatch = content.match(/```appointment_booking\s*\n?([\s\S]*?)\n?```/);
     if (bookingMatch) {
@@ -55,17 +55,30 @@ export function DentalAssistantWidget() {
 
     // Check for confirmation trigger
     if (content.includes("```confirm_appointment```") && pendingBooking) {
-      // Fire webhook
-      fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify(pendingBooking),
-      }).catch(() => {
-        // Fail silently — user sees success message from AI
-      });
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify(pendingBooking),
+        });
+        if (res.status === 409) {
+          const data = await res.json().catch(() => ({}));
+          setMessages(prev => [
+            ...prev,
+            {
+              role: "assistant",
+              content: `😔 ${data.message || "That time slot is fully booked (we only have 2 dental chairs). Could you please choose a different time?"}`,
+            },
+          ]);
+          setPendingBooking(null);
+          return;
+        }
+      } catch {
+        // Fail silently — user already saw the AI's success message
+      }
       setPendingBooking(null);
     }
   }, [pendingBooking]);
