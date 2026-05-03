@@ -55,6 +55,7 @@ serve(async (req) => {
     const slot_date: string | undefined = body.slot_date;
     const slot_time: string | undefined = body.slot_time;
     const date_display: string | undefined = body.date_display || body.date;
+    const is_emergency: boolean = body.is_emergency === true;
 
     if (!name || !phone) {
       return new Response(
@@ -89,8 +90,23 @@ serve(async (req) => {
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
     const MAX_CHAIRS = 2;
+    const MIN_LEAD_TIME_MS = 2 * 60 * 60 * 1000; // 2 hours
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     const timeRegex = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+    // ===== Minimum 2-hour lead time (skipped for emergencies) =====
+    if (!is_emergency && slot_date && slot_time && dateRegex.test(slot_date) && timeRegex.test(slot_time)) {
+      const slotDateTime = new Date(`${slot_date}T${slot_time}:00+05:45`); // Nepal time
+      if (!isNaN(slotDateTime.getTime()) && slotDateTime.getTime() - Date.now() < MIN_LEAD_TIME_MS) {
+        return new Response(
+          JSON.stringify({
+            error: "lead_time_too_short",
+            message: "Appointments must be booked at least 2 hours in advance. If this is a dental emergency (severe pain, swelling, trauma, or bleeding), please tell me — I can book you the earliest available slot.",
+          }),
+          { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
 
     // ===== Slot capacity check (2 dental chairs) =====
     if (slot_date && slot_time && dateRegex.test(slot_date) && timeRegex.test(slot_time) && supabaseUrl && serviceKey) {
@@ -153,11 +169,12 @@ serve(async (req) => {
             form_type: "ai_booking",
             treatment_interest: issue ? String(issue).slice(0, 1000) : null,
             status: "new",
-            priority: "high",
+            priority: is_emergency ? "urgent" : "high",
             metadata: {
               slot_date: slot_date && dateRegex.test(slot_date) ? slot_date : null,
               slot_time: slot_time && timeRegex.test(slot_time) ? slot_time : null,
               date_display: date_display ? String(date_display).slice(0, 200) : null,
+              is_emergency,
             },
           }),
         });
