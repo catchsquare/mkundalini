@@ -216,7 +216,7 @@ serve(async (req) => {
           body: JSON.stringify({
             from: "Kundalini Dental <onboarding@resend.dev>",
             to: NOTIFY_EMAILS,
-            subject: `🦷 AI Booking: ${String(name).slice(0, 100)} — ${date ? String(date).slice(0, 50) : "Date TBD"}`,
+            subject: `🦷 AI Booking: ${String(name).slice(0, 100)} — ${date_display ? String(date_display).slice(0, 50) : (slot_date || "Date TBD")}`,
             html,
           }),
         });
