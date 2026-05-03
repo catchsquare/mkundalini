@@ -169,11 +169,12 @@ serve(async (req) => {
             form_type: "ai_booking",
             treatment_interest: issue ? String(issue).slice(0, 1000) : null,
             status: "new",
-            priority: "high",
+            priority: is_emergency ? "urgent" : "high",
             metadata: {
               slot_date: slot_date && dateRegex.test(slot_date) ? slot_date : null,
               slot_time: slot_time && timeRegex.test(slot_time) ? slot_time : null,
               date_display: date_display ? String(date_display).slice(0, 200) : null,
+              is_emergency,
             },
           }),
         });
