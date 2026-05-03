@@ -49,7 +49,12 @@ serve(async (req) => {
       );
     }
 
-    const { name, phone, date, issue } = await req.json();
+    const body = await req.json();
+    const { name, phone, issue } = body;
+    // Backward-compat: accept either {slot_date, slot_time} or {date}
+    const slot_date: string | undefined = body.slot_date;
+    const slot_time: string | undefined = body.slot_time;
+    const date_display: string | undefined = body.date_display || body.date;
 
     if (!name || !phone) {
       return new Response(
@@ -65,7 +70,7 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
-    if (date && String(date).length > 100) {
+    if (date_display && String(date_display).length > 200) {
       return new Response(
         JSON.stringify({ error: "Input too long" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -80,7 +85,54 @@ serve(async (req) => {
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
     const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY");
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+
+    const MAX_CHAIRS = 2;
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    const timeRegex = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+    // ===== Slot capacity check (2 dental chairs) =====
+    if (slot_date && slot_time && dateRegex.test(slot_date) && timeRegex.test(slot_time) && supabaseUrl && serviceKey) {
+      try {
+        // Count confirmed appointments at this slot
+        const apptUrl = `${supabaseUrl}/rest/v1/appointments?select=id&appointment_date=eq.${slot_date}&start_time=eq.${slot_time}:00&status=in.(scheduled,confirmed,in_progress)`;
+        const apptRes = await fetch(apptUrl, {
+          headers: {
+            apikey: serviceKey,
+            Authorization: `Bearer ${serviceKey}`,
+            Prefer: "count=exact",
+          },
+        });
+        const apptCountHeader = apptRes.headers.get("content-range") || "";
+        const apptCount = parseInt(apptCountHeader.split("/")[1] || "0", 10) || 0;
+
+        // Count pending AI leads requesting the same slot
+        const leadUrl = `${supabaseUrl}/rest/v1/leads?select=id&form_type=eq.ai_booking&status=in.(new,contacted)&metadata->>slot_date=eq.${slot_date}&metadata->>slot_time=eq.${slot_time}`;
+        const leadRes = await fetch(leadUrl, {
+          headers: {
+            apikey: serviceKey,
+            Authorization: `Bearer ${serviceKey}`,
+            Prefer: "count=exact",
+          },
+        });
+        const leadCountHeader = leadRes.headers.get("content-range") || "";
+        const leadCount = parseInt(leadCountHeader.split("/")[1] || "0", 10) || 0;
+
+        if (apptCount + leadCount >= MAX_CHAIRS) {
+          return new Response(
+            JSON.stringify({
+              error: "slot_full",
+              message: `Sorry, that time slot is fully booked (we only have ${MAX_CHAIRS} dental chairs). Please choose another time.`,
+            }),
+            { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+      } catch (capErr) {
+        console.error("Slot capacity check failed:", capErr);
+        // Fail-open: continue with booking but log the issue
+      }
+    }
 
     // 1. Save as a lead in the database (using anon key — RLS INSERT policy allows public inserts)
     if (supabaseUrl && supabaseKey) {
@@ -102,6 +154,11 @@ serve(async (req) => {
             treatment_interest: issue ? String(issue).slice(0, 1000) : null,
             status: "new",
             priority: "high",
+            metadata: {
+              slot_date: slot_date && dateRegex.test(slot_date) ? slot_date : null,
+              slot_time: slot_time && timeRegex.test(slot_time) ? slot_time : null,
+              date_display: date_display ? String(date_display).slice(0, 200) : null,
+            },
           }),
         });
       } catch (dbErr) {
@@ -132,7 +189,7 @@ serve(async (req) => {
               </tr>
               <tr>
                 <td style="padding: 10px 8px; font-weight: bold; color: #555; border-bottom: 1px solid #f3f4f6;">📅 Preferred Date</td>
-                <td style="padding: 10px 8px; border-bottom: 1px solid #f3f4f6;">${esc(date)}</td>
+                <td style="padding: 10px 8px; border-bottom: 1px solid #f3f4f6;">${esc(date_display || (slot_date && slot_time ? `${slot_date} ${slot_time}` : ""))}</td>
               </tr>
               <tr>
                 <td style="padding: 10px 8px; font-weight: bold; color: #555;">🩺 Issue</td>
@@ -159,7 +216,7 @@ serve(async (req) => {
           body: JSON.stringify({
             from: "Kundalini Dental <onboarding@resend.dev>",
             to: NOTIFY_EMAILS,
-            subject: `🦷 AI Booking: ${String(name).slice(0, 100)} — ${date ? String(date).slice(0, 50) : "Date TBD"}`,
+            subject: `🦷 AI Booking: ${String(name).slice(0, 100)} — ${date_display ? String(date_display).slice(0, 50) : (slot_date || "Date TBD")}`,
             html,
           }),
         });
