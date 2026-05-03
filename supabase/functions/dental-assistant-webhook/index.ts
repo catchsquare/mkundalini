@@ -189,7 +189,7 @@ serve(async (req) => {
               </tr>
               <tr>
                 <td style="padding: 10px 8px; font-weight: bold; color: #555; border-bottom: 1px solid #f3f4f6;">📅 Preferred Date</td>
-                <td style="padding: 10px 8px; border-bottom: 1px solid #f3f4f6;">${esc(date)}</td>
+                <td style="padding: 10px 8px; border-bottom: 1px solid #f3f4f6;">${esc(date_display || (slot_date && slot_time ? `${slot_date} ${slot_time}` : ""))}</td>
               </tr>
               <tr>
                 <td style="padding: 10px 8px; font-weight: bold; color: #555;">🩺 Issue</td>
