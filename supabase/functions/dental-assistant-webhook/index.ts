@@ -55,6 +55,7 @@ serve(async (req) => {
     const slot_date: string | undefined = body.slot_date;
     const slot_time: string | undefined = body.slot_time;
     const date_display: string | undefined = body.date_display || body.date;
+    const is_emergency: boolean = body.is_emergency === true;
 
     if (!name || !phone) {
       return new Response(
