@@ -29,6 +29,55 @@ function isRateLimited(ip: string): boolean {
 const MAX_MESSAGES = 50;
 const MAX_TOTAL_CHARS = 20000;
 
+// Build a fresh date/time context for every request (Nepal time, UTC+05:45)
+function buildDateContext(): string {
+  const now = new Date();
+  const nepalFormatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kathmandu",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+  const isoFormatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kathmandu",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kathmandu",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const todayIso = isoFormatter.format(now); // YYYY-MM-DD
+  const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+  const tomorrowIso = isoFormatter.format(tomorrow);
+  const nowTime = timeFormatter.format(now); // HH:MM
+  const human = nepalFormatter.format(now);
+
+  return `## CURRENT DATE & TIME (Nepal time, Asia/Kathmandu, UTC+05:45)
+- Right now it is: **${human}**
+- Today's date (ISO): **${todayIso}**
+- Tomorrow's date (ISO): **${tomorrowIso}**
+- Current time (24h): **${nowTime}**
+
+CRITICAL RULES for date/time handling:
+- ALWAYS use the date/time above as "now". Do NOT guess or use training data.
+- When the user says relative words ("today", "tomorrow", "next Monday", "in 2 hours"), compute from the date above.
+- "slot_date" in the booking JSON MUST be in YYYY-MM-DD format.
+- "slot_time" MUST be HH:MM in 24-hour format (Nepal time). Convert "10am" → "10:00", "2:30 pm" → "14:30".
+- The "date_display" field MUST exactly match the slot_date and slot_time you chose, written in friendly form (e.g., "Monday, May 4, 2026 at 10:00 AM").
+- Before showing the appointment summary, double-check that slot_date, slot_time, and date_display all refer to the SAME moment.
+- If the user gives an ambiguous date (e.g., "5/6"), ask them to clarify the day, month, and year.`;
+}
+
+
+
 const SYSTEM_PROMPT = `You are the friendly AI dental assistant for Kundalini Dental Clinic, a trusted dental clinic in Kathmandu, Nepal.
 
 ## YOUR PERSONALITY
