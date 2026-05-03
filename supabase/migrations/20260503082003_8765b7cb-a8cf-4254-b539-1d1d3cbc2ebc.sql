@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Public can view consented visible gallery items" ON public.gallery_items;
