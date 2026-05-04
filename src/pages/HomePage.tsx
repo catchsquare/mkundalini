@@ -418,7 +418,18 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 className="card-elevated card-hover p-5 sm:p-6 lg:p-8 text-center group"
               >
-                <div className="text-4xl sm:text-5xl mb-4 sm:mb-5">{service.icon}</div>
+                <div className="mb-4 sm:mb-5 flex justify-center items-center min-h-[3rem] sm:min-h-[3.5rem]">
+                  {service.icon && /^(https?:\/\/|\/)/.test(service.icon) ? (
+                    <img
+                      src={service.icon}
+                      alt={service.title}
+                      className="h-12 sm:h-14 w-auto object-contain"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span className="text-4xl sm:text-5xl">{service.icon}</span>
+                  )}
+                </div>
                 <span className="inline-block px-2.5 sm:px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium mb-2 sm:mb-3">
                   {service.highlight}
                 </span>
