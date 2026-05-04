@@ -1,0 +1,1 @@
+GRANT EXECUTE ON FUNCTION public.has_cms_access(uuid) TO anon, authenticated;
