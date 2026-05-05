@@ -41,7 +41,7 @@ const staggerContainer = {
   viewport: { once: true },
 };
 
-const pricingPhilosophy = [
+const fallbackPricingPhilosophy = [
   {
     icon: Heart,
     title: "Care Before Commerce",
@@ -68,7 +68,7 @@ const pricingPhilosophy = [
   },
 ];
 
-const treatmentPricing = [
+const fallbackTreatmentPricing = [
   {
     category: "Dental Implants",
     description: "Titanium implants with porcelain crowns",
@@ -167,7 +167,7 @@ const treatmentPricing = [
   },
 ];
 
-const pricingFactors = [
+const fallbackPricingFactors = [
   {
     icon: Stethoscope,
     factor: "Treatment Complexity",
@@ -194,7 +194,7 @@ const pricingFactors = [
   },
 ];
 
-const ethicalBilling = [
+const fallbackEthicalBilling = [
   {
     title: "We Only Recommend What You Need",
     description:
@@ -217,7 +217,7 @@ const ethicalBilling = [
   },
 ];
 
-const internationalComparison = [
+const fallbackInternationalComparison = [
   {
     treatment: "Single Dental Implant (with crown)",
     nepal: "$800 - $1,200",
