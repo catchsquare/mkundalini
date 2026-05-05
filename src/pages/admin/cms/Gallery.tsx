@@ -35,6 +35,7 @@ import { useAuditLog } from "@/hooks/use-audit-log";
 import { DataTablePagination } from "@/components/admin/shared/DataTablePagination";
 import { DeleteConfirmDialog } from "@/components/admin/shared/DeleteConfirmDialog";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 interface GalleryItem {
   id: string;
