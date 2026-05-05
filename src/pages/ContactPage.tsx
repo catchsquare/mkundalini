@@ -29,6 +29,10 @@ import { Link } from "react-router-dom";
 import { submitLead } from "@/lib/leads";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getIcon } from "@/lib/icon-map";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -45,73 +49,21 @@ const staggerContainer = {
   viewport: { once: true },
 };
 
-const contactMethods = [
-  {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    subtitle: "Fastest Response",
-    value: "+977-9802808008",
-    href: "https://wa.me/9779802808008",
-    description: "Get instant responses. Share photos, X-rays, and questions directly.",
-    responseTime: "Usually within 1 hour",
-    color: "bg-green-500",
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    subtitle: "Call Us Directly",
-    value: "+977-9802808008",
-    href: "tel:+9779802808008",
-    description: "Speak directly with our team during clinic hours.",
-    responseTime: "During clinic hours",
-    color: "bg-purple-500",
-  },
-  {
-    icon: Video,
-    title: "Video Consultation",
-    subtitle: "Face-to-Face Online",
-    value: "Book a Session",
-    href: "#booking-form",
-    description: "Schedule a video call with our dental team.",
-    responseTime: "By appointment",
-    color: "bg-accent",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    subtitle: "Detailed Inquiries",
-    value: "info@kundalinidentalclinic.com.np",
-    href: "mailto:info@kundalinidentalclinic.com.np",
-    description: "Best for sending X-rays, photos, and detailed treatment histories.",
-    responseTime: "Within 24 hours",
-    color: "bg-primary",
-  },
+const fallbackContactMethods = [
+  { icon: "MessageCircle", title: "WhatsApp", subtitle: "Fastest Response", value: "+977-9802808008", href: "https://wa.me/9779802808008", description: "Get instant responses. Share photos, X-rays, and questions directly.", responseTime: "Usually within 1 hour", color: "bg-green-500" },
+  { icon: "Phone", title: "Phone", subtitle: "Call Us Directly", value: "+977-9802808008", href: "tel:+9779802808008", description: "Speak directly with our team during clinic hours.", responseTime: "During clinic hours", color: "bg-purple-500" },
+  { icon: "Video", title: "Video Consultation", subtitle: "Face-to-Face Online", value: "Book a Session", href: "#booking-form", description: "Schedule a video call with our dental team.", responseTime: "By appointment", color: "bg-accent" },
+  { icon: "Mail", title: "Email", subtitle: "Detailed Inquiries", value: "info@kundalinidentalclinic.com.np", href: "mailto:info@kundalinidentalclinic.com.np", description: "Best for sending X-rays, photos, and detailed treatment histories.", responseTime: "Within 24 hours", color: "bg-primary" },
 ];
 
-const bookingSteps = [
-  {
-    step: 1,
-    title: "Submit Your Inquiry",
-    description: "Fill out the form below or contact us via WhatsApp with your dental concerns and goals.",
-  },
-  {
-    step: 2,
-    title: "Free Virtual Consultation",
-    description: "We'll review your case and schedule a video call to discuss treatment options and costs.",
-  },
-  {
-    step: 3,
-    title: "Receive Your Treatment Plan",
-    description: "Get a detailed, personalized treatment plan with transparent pricing—no obligations.",
-  },
-  {
-    step: 4,
-    title: "Confirm Your Visit",
-    description: "Once you're ready, we'll help coordinate your appointment dates and travel logistics.",
-  },
+const fallbackBookingSteps = [
+  { step: 1, title: "Submit Your Inquiry", description: "Fill out the form below or contact us via WhatsApp with your dental concerns and goals." },
+  { step: 2, title: "Free Virtual Consultation", description: "We'll review your case and schedule a video call to discuss treatment options and costs." },
+  { step: 3, title: "Receive Your Treatment Plan", description: "Get a detailed, personalized treatment plan with transparent pricing—no obligations." },
+  { step: 4, title: "Confirm Your Visit", description: "Once you're ready, we'll help coordinate your appointment dates and travel logistics." },
 ];
 
-const treatmentOptions = [
+const fallbackTreatmentOptions = [
   { value: "implants", label: "Dental Implants" },
   { value: "veneers", label: "Veneers / Smile Makeover" },
   { value: "crowns", label: "Crowns & Bridges" },
@@ -123,41 +75,67 @@ const treatmentOptions = [
   { value: "other", label: "Other / Not Sure" },
 ];
 
-const clinicHours = [
+const fallbackClinicHours = [
   { day: "Sunday - Friday", hours: "9:00 AM - 6:00 PM" },
   { day: "Saturday", hours: "10:00 AM - 4:00 PM" },
   { day: "Public Holidays", hours: "Closed" },
 ];
 
-const reassurances = [
-  {
-    icon: Shield,
-    title: "No Obligation",
-    description: "Free consultations with zero pressure to proceed",
-  },
-  {
-    icon: Clock,
-    title: "Quick Response",
-    description: "We respond within 24 hours, often much faster",
-  },
-  {
-    icon: Users,
-    title: "Dedicated Support",
-    description: "A personal coordinator assigned to your case",
-  },
-  {
-    icon: Heart,
-    title: "Patient-First",
-    description: "Your comfort and satisfaction is our priority",
-  },
+const fallbackReassurances = [
+  { icon: "Shield", title: "No Obligation", description: "Free consultations with zero pressure to proceed" },
+  { icon: "Clock", title: "Quick Response", description: "We respond within 24 hours, often much faster" },
+  { icon: "Users", title: "Dedicated Support", description: "A personal coordinator assigned to your case" },
+  { icon: "Heart", title: "Patient-First", description: "Your comfort and satisfaction is our priority" },
 ];
 
 export default function ContactPage() {
   const { toast } = useToast();
   const { settings } = useGlobalSettings();
   const { getSectionByType } = usePageContent("contact");
-  
-  const heroSection = getSectionByType("hero");
+  const { byKey, loading: blocksLoading } = useContentBlocks("contact");
+  const { slide: heroSlide } = useHeroSlide("contact");
+
+  const contactMethodBlocks = byKey("contact_methods");
+  const bookingStepBlocks = byKey("booking_steps");
+  const treatmentOptionBlocks = byKey("treatment_options");
+  const clinicHourBlocks = byKey("clinic_hours");
+  const reassuranceBlocks = byKey("reassurances");
+
+  const contactMethods = contactMethodBlocks.length > 0
+    ? contactMethodBlocks.map((b) => {
+        const m = (b.metadata || {}) as any;
+        return {
+          icon: b.icon || "Phone",
+          title: b.title || "",
+          subtitle: m.subtitle || "",
+          value: m.value || b.title || "",
+          href: b.link_url || "#",
+          description: b.description || "",
+          responseTime: m.response_time || "",
+          color: m.color || "bg-primary",
+        };
+      })
+    : fallbackContactMethods;
+
+  const bookingSteps = bookingStepBlocks.length > 0
+    ? bookingStepBlocks.map((b, i) => ({ step: ((b.metadata || {}) as any).step || i + 1, title: b.title || "", description: b.description || "" }))
+    : fallbackBookingSteps;
+
+  const treatmentOptions = treatmentOptionBlocks.length > 0
+    ? treatmentOptionBlocks.map((b) => ({ value: b.title || "", label: b.description || b.title || "" }))
+    : fallbackTreatmentOptions;
+
+  const clinicHours = clinicHourBlocks.length > 0
+    ? clinicHourBlocks.map((b) => ({ day: b.title || "", hours: b.description || "" }))
+    : fallbackClinicHours;
+
+  const reassurances = reassuranceBlocks.length > 0
+    ? reassuranceBlocks.map((b) => ({ icon: b.icon || "Sparkles", title: b.title || "", description: b.description || "" }))
+    : fallbackReassurances;
+
+  const heroSection = heroSlide
+    ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
+    : getSectionByType("hero");
   const contactMethodsSection = getSectionByType("contact_methods");
   const bookingSection = getSectionByType("booking_process");
   
@@ -313,15 +291,18 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {reassurances.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50"
-              >
-                <item.icon className="w-4 h-4 text-primary" />
-                <span className="text-sm text-foreground font-medium">{item.title}</span>
-              </div>
-            ))}
+            {reassurances.map((item, index) => {
+              const Icon = getIcon(item.icon);
+              return (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50"
+                >
+                  <Icon className="w-4 h-4 text-primary" />
+                  <span className="text-sm text-foreground font-medium">{item.title}</span>
+                </div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
@@ -349,32 +330,35 @@ export default function ContactPage() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {contactMethods.map((method, index) => (
-              <motion.a
-                key={index}
-                href={method.href}
-                target={method.href.startsWith("http") ? "_blank" : undefined}
-                rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="bg-card rounded-2xl p-6 border border-border/50 card-hover group block"
-                variants={fadeInUp}
-              >
-                <div className={`w-12 h-12 rounded-xl ${method.color} flex items-center justify-center mb-4`}>
-                  <method.icon className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="font-bold text-foreground mb-1">{method.title}</h3>
-                <span className="text-xs text-accent font-medium">{method.subtitle}</span>
-                <p className="text-primary font-medium mt-3 group-hover:underline">
-                  {method.value}
-                </p>
-                <p className="text-muted-foreground text-sm mt-2">
-                  {method.description}
-                </p>
-                <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  {method.responseTime}
-                </p>
-              </motion.a>
-            ))}
+            {contactMethods.map((method, index) => {
+              const Icon = getIcon(method.icon);
+              return (
+                <motion.a
+                  key={index}
+                  href={method.href}
+                  target={method.href.startsWith("http") ? "_blank" : undefined}
+                  rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="bg-card rounded-2xl p-6 border border-border/50 card-hover group block"
+                  variants={fadeInUp}
+                >
+                  <div className={`w-12 h-12 rounded-xl ${method.color} flex items-center justify-center mb-4`}>
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-bold text-foreground mb-1">{method.title}</h3>
+                  <span className="text-xs text-accent font-medium">{method.subtitle}</span>
+                  <p className="text-primary font-medium mt-3 group-hover:underline">
+                    {method.value}
+                  </p>
+                  <p className="text-muted-foreground text-sm mt-2">
+                    {method.description}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {method.responseTime}
+                  </p>
+                </motion.a>
+              );
+            })}
           </motion.div>
         </div>
       </section>

@@ -35,8 +35,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { useFaqs } from "@/hooks/use-faqs";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getIcon } from "@/lib/icon-map";
 
-const whyNepal = [
+const resolveIcon = (icon: any) => (typeof icon === "string" ? getIcon(icon) : icon);
+
+const fallbackWhyNepal = [
   {
     icon: DollarSign,
     title: "Significant Cost Savings",
@@ -69,7 +76,7 @@ const whyNepal = [
   },
 ];
 
-const whyKundalini = [
+const fallbackWhyKundalini = [
   {
     title: "15 Years of Experience",
     description: "Led by Dr. Nitin Aryal with 15 years of dental expertise, our clinic established in 2023 combines experienced leadership with modern facilities.",
@@ -96,7 +103,7 @@ const whyKundalini = [
   },
 ];
 
-const consultationProcess = [
+const fallbackConsultationProcess = [
   {
     step: 1,
     title: "Initial Contact",
@@ -127,7 +134,7 @@ const consultationProcess = [
   },
 ];
 
-const treatmentTimelines = [
+const fallbackTreatmentTimelines = [
   {
     treatment: "Single Dental Implant",
     firstVisit: "2-3 days",
@@ -170,7 +177,7 @@ const treatmentTimelines = [
   },
 ];
 
-const costTransparencyPoints = [
+const fallbackCostTransparencyPoints = [
   "Complete written quote before you book travel",
   "All-inclusive pricing — no hidden fees",
   "Price includes consultation, treatment, follow-ups",
@@ -179,7 +186,7 @@ const costTransparencyPoints = [
   "Itemized invoices for insurance reimbursement",
 ];
 
-const travelGuidance = [
+const fallbackTravelGuidance = [
   {
     title: "Getting Here",
     points: [
@@ -218,7 +225,7 @@ const travelGuidance = [
   },
 ];
 
-const aftercareProcess = [
+const fallbackAftercareProcess = [
   {
     icon: FileText,
     title: "Complete Documentation",
@@ -251,7 +258,7 @@ const aftercareProcess = [
   },
 ];
 
-const faqs = [
+const fallbackFaqs = [
   {
     question: "How do I know the quality is really the same as in my country?",
     answer: "We use FDA-approved implants from Straumann (Swiss), Nobel Biocare (Swedish), and other premium manufacturers — the exact same brands used by top clinics in the USA. We're happy to show you the implant packaging and certificates. Our dentists trained at internationally recognized institutions and maintain certifications that are valid globally.",
@@ -288,8 +295,33 @@ const faqs = [
 
 export default function DentalTourismPage() {
   const { getSectionByType } = usePageContent("dental-tourism");
-  
-  const heroSection = getSectionByType("hero");
+  const { byKey, loading: blocksLoading } = useContentBlocks("dental-tourism");
+  const { slide: heroSlide } = useHeroSlide("dental-tourism");
+  const { faqs: faqRows, loading: faqsLoading } = useFaqs("dental-tourism");
+
+  const mapList = (key: string, fallback: any[], shape: (b: any) => any) => {
+    const rows = byKey(key);
+    return rows.length > 0 ? rows.map(shape) : fallback;
+  };
+
+  const whyNepal = mapList("why_nepal", fallbackWhyNepal, (b) => ({ icon: b.icon || "Sparkles", title: b.title || "", description: b.description || "" }));
+  const whyKundalini = mapList("why_kundalini", fallbackWhyKundalini, (b) => ({ title: b.title || "", description: b.description || "" }));
+  const consultationProcess = mapList("consultation_process", fallbackConsultationProcess, (b) => {
+    const m = (b.metadata || {}) as any;
+    return { step: m.step || 1, title: b.title || "", duration: m.duration || "", description: b.description || "", icon: b.icon || "MessageCircle" };
+  });
+  const treatmentTimelines = mapList("treatment_timelines", fallbackTreatmentTimelines, (b) => {
+    const m = (b.metadata || {}) as any;
+    return { treatment: b.title || "", firstVisit: m.first_visit || "", healingPeriod: m.healing_period || "", secondVisit: m.second_visit || "", totalStay: m.total_stay || "", notes: b.description || "" };
+  });
+  const costTransparencyPoints = mapList("cost_transparency", fallbackCostTransparencyPoints.map((p) => ({ title: p })), (b) => ({ title: b.title || "" })).map((x: any) => x.title);
+  const travelGuidance = mapList("travel_guidance", fallbackTravelGuidance, (b) => ({ title: b.title || "", points: ((b.metadata || {}) as any).points || [] }));
+  const aftercareProcess = mapList("aftercare_process", fallbackAftercareProcess, (b) => ({ icon: b.icon || "Sparkles", title: b.title || "", description: b.description || "" }));
+  const faqs = faqRows.length > 0 ? faqRows.map((f) => ({ question: f.question, answer: f.answer })) : fallbackFaqs;
+
+  const heroSection = heroSlide
+    ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
+    : getSectionByType("hero");
   const statsSection = getSectionByType("quick_stats");
   const whyNepalSection = getSectionByType("why_nepal");
   const whyKundaliniSection = getSectionByType("why_kundalini");
@@ -380,22 +412,25 @@ export default function DentalTourismPage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyNepal.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card-elevated p-6"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-              </motion.div>
-            ))}
+            {whyNepal.map((item, index) => {
+              const Icon = resolveIcon(item.icon);
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card-elevated p-6"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -501,34 +536,37 @@ export default function DentalTourismPage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {consultationProcess.map((step, index) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card-elevated p-6 relative overflow-hidden"
-              >
-                <div className="absolute top-4 right-4 text-6xl font-bold text-primary/5">
-                  {step.step}
-                </div>
-                <div className="relative">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <step.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <span className="text-xs text-primary font-medium uppercase tracking-wider">
-                        {step.duration}
-                      </span>
-                      <h3 className="text-lg font-semibold text-foreground">{step.title}</h3>
-                    </div>
+            {consultationProcess.map((step, index) => {
+              const Icon = resolveIcon(step.icon);
+              return (
+                <motion.div
+                  key={step.step}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card-elevated p-6 relative overflow-hidden"
+                >
+                  <div className="absolute top-4 right-4 text-6xl font-bold text-primary/5">
+                    {step.step}
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-                </div>
-              </motion.div>
-            ))}
+                  <div className="relative">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <span className="text-xs text-primary font-medium uppercase tracking-wider">
+                          {step.duration}
+                        </span>
+                        <h3 className="text-lg font-semibold text-foreground">{step.title}</h3>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.div
@@ -768,22 +806,25 @@ export default function DentalTourismPage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {aftercareProcess.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card-elevated p-6"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-              </motion.div>
-            ))}
+            {aftercareProcess.map((item, index) => {
+              const Icon = resolveIcon(item.icon);
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card-elevated p-6"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

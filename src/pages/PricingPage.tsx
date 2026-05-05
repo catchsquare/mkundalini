@@ -19,6 +19,12 @@ import {
   Clock,
 } from "lucide-react";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getIcon } from "@/lib/icon-map";
+
+const resolveIcon = (icon: any) => (typeof icon === "string" ? getIcon(icon) : icon);
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -35,7 +41,7 @@ const staggerContainer = {
   viewport: { once: true },
 };
 
-const pricingPhilosophy = [
+const fallbackPricingPhilosophy = [
   {
     icon: Heart,
     title: "Care Before Commerce",
@@ -62,7 +68,7 @@ const pricingPhilosophy = [
   },
 ];
 
-const treatmentPricing = [
+const fallbackTreatmentPricing = [
   {
     category: "Dental Implants",
     description: "Titanium implants with porcelain crowns",
@@ -161,7 +167,7 @@ const treatmentPricing = [
   },
 ];
 
-const pricingFactors = [
+const fallbackPricingFactors = [
   {
     icon: Stethoscope,
     factor: "Treatment Complexity",
@@ -188,7 +194,7 @@ const pricingFactors = [
   },
 ];
 
-const ethicalBilling = [
+const fallbackEthicalBilling = [
   {
     title: "We Only Recommend What You Need",
     description:
@@ -211,7 +217,7 @@ const ethicalBilling = [
   },
 ];
 
-const internationalComparison = [
+const fallbackInternationalComparison = [
   {
     treatment: "Single Dental Implant (with crown)",
     nepal: "$800 - $1,200",
@@ -258,8 +264,44 @@ const internationalComparison = [
 
 export default function PricingPage() {
   const { getSectionByType } = usePageContent("pricing");
-  
-  const heroSection = getSectionByType("hero");
+  const { byKey, loading: blocksLoading } = useContentBlocks("pricing");
+  const { slide: heroSlide } = useHeroSlide("pricing");
+
+  const philBlocks = byKey("philosophy");
+  const pricingPhilosophy = philBlocks.length > 0
+    ? philBlocks.map((b) => ({ icon: b.icon || "Heart", title: b.title || "", description: b.description || "" }))
+    : fallbackPricingPhilosophy;
+
+  const factorBlocks = byKey("factors");
+  const pricingFactors = factorBlocks.length > 0
+    ? factorBlocks.map((b) => ({ icon: b.icon || "Stethoscope", factor: b.title || "", description: b.description || "" }))
+    : fallbackPricingFactors;
+
+  const ethicalBlocks = byKey("ethical_billing");
+  const ethicalBilling = ethicalBlocks.length > 0
+    ? ethicalBlocks.map((b) => ({ title: b.title || "", description: b.description || "" }))
+    : fallbackEthicalBilling;
+
+  const compareBlocks = byKey("international_comparison");
+  const internationalComparison = compareBlocks.length > 0
+    ? compareBlocks.map((b) => {
+        const m = (b.metadata || {}) as any;
+        return { treatment: b.title || "", nepal: m.nepal || "", usa: m.usa || "", uk: m.uk || "", australia: m.australia || "" };
+      })
+    : fallbackInternationalComparison;
+
+  const treatmentBlocks = byKey("treatment_pricing");
+  const treatmentPricing = treatmentBlocks.length > 0
+    ? treatmentBlocks.map((b) => ({
+        category: b.title || "",
+        description: b.description || "",
+        treatments: (((b.metadata || {}) as any).treatments || []) as Array<{ name: string; priceRange: string; includes: string; note: string }>,
+      }))
+    : fallbackTreatmentPricing;
+
+  const heroSection = heroSlide
+    ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
+    : getSectionByType("hero");
   const philosophySection = getSectionByType("philosophy");
 
   return (
@@ -316,23 +358,26 @@ export default function PricingPage() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {pricingPhilosophy.map((item, index) => (
-              <motion.div
-                key={index}
-                className="bg-card rounded-2xl p-8 border border-border/50 card-hover"
-                variants={fadeInUp}
-              >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                  <item.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
+            {pricingPhilosophy.map((item, index) => {
+              const Icon = resolveIcon(item.icon);
+              return (
+                <motion.div
+                  key={index}
+                  className="bg-card rounded-2xl p-8 border border-border/50 card-hover"
+                  variants={fadeInUp}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
+                    <Icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
@@ -446,25 +491,28 @@ export default function PricingPage() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {pricingFactors.map((item, index) => (
-              <motion.div
-                key={index}
-                className="flex gap-6"
-                variants={fadeInUp}
-              >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="w-7 h-7 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">
-                    {item.factor}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            {pricingFactors.map((item, index) => {
+              const Icon = resolveIcon(item.icon);
+              return (
+                <motion.div
+                  key={index}
+                  className="flex gap-6"
+                  variants={fadeInUp}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      {item.factor}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>

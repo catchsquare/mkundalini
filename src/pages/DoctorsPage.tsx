@@ -14,9 +14,13 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Layout } from "@/components/layout/Layout";
 import { usePageContent } from "@/hooks/use-page-content";
 import { useTeamMembers } from "@/hooks/use-team-members";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { getIcon } from "@/lib/icon-map";
 
 // Fallback static doctor data
 const fallbackDoctor = {
@@ -42,34 +46,27 @@ const fallbackDoctor = {
   featured: true,
 };
 
-const trustFactors = [
-  {
-    icon: GraduationCap,
-    title: "Experienced Leadership",
-    description: "Led by Dr. Nitin Aryal with 15 years of clinical experience.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Qualified Professional",
-    description: "Bachelor of Dental Surgery (BDS) with extensive practical experience.",
-  },
-  {
-    icon: Globe,
-    title: "Quality Standards",
-    description: "We follow international protocols and maintain high standards of care.",
-  },
-  {
-    icon: Languages,
-    title: "Multilingual Team",
-    description: "Communicate comfortably in English and Nepali.",
-  },
+const fallbackTrustFactors = [
+  { icon: "GraduationCap", title: "Experienced Leadership", description: "Led by Dr. Nitin Aryal with 15 years of clinical experience." },
+  { icon: "BadgeCheck", title: "Qualified Professional", description: "Bachelor of Dental Surgery (BDS) with extensive practical experience." },
+  { icon: "Globe", title: "Quality Standards", description: "We follow international protocols and maintain high standards of care." },
+  { icon: "Languages", title: "Multilingual Team", description: "Communicate comfortably in English and Nepali." },
 ];
 
 export default function DoctorsPage() {
   const { getSectionByType } = usePageContent("doctors");
   const { members, featuredMember, loading } = useTeamMembers();
-  
-  const heroSection = getSectionByType("hero");
+  const { byKey, loading: blocksLoading } = useContentBlocks("doctors");
+  const { slide: heroSlide } = useHeroSlide("doctors");
+
+  const trustBlocks = byKey("trust_factors");
+  const trustFactors = trustBlocks.length > 0
+    ? trustBlocks.map((b) => ({ icon: b.icon || "Sparkles", title: b.title || "", description: b.description || "" }))
+    : fallbackTrustFactors;
+
+  const heroSection = heroSlide
+    ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
+    : getSectionByType("hero");
   const doctorSection = getSectionByType("featured_doctor");
   const commitmentSection = getSectionByType("commitment");
   
@@ -115,24 +112,35 @@ export default function DoctorsPage() {
       {/* Trust Factors */}
       <section className="bg-muted/30 py-12 border-y border-border/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {trustFactors.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
+          {blocksLoading ? (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="text-center"><Skeleton className="w-14 h-14 rounded-2xl mx-auto mb-4" /><Skeleton className="h-5 w-32 mx-auto mb-2" /><Skeleton className="h-4 w-40 mx-auto" /></div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              {trustFactors.map((item, index) => {
+                const Icon = getIcon(item.icon);
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="text-center"
+                  >
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                      <Icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
