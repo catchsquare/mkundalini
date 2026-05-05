@@ -92,8 +92,50 @@ export default function ContactPage() {
   const { toast } = useToast();
   const { settings } = useGlobalSettings();
   const { getSectionByType } = usePageContent("contact");
-  
-  const heroSection = getSectionByType("hero");
+  const { byKey, loading: blocksLoading } = useContentBlocks("contact");
+  const { slide: heroSlide } = useHeroSlide("contact");
+
+  const contactMethodBlocks = byKey("contact_methods");
+  const bookingStepBlocks = byKey("booking_steps");
+  const treatmentOptionBlocks = byKey("treatment_options");
+  const clinicHourBlocks = byKey("clinic_hours");
+  const reassuranceBlocks = byKey("reassurances");
+
+  const contactMethods = contactMethodBlocks.length > 0
+    ? contactMethodBlocks.map((b) => {
+        const m = (b.metadata || {}) as any;
+        return {
+          icon: b.icon || "Phone",
+          title: b.title || "",
+          subtitle: m.subtitle || "",
+          value: m.value || b.title || "",
+          href: b.link_url || "#",
+          description: b.description || "",
+          responseTime: m.response_time || "",
+          color: m.color || "bg-primary",
+        };
+      })
+    : fallbackContactMethods;
+
+  const bookingSteps = bookingStepBlocks.length > 0
+    ? bookingStepBlocks.map((b, i) => ({ step: ((b.metadata || {}) as any).step || i + 1, title: b.title || "", description: b.description || "" }))
+    : fallbackBookingSteps;
+
+  const treatmentOptions = treatmentOptionBlocks.length > 0
+    ? treatmentOptionBlocks.map((b) => ({ value: b.title || "", label: b.description || b.title || "" }))
+    : fallbackTreatmentOptions;
+
+  const clinicHours = clinicHourBlocks.length > 0
+    ? clinicHourBlocks.map((b) => ({ day: b.title || "", hours: b.description || "" }))
+    : fallbackClinicHours;
+
+  const reassurances = reassuranceBlocks.length > 0
+    ? reassuranceBlocks.map((b) => ({ icon: b.icon || "Sparkles", title: b.title || "", description: b.description || "" }))
+    : fallbackReassurances;
+
+  const heroSection = heroSlide
+    ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
+    : getSectionByType("hero");
   const contactMethodsSection = getSectionByType("contact_methods");
   const bookingSection = getSectionByType("booking_process");
   
