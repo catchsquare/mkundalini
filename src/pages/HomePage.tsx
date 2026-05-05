@@ -23,6 +23,10 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { OfferBadge } from "@/components/ui/offer-badge";
 import heroImage from "@/assets/hero-dental.jpg";
+import iconDentalImplant from "@/assets/services/dental-implant.png";
+import iconTeethWhitening from "@/assets/services/teeth-whitening.png";
+import iconOrthodontics from "@/assets/services/orthodontics.png";
+import iconFullMouth from "@/assets/services/full-mouth-restoration.png";
 import { usePageContent } from "@/hooks/use-page-content";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { useOffers } from "@/hooks/use-offers";
@@ -73,28 +77,28 @@ const defaultServices = [
   {
     title: "Dental Implants",
     description: "Premium titanium implants with lifetime warranty. Same-day procedures available for qualified patients.",
-    icon: "🦷",
+    icon: iconDentalImplant,
     highlight: "Save up to 70%",
     link: "/services/dental-implants",
   },
   {
     title: "Cosmetic Dentistry",
     description: "Veneers, professional whitening, and complete smile makeovers designed for natural, lasting beauty.",
-    icon: "✨",
+    icon: iconTeethWhitening,
     highlight: "Hollywood Smile",
     link: "/services",
   },
   {
     title: "Orthodontics",
     description: "Invisible aligners and modern braces for beautifully aligned teeth. Suitable for all ages.",
-    icon: "😁",
+    icon: iconOrthodontics,
     highlight: "Invisible Options",
     link: "/services",
   },
   {
     title: "Full Mouth Restoration",
     description: "Comprehensive treatment plans for complex cases. Rebuild your smile with confidence.",
-    icon: "💎",
+    icon: iconFullMouth,
     highlight: "Complete Care",
     link: "/services",
   },
