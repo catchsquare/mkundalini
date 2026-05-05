@@ -92,74 +92,14 @@ const navigationGroups: NavGroup[] = [
     defaultOpen: true,
     items: [
       { name: "Overview", href: "/admin", icon: LayoutDashboard },
-      { name: "Quick Actions", href: "/admin/quick-actions", icon: Stethoscope },
     ],
   },
   {
-    name: "CRM & Leads",
+    name: "Leads",
     icon: Target,
     roles: ["super_admin", "admin", "manager", "receptionist"],
     items: [
       { name: "All Leads", href: "/admin/leads", icon: Inbox },
-      { name: "Lead Pipeline", href: "/admin/leads/pipeline", icon: Filter },
-      { name: "Contact Forms", href: "/admin/leads/forms", icon: FileText },
-      { name: "Follow-ups", href: "/admin/leads/followups", icon: PhoneCall, badge: "3" },
-    ],
-  },
-  {
-    name: "Appointments",
-    icon: Calendar,
-    roles: ["super_admin", "admin", "manager", "receptionist", "dentist"],
-    items: [
-      { name: "Calendar View", href: "/admin/appointments", icon: CalendarDays },
-      { name: "Today's Schedule", href: "/admin/appointments/today", icon: Clock },
-      { name: "Upcoming", href: "/admin/appointments/upcoming", icon: Calendar },
-      { name: "History", href: "/admin/appointments/history", icon: History },
-    ],
-  },
-  {
-    name: "Patients",
-    icon: Users,
-    roles: ["super_admin", "admin", "manager", "receptionist", "dentist"],
-    items: [
-      { name: "Patient Directory", href: "/admin/patients", icon: Users },
-      { name: "Add New Patient", href: "/admin/patients/new", icon: UserPlus },
-      { name: "Treatment History", href: "/admin/patients/treatments", icon: FileText },
-      { name: "Medical Records", href: "/admin/patients/records", icon: FileSpreadsheet, roles: ["super_admin", "admin", "dentist"] },
-    ],
-  },
-  {
-    name: "Billing",
-    icon: Receipt,
-    roles: ["super_admin", "admin", "manager", "receptionist"],
-    items: [
-      { name: "Invoices", href: "/admin/billing", icon: Receipt },
-      { name: "Payments", href: "/admin/billing/payments", icon: CreditCard },
-      { name: "Pending Dues", href: "/admin/billing/pending", icon: AlertCircle, badge: "5" },
-      { name: "Payment Methods", href: "/admin/billing/methods", icon: CreditCard, roles: ["super_admin", "admin"] },
-    ],
-  },
-  {
-    name: "Inventory",
-    icon: Package,
-    roles: ["super_admin", "admin", "manager"],
-    items: [
-      { name: "Stock Overview", href: "/admin/inventory", icon: Boxes },
-      { name: "Categories", href: "/admin/inventory/categories", icon: Tags },
-      { name: "Low Stock Alerts", href: "/admin/inventory/alerts", icon: AlertTriangle, badge: "2" },
-      { name: "Transactions", href: "/admin/inventory/transactions", icon: ArrowLeftRight },
-    ],
-  },
-  {
-    name: "Reports",
-    icon: BarChart3,
-    roles: ["super_admin", "admin", "manager"],
-    items: [
-      { name: "Revenue Analytics", href: "/admin/reports/revenue", icon: TrendingUp },
-      { name: "Patient Analytics", href: "/admin/reports/patients", icon: PieChart },
-      { name: "Treatment Analytics", href: "/admin/reports/treatments", icon: BarChart3 },
-      { name: "Staff Performance", href: "/admin/reports/staff", icon: Award, roles: ["super_admin", "admin"] },
-      { name: "Export Data", href: "/admin/reports/export", icon: Download },
     ],
   },
 ];
@@ -191,11 +131,8 @@ const cmsNavigationGroups: NavGroup[] = [
       { name: "Hero Slides", href: "/admin/cms/hero-slides", icon: Image },
       { name: "Content Blocks", href: "/admin/cms/content-blocks", icon: LayoutTemplate },
       { name: "FAQs", href: "/admin/cms/faqs", icon: MessageSquare },
-      { name: "Services", href: "/admin/cms/services", icon: Stethoscope },
-      { name: "Team Members", href: "/admin/cms/team-members", icon: Users },
       { name: "Pricing Packages", href: "/admin/cms/pricing-packages", icon: CreditCard },
       { name: "Legal Pages", href: "/admin/cms/legal-pages", icon: FileText },
-      { name: "Global Settings", href: "/admin/cms/global-settings", icon: Cog },
     ],
   },
   {
@@ -212,8 +149,6 @@ const cmsNavigationGroups: NavGroup[] = [
     roles: ["super_admin", "admin", "content_editor"],
     items: [
       { name: "All Posts", href: "/admin/cms/blog", icon: BookOpen },
-      { name: "Add New Post", href: "/admin/cms/blog/new", icon: PenTool },
-      { name: "Categories", href: "/admin/cms/blog/categories", icon: Tags },
     ],
   },
   {
@@ -222,8 +157,7 @@ const cmsNavigationGroups: NavGroup[] = [
     roles: ["super_admin", "admin", "content_editor"],
     items: [
       { name: "Doctors", href: "/admin/cms/doctors", icon: Stethoscope },
-      { name: "Staff Directory", href: "/admin/cms/staff", icon: Users },
-      { name: "Specializations", href: "/admin/cms/specializations", icon: Award },
+      { name: "Staff Directory", href: "/admin/cms/team", icon: Users },
     ],
   },
   {
@@ -231,9 +165,7 @@ const cmsNavigationGroups: NavGroup[] = [
     icon: MessageSquare,
     roles: ["super_admin", "admin", "content_editor"],
     items: [
-      { name: "Reviews", href: "/admin/cms/testimonials", icon: Star },
-      { name: "Video Testimonials", href: "/admin/cms/testimonials/videos", icon: MessageSquare },
-      { name: "Google Reviews", href: "/admin/cms/testimonials/google", icon: Globe },
+      { name: "All Reviews", href: "/admin/cms/testimonials", icon: Star },
     ],
   },
   {
@@ -242,8 +174,6 @@ const cmsNavigationGroups: NavGroup[] = [
     roles: ["super_admin", "admin", "content_editor"],
     items: [
       { name: "Before/After Cases", href: "/admin/cms/gallery", icon: Image },
-      { name: "Clinic Photos", href: "/admin/cms/gallery/clinic", icon: Images },
-      { name: "Categories", href: "/admin/cms/gallery/categories", icon: Tags },
     ],
   },
   {
@@ -253,7 +183,6 @@ const cmsNavigationGroups: NavGroup[] = [
     items: [
       { name: "Main Menu", href: "/admin/cms/navigation/main", icon: Menu },
       { name: "Footer Links", href: "/admin/cms/navigation/footer", icon: Link2 },
-      { name: "Mobile Menu", href: "/admin/cms/navigation/mobile", icon: Menu },
     ],
   },
 ];
@@ -265,12 +194,7 @@ const settingsNavigation: NavGroup[] = [
     icon: Settings,
     roles: ["super_admin", "admin"],
     items: [
-      { name: "General", href: "/admin/settings", icon: Cog },
-      { name: "SEO Defaults", href: "/admin/settings/seo", icon: Search },
-      { name: "Social Links", href: "/admin/settings/social", icon: Share2 },
-      { name: "Working Hours", href: "/admin/settings/hours", icon: Clock },
-      { name: "WhatsApp/Viber", href: "/admin/settings/messaging", icon: Phone },
-      { name: "Email Templates", href: "/admin/settings/emails", icon: Mail },
+      { name: "Global Settings", href: "/admin/settings", icon: Cog },
     ],
   },
   {
@@ -279,7 +203,6 @@ const settingsNavigation: NavGroup[] = [
     roles: ["super_admin", "admin"],
     items: [
       { name: "All Users", href: "/admin/users", icon: Users },
-      { name: "Roles & Permissions", href: "/admin/users/roles", icon: Shield },
       { name: "Activity Logs", href: "/admin/users/activity", icon: Activity },
     ],
   },
@@ -431,7 +354,7 @@ export function AdminSidebar({
           {/* Main Navigation */}
           <div className="space-y-1">
             <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-              Clinic Management
+              Main
             </p>
             {navigationGroups.map((group) => (
               <NavGroupComponent
