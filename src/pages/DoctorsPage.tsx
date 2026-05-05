@@ -46,34 +46,27 @@ const fallbackDoctor = {
   featured: true,
 };
 
-const trustFactors = [
-  {
-    icon: GraduationCap,
-    title: "Experienced Leadership",
-    description: "Led by Dr. Nitin Aryal with 15 years of clinical experience.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Qualified Professional",
-    description: "Bachelor of Dental Surgery (BDS) with extensive practical experience.",
-  },
-  {
-    icon: Globe,
-    title: "Quality Standards",
-    description: "We follow international protocols and maintain high standards of care.",
-  },
-  {
-    icon: Languages,
-    title: "Multilingual Team",
-    description: "Communicate comfortably in English and Nepali.",
-  },
+const fallbackTrustFactors = [
+  { icon: "GraduationCap", title: "Experienced Leadership", description: "Led by Dr. Nitin Aryal with 15 years of clinical experience." },
+  { icon: "BadgeCheck", title: "Qualified Professional", description: "Bachelor of Dental Surgery (BDS) with extensive practical experience." },
+  { icon: "Globe", title: "Quality Standards", description: "We follow international protocols and maintain high standards of care." },
+  { icon: "Languages", title: "Multilingual Team", description: "Communicate comfortably in English and Nepali." },
 ];
 
 export default function DoctorsPage() {
   const { getSectionByType } = usePageContent("doctors");
   const { members, featuredMember, loading } = useTeamMembers();
-  
-  const heroSection = getSectionByType("hero");
+  const { byKey, loading: blocksLoading } = useContentBlocks("doctors");
+  const { slide: heroSlide } = useHeroSlide("doctors");
+
+  const trustBlocks = byKey("trust_factors");
+  const trustFactors = trustBlocks.length > 0
+    ? trustBlocks.map((b) => ({ icon: b.icon || "Sparkles", title: b.title || "", description: b.description || "" }))
+    : fallbackTrustFactors;
+
+  const heroSection = heroSlide
+    ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
+    : getSectionByType("hero");
   const doctorSection = getSectionByType("featured_doctor");
   const commitmentSection = getSectionByType("commitment");
   
