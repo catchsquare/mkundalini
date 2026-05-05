@@ -14,9 +14,13 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Layout } from "@/components/layout/Layout";
 import { usePageContent } from "@/hooks/use-page-content";
 import { useTeamMembers } from "@/hooks/use-team-members";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { getIcon } from "@/lib/icon-map";
 
 // Fallback static doctor data
 const fallbackDoctor = {
