@@ -1,99 +1,26 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { 
-  ArrowRight, 
-  Award, 
-  GraduationCap, 
-  Heart, 
-  Users, 
-  Shield,
-  Sparkles,
-  Eye,
-  HandHeart,
-  Microscope,
-  BadgeCheck,
-  Clock,
-  Quote
-} from "lucide-react";
+import { ArrowRight, GraduationCap, Sparkles, HandHeart, Quote, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
-
-const coreValues = [
-  {
-    icon: Heart,
-    title: "Patient First, Always",
-    description:
-      "Every decision we make centers on your comfort, well-being, and long-term health. You are never just a number here.",
-  },
-  {
-    icon: Shield,
-    title: "Uncompromising Safety",
-    description:
-      "Hospital-grade sterilization, FDA-approved materials, and rigorous infection control protocols protect you at every visit.",
-  },
-  {
-    icon: Eye,
-    title: "Complete Transparency",
-    description:
-      "Clear explanations, honest assessments, and upfront pricing. We believe you deserve to understand every aspect of your care.",
-  },
-  {
-    icon: HandHeart,
-    title: "Gentle, Compassionate Care",
-    description:
-      "We understand dental anxiety. Our team creates a calm, supportive environment where you feel safe and respected.",
-  },
-];
-
-const safetyCommitments = [
-  {
-    icon: Microscope,
-    title: "Advanced Sterilization",
-    description: "Class B autoclaves, UV sterilization chambers, and single-use instruments where possible.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Certified Materials",
-    description: "Only FDA-approved, internationally certified implants, crowns, and restorative materials.",
-  },
-  {
-    icon: Clock,
-    title: "Strict Protocols",
-    description: "Documented infection control procedures following WHO and ADA guidelines.",
-  },
-  {
-    icon: Award,
-    title: "Regular Audits",
-    description: "Internal quality assessments and third-party audits ensure consistent standards.",
-  },
-];
-
-const team = [
-  {
-    name: "Dr. Nitin Aryal",
-    role: "Managing Director",
-    education: "BDS",
-    experience: "15 years",
-    specialization: "Comprehensive Dental Care",
-    bio: "With 15 years of clinical experience, Dr. Nitin Aryal founded Kundalini Dental Clinic in 2023 with a mission to provide quality dental care in Kathmandu. His patient-centered approach ensures every individual receives personalized attention and professional treatment.",
-  },
-];
-
-const milestones = [
-  { year: "2023", event: "Kundalini Dental Clinic established in Kathmandu" },
-  { year: "2023", event: "Equipped with modern dental technology and equipment" },
-  { year: "2024", event: "Expanded services for international patients" },
-];
-
-const philosophy = [
-  "We believe oral health is inseparable from overall well-being.",
-  "We treat people, not just teeth — understanding your concerns, fears, and goals.",
-  "We practice conservative dentistry, preserving natural tooth structure whenever possible.",
-  "We never recommend unnecessary procedures — your trust matters more than profit.",
-  "We invest in continuous education to bring you the latest, proven techniques.",
-];
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useTeamMembers } from "@/hooks/use-team-members";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getIcon } from "@/lib/icon-map";
 
 export default function AboutPage() {
+  const { byKey, loading } = useContentBlocks("about");
+  const { members, loading: teamLoading } = useTeamMembers();
+  const { slide: hero } = useHeroSlide("about");
+
+  const coreValues = byKey("core_values");
+  const safetyCommitments = byKey("safety_commitments");
+  const milestones = byKey("milestones");
+  const philosophy = byKey("philosophy");
+  const ethicalPillars = byKey("ethical_pillars");
+  const promiseChips = byKey("promise_chips");
+
   return (
     <Layout>
       {/* Hero */}
