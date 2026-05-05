@@ -239,6 +239,60 @@ export type Database = {
           },
         ]
       }
+      content_blocks: {
+        Row: {
+          block_key: string
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          image_alt: string | null
+          image_url: string | null
+          is_visible: boolean | null
+          link_label: string | null
+          link_url: string | null
+          metadata: Json | null
+          page_slug: string
+          sort_order: number | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          block_key: string
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          image_alt?: string | null
+          image_url?: string | null
+          is_visible?: boolean | null
+          link_label?: string | null
+          link_url?: string | null
+          metadata?: Json | null
+          page_slug: string
+          sort_order?: number | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          block_key?: string
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          image_alt?: string | null
+          image_url?: string | null
+          is_visible?: boolean | null
+          link_label?: string | null
+          link_url?: string | null
+          metadata?: Json | null
+          page_slug?: string
+          sort_order?: number | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       dentists: {
         Row: {
           created_at: string
@@ -273,6 +327,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      faqs: {
+        Row: {
+          answer: string
+          category: string | null
+          created_at: string
+          id: string
+          is_visible: boolean | null
+          page_slug: string | null
+          question: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          category?: string | null
+          created_at?: string
+          id?: string
+          is_visible?: boolean | null
+          page_slug?: string | null
+          question: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          category?: string | null
+          created_at?: string
+          id?: string
+          is_visible?: boolean | null
+          page_slug?: string | null
+          question?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       gallery_categories: {
         Row: {
@@ -430,6 +520,63 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      hero_slides: {
+        Row: {
+          badge_text: string | null
+          created_at: string
+          cta_label: string | null
+          cta_link: string | null
+          description: string | null
+          id: string
+          image_alt: string | null
+          image_url: string | null
+          is_visible: boolean | null
+          page_slug: string
+          secondary_cta_label: string | null
+          secondary_cta_link: string | null
+          sort_order: number | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          badge_text?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_link?: string | null
+          description?: string | null
+          id?: string
+          image_alt?: string | null
+          image_url?: string | null
+          is_visible?: boolean | null
+          page_slug: string
+          secondary_cta_label?: string | null
+          secondary_cta_link?: string | null
+          sort_order?: number | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          badge_text?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_link?: string | null
+          description?: string | null
+          id?: string
+          image_alt?: string | null
+          image_url?: string | null
+          is_visible?: boolean | null
+          page_slug?: string
+          secondary_cta_label?: string | null
+          secondary_cta_link?: string | null
+          sort_order?: number | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       inventory_categories: {
         Row: {
@@ -805,6 +952,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      legal_pages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          is_published: boolean | null
+          last_updated: string | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean | null
+          last_updated?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean | null
+          last_updated?: string | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       navigation_items: {
         Row: {
@@ -1183,6 +1369,63 @@ export type Database = {
           },
         ]
       }
+      pricing_packages: {
+        Row: {
+          category: string | null
+          comparison_price: string | null
+          created_at: string
+          cta_label: string | null
+          cta_link: string | null
+          currency: string | null
+          description: string | null
+          features: string[] | null
+          id: string
+          is_popular: boolean | null
+          is_visible: boolean | null
+          name: string
+          period: string | null
+          price: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          comparison_price?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_link?: string | null
+          currency?: string | null
+          description?: string | null
+          features?: string[] | null
+          id?: string
+          is_popular?: boolean | null
+          is_visible?: boolean | null
+          name: string
+          period?: string | null
+          price: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          comparison_price?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_link?: string | null
+          currency?: string | null
+          description?: string | null
+          features?: string[] | null
+          id?: string
+          is_popular?: boolean | null
+          is_visible?: boolean | null
+          name?: string
+          period?: string | null
+          price?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -1358,6 +1601,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      site_stats: {
+        Row: {
+          created_at: string
+          icon: string | null
+          id: string
+          is_visible: boolean | null
+          label: string
+          page_slug: string
+          sort_order: number | null
+          suffix: string | null
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_visible?: boolean | null
+          label: string
+          page_slug: string
+          sort_order?: number | null
+          suffix?: string | null
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_visible?: boolean | null
+          label?: string
+          page_slug?: string
+          sort_order?: number | null
+          suffix?: string | null
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
       }
       team_members: {
         Row: {
