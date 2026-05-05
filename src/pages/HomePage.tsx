@@ -32,6 +32,7 @@ import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { useOffers } from "@/hooks/use-offers";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useTestimonials } from "@/hooks/use-testimonials";
 
 // Icon mapping for dynamic content
 const iconMap: Record<string, React.ElementType> = {
@@ -198,6 +199,7 @@ export default function HomePage() {
   const { offers } = useOffers();
   const { slide: homeHero } = useHeroSlide('home');
   const { byKey: homeBlocks } = useContentBlocks('home');
+  const { testimonials: dbTestimonials } = useTestimonials({ limit: 3 });
   
   // Get CMS content for each section
   const heroContent = getSectionByType('hero');
@@ -288,12 +290,19 @@ export default function HomePage() {
     cta: internationalContent?.cta || { label: "Learn About Dental Tourism", link: "/dental-tourism" }
   };
   
-  // Testimonials
+  // Testimonials — prefer DB testimonials, fall back to JSON section, then defaults
+  const mappedDbTestimonials = dbTestimonials.map((t) => ({
+    name: t.patient_name,
+    location: t.patient_location || '',
+    treatment: t.treatment_type || '',
+    quote: t.content,
+    rating: t.rating || 5,
+  }));
   const testimonialsData = {
     badge: testimonialContent?.badge || "Patient Stories",
     headline: testimonialContent?.headline || "What Our Patients Say",
     description: testimonialContent?.description || "Real experiences from patients who trusted us with their dental care.",
-    testimonials: testimonialContent?.testimonials || defaultTestimonials,
+    testimonials: mappedDbTestimonials.length > 0 ? mappedDbTestimonials : (testimonialContent?.testimonials || defaultTestimonials),
     cta: testimonialContent?.cta || { label: "Read More Reviews", link: "/reviews" }
   };
   
