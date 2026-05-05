@@ -504,7 +504,7 @@ export default function ReviewsPage() {
               Our Photo Documentation Standards
             </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {photoGuidelines.map((guideline, index) => (
+              {displayPhotoGuidelines.map((guideline: any, index: number) => (
                 <div key={index} className="text-center">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <guideline.icon className="w-6 h-6 text-primary" />
