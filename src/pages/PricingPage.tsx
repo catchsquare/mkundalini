@@ -264,8 +264,44 @@ const fallbackInternationalComparison = [
 
 export default function PricingPage() {
   const { getSectionByType } = usePageContent("pricing");
-  
-  const heroSection = getSectionByType("hero");
+  const { byKey, loading: blocksLoading } = useContentBlocks("pricing");
+  const { slide: heroSlide } = useHeroSlide("pricing");
+
+  const philBlocks = byKey("philosophy");
+  const pricingPhilosophy = philBlocks.length > 0
+    ? philBlocks.map((b) => ({ icon: b.icon || "Heart", title: b.title || "", description: b.description || "" }))
+    : fallbackPricingPhilosophy;
+
+  const factorBlocks = byKey("factors");
+  const pricingFactors = factorBlocks.length > 0
+    ? factorBlocks.map((b) => ({ icon: b.icon || "Stethoscope", factor: b.title || "", description: b.description || "" }))
+    : fallbackPricingFactors;
+
+  const ethicalBlocks = byKey("ethical_billing");
+  const ethicalBilling = ethicalBlocks.length > 0
+    ? ethicalBlocks.map((b) => ({ title: b.title || "", description: b.description || "" }))
+    : fallbackEthicalBilling;
+
+  const compareBlocks = byKey("international_comparison");
+  const internationalComparison = compareBlocks.length > 0
+    ? compareBlocks.map((b) => {
+        const m = (b.metadata || {}) as any;
+        return { treatment: b.title || "", nepal: m.nepal || "", usa: m.usa || "", uk: m.uk || "", australia: m.australia || "" };
+      })
+    : fallbackInternationalComparison;
+
+  const treatmentBlocks = byKey("treatment_pricing");
+  const treatmentPricing = treatmentBlocks.length > 0
+    ? treatmentBlocks.map((b) => ({
+        category: b.title || "",
+        description: b.description || "",
+        treatments: (((b.metadata || {}) as any).treatments || []) as Array<{ name: string; priceRange: string; includes: string; note: string }>,
+      }))
+    : fallbackTreatmentPricing;
+
+  const heroSection = heroSlide
+    ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
+    : getSectionByType("hero");
   const philosophySection = getSectionByType("philosophy");
 
   return (
