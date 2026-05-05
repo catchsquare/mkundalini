@@ -292,8 +292,33 @@ const fallbackFaqs = [
 
 export default function DentalTourismPage() {
   const { getSectionByType } = usePageContent("dental-tourism");
-  
-  const heroSection = getSectionByType("hero");
+  const { byKey, loading: blocksLoading } = useContentBlocks("dental-tourism");
+  const { slide: heroSlide } = useHeroSlide("dental-tourism");
+  const { faqs: faqRows, loading: faqsLoading } = useFaqs("dental-tourism");
+
+  const mapList = (key: string, fallback: any[], shape: (b: any) => any) => {
+    const rows = byKey(key);
+    return rows.length > 0 ? rows.map(shape) : fallback;
+  };
+
+  const whyNepal = mapList("why_nepal", fallbackWhyNepal, (b) => ({ icon: b.icon || "Sparkles", title: b.title || "", description: b.description || "" }));
+  const whyKundalini = mapList("why_kundalini", fallbackWhyKundalini, (b) => ({ title: b.title || "", description: b.description || "" }));
+  const consultationProcess = mapList("consultation_process", fallbackConsultationProcess, (b) => {
+    const m = (b.metadata || {}) as any;
+    return { step: m.step || 1, title: b.title || "", duration: m.duration || "", description: b.description || "", icon: b.icon || "MessageCircle" };
+  });
+  const treatmentTimelines = mapList("treatment_timelines", fallbackTreatmentTimelines, (b) => {
+    const m = (b.metadata || {}) as any;
+    return { treatment: b.title || "", firstVisit: m.first_visit || "", healingPeriod: m.healing_period || "", secondVisit: m.second_visit || "", totalStay: m.total_stay || "", notes: b.description || "" };
+  });
+  const costTransparencyPoints = mapList("cost_transparency", fallbackCostTransparencyPoints.map((p) => ({ title: p })), (b) => ({ title: b.title || "" })).map((x: any) => x.title);
+  const travelGuidance = mapList("travel_guidance", fallbackTravelGuidance, (b) => ({ title: b.title || "", points: ((b.metadata || {}) as any).points || [] }));
+  const aftercareProcess = mapList("aftercare_process", fallbackAftercareProcess, (b) => ({ icon: b.icon || "Sparkles", title: b.title || "", description: b.description || "" }));
+  const faqs = faqRows.length > 0 ? faqRows.map((f) => ({ question: f.question, answer: f.answer })) : fallbackFaqs;
+
+  const heroSection = heroSlide
+    ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
+    : getSectionByType("hero");
   const statsSection = getSectionByType("quick_stats");
   const whyNepalSection = getSectionByType("why_nepal");
   const whyKundaliniSection = getSectionByType("why_kundalini");
