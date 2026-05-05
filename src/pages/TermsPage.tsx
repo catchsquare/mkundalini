@@ -1,3 +1,4 @@
+import { sanitizeHTML } from "@/lib/sanitize";
 import { Layout } from "@/components/layout/Layout";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { useLegalPage } from "@/hooks/use-legal-page";
@@ -54,7 +55,7 @@ export default function TermsPage() {
           ) : (
             <article
               className="rich-content prose prose-neutral max-w-none"
-              dangerouslySetInnerHTML={{ __html: page?.content || "" }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(page?.content || "") }}
             />
           )}
         </div>

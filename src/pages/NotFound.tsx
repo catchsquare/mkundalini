@@ -175,14 +175,10 @@ const NotFound = () => {
 
   useEffect(() => {
     if (redirectTo) {
-      console.info(
-        `404 redirect: ${location.pathname} -> ${redirectTo}`
-      );
+      // silent redirect
     } else {
-      console.error(
-        "404 Error: No redirect match for:",
-        location.pathname
-      );
+      // 404 — no match
+      void location.pathname;
     }
   }, [location.pathname, redirectTo]);
 
