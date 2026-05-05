@@ -330,32 +330,35 @@ export default function ContactPage() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {contactMethods.map((method, index) => (
-              <motion.a
-                key={index}
-                href={method.href}
-                target={method.href.startsWith("http") ? "_blank" : undefined}
-                rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="bg-card rounded-2xl p-6 border border-border/50 card-hover group block"
-                variants={fadeInUp}
-              >
-                <div className={`w-12 h-12 rounded-xl ${method.color} flex items-center justify-center mb-4`}>
-                  <method.icon className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="font-bold text-foreground mb-1">{method.title}</h3>
-                <span className="text-xs text-accent font-medium">{method.subtitle}</span>
-                <p className="text-primary font-medium mt-3 group-hover:underline">
-                  {method.value}
-                </p>
-                <p className="text-muted-foreground text-sm mt-2">
-                  {method.description}
-                </p>
-                <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  {method.responseTime}
-                </p>
-              </motion.a>
-            ))}
+            {contactMethods.map((method, index) => {
+              const Icon = getIcon(method.icon);
+              return (
+                <motion.a
+                  key={index}
+                  href={method.href}
+                  target={method.href.startsWith("http") ? "_blank" : undefined}
+                  rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="bg-card rounded-2xl p-6 border border-border/50 card-hover group block"
+                  variants={fadeInUp}
+                >
+                  <div className={`w-12 h-12 rounded-xl ${method.color} flex items-center justify-center mb-4`}>
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-bold text-foreground mb-1">{method.title}</h3>
+                  <span className="text-xs text-accent font-medium">{method.subtitle}</span>
+                  <p className="text-primary font-medium mt-3 group-hover:underline">
+                    {method.value}
+                  </p>
+                  <p className="text-muted-foreground text-sm mt-2">
+                    {method.description}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {method.responseTime}
+                  </p>
+                </motion.a>
+              );
+            })}
           </motion.div>
         </div>
       </section>
