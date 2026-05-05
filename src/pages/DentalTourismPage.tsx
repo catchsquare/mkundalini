@@ -40,7 +40,7 @@ import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { useFaqs } from "@/hooks/use-faqs";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const whyNepal = [
+const fallbackWhyNepal = [
   {
     icon: DollarSign,
     title: "Significant Cost Savings",
@@ -73,7 +73,7 @@ const whyNepal = [
   },
 ];
 
-const whyKundalini = [
+const fallbackWhyKundalini = [
   {
     title: "15 Years of Experience",
     description: "Led by Dr. Nitin Aryal with 15 years of dental expertise, our clinic established in 2023 combines experienced leadership with modern facilities.",
@@ -100,7 +100,7 @@ const whyKundalini = [
   },
 ];
 
-const consultationProcess = [
+const fallbackConsultationProcess = [
   {
     step: 1,
     title: "Initial Contact",
@@ -131,7 +131,7 @@ const consultationProcess = [
   },
 ];
 
-const treatmentTimelines = [
+const fallbackTreatmentTimelines = [
   {
     treatment: "Single Dental Implant",
     firstVisit: "2-3 days",
@@ -174,7 +174,7 @@ const treatmentTimelines = [
   },
 ];
 
-const costTransparencyPoints = [
+const fallbackCostTransparencyPoints = [
   "Complete written quote before you book travel",
   "All-inclusive pricing — no hidden fees",
   "Price includes consultation, treatment, follow-ups",
@@ -183,7 +183,7 @@ const costTransparencyPoints = [
   "Itemized invoices for insurance reimbursement",
 ];
 
-const travelGuidance = [
+const fallbackTravelGuidance = [
   {
     title: "Getting Here",
     points: [
@@ -222,7 +222,7 @@ const travelGuidance = [
   },
 ];
 
-const aftercareProcess = [
+const fallbackAftercareProcess = [
   {
     icon: FileText,
     title: "Complete Documentation",
@@ -255,7 +255,7 @@ const aftercareProcess = [
   },
 ];
 
-const faqs = [
+const fallbackFaqs = [
   {
     question: "How do I know the quality is really the same as in my country?",
     answer: "We use FDA-approved implants from Straumann (Swiss), Nobel Biocare (Swedish), and other premium manufacturers — the exact same brands used by top clinics in the USA. We're happy to show you the implant packaging and certificates. Our dentists trained at internationally recognized institutions and maintain certifications that are valid globally.",
