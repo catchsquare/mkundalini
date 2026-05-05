@@ -193,7 +193,11 @@ const photoGuidelines = [
 
 export default function ReviewsPage() {
   const { getSectionByType } = usePageContent("reviews");
-  
+
+  const heroSection = getSectionByType("hero");
+  const statsSection = getSectionByType("trust_stats");
+  const testimonialsSection = getSectionByType("testimonials_section");
+
   const { testimonials: dbTestimonials, loading: testimonialsLoading } = useTestimonials();
   const { byKey: reviewBlocks, loading: blocksLoading } = useContentBlocks("reviews");
   const { items: galleryItems, loading: galleryLoading } = useGallery({ limit: 8 });
