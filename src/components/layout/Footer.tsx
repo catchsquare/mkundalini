@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin, ArrowRight, Globe, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
-import logoImage from "@/assets/logo.png";
+import logoFallback from "@/assets/logo.png";
 
 const navigation = {
   services: [
@@ -69,8 +69,8 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-2 space-y-5">
             <Link to="/" className="flex items-center gap-3 justify-center sm:justify-start">
               <img
-                src={logoImage}
-                alt="Kundalini Dental Clinic"
+                src={settings.logo_url || settings.site_logo || logoFallback}
+                alt={settings.clinic_name || "Kundalini Dental Clinic"}
                 className="h-12 sm:h-14 w-auto object-contain"
               />
             </Link>
