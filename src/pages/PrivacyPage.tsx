@@ -1,3 +1,4 @@
+import { sanitizeHTML } from "@/lib/sanitize";
 import { Layout } from "@/components/layout/Layout";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { useLegalPage } from "@/hooks/use-legal-page";
