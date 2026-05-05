@@ -35,6 +35,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { useFaqs } from "@/hooks/use-faqs";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const whyNepal = [
   {
