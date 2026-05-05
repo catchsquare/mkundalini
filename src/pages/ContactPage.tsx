@@ -49,73 +49,21 @@ const staggerContainer = {
   viewport: { once: true },
 };
 
-const contactMethods = [
-  {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    subtitle: "Fastest Response",
-    value: "+977-9802808008",
-    href: "https://wa.me/9779802808008",
-    description: "Get instant responses. Share photos, X-rays, and questions directly.",
-    responseTime: "Usually within 1 hour",
-    color: "bg-green-500",
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    subtitle: "Call Us Directly",
-    value: "+977-9802808008",
-    href: "tel:+9779802808008",
-    description: "Speak directly with our team during clinic hours.",
-    responseTime: "During clinic hours",
-    color: "bg-purple-500",
-  },
-  {
-    icon: Video,
-    title: "Video Consultation",
-    subtitle: "Face-to-Face Online",
-    value: "Book a Session",
-    href: "#booking-form",
-    description: "Schedule a video call with our dental team.",
-    responseTime: "By appointment",
-    color: "bg-accent",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    subtitle: "Detailed Inquiries",
-    value: "info@kundalinidentalclinic.com.np",
-    href: "mailto:info@kundalinidentalclinic.com.np",
-    description: "Best for sending X-rays, photos, and detailed treatment histories.",
-    responseTime: "Within 24 hours",
-    color: "bg-primary",
-  },
+const fallbackContactMethods = [
+  { icon: "MessageCircle", title: "WhatsApp", subtitle: "Fastest Response", value: "+977-9802808008", href: "https://wa.me/9779802808008", description: "Get instant responses. Share photos, X-rays, and questions directly.", responseTime: "Usually within 1 hour", color: "bg-green-500" },
+  { icon: "Phone", title: "Phone", subtitle: "Call Us Directly", value: "+977-9802808008", href: "tel:+9779802808008", description: "Speak directly with our team during clinic hours.", responseTime: "During clinic hours", color: "bg-purple-500" },
+  { icon: "Video", title: "Video Consultation", subtitle: "Face-to-Face Online", value: "Book a Session", href: "#booking-form", description: "Schedule a video call with our dental team.", responseTime: "By appointment", color: "bg-accent" },
+  { icon: "Mail", title: "Email", subtitle: "Detailed Inquiries", value: "info@kundalinidentalclinic.com.np", href: "mailto:info@kundalinidentalclinic.com.np", description: "Best for sending X-rays, photos, and detailed treatment histories.", responseTime: "Within 24 hours", color: "bg-primary" },
 ];
 
-const bookingSteps = [
-  {
-    step: 1,
-    title: "Submit Your Inquiry",
-    description: "Fill out the form below or contact us via WhatsApp with your dental concerns and goals.",
-  },
-  {
-    step: 2,
-    title: "Free Virtual Consultation",
-    description: "We'll review your case and schedule a video call to discuss treatment options and costs.",
-  },
-  {
-    step: 3,
-    title: "Receive Your Treatment Plan",
-    description: "Get a detailed, personalized treatment plan with transparent pricing—no obligations.",
-  },
-  {
-    step: 4,
-    title: "Confirm Your Visit",
-    description: "Once you're ready, we'll help coordinate your appointment dates and travel logistics.",
-  },
+const fallbackBookingSteps = [
+  { step: 1, title: "Submit Your Inquiry", description: "Fill out the form below or contact us via WhatsApp with your dental concerns and goals." },
+  { step: 2, title: "Free Virtual Consultation", description: "We'll review your case and schedule a video call to discuss treatment options and costs." },
+  { step: 3, title: "Receive Your Treatment Plan", description: "Get a detailed, personalized treatment plan with transparent pricing—no obligations." },
+  { step: 4, title: "Confirm Your Visit", description: "Once you're ready, we'll help coordinate your appointment dates and travel logistics." },
 ];
 
-const treatmentOptions = [
+const fallbackTreatmentOptions = [
   { value: "implants", label: "Dental Implants" },
   { value: "veneers", label: "Veneers / Smile Makeover" },
   { value: "crowns", label: "Crowns & Bridges" },
@@ -127,33 +75,17 @@ const treatmentOptions = [
   { value: "other", label: "Other / Not Sure" },
 ];
 
-const clinicHours = [
+const fallbackClinicHours = [
   { day: "Sunday - Friday", hours: "9:00 AM - 6:00 PM" },
   { day: "Saturday", hours: "10:00 AM - 4:00 PM" },
   { day: "Public Holidays", hours: "Closed" },
 ];
 
-const reassurances = [
-  {
-    icon: Shield,
-    title: "No Obligation",
-    description: "Free consultations with zero pressure to proceed",
-  },
-  {
-    icon: Clock,
-    title: "Quick Response",
-    description: "We respond within 24 hours, often much faster",
-  },
-  {
-    icon: Users,
-    title: "Dedicated Support",
-    description: "A personal coordinator assigned to your case",
-  },
-  {
-    icon: Heart,
-    title: "Patient-First",
-    description: "Your comfort and satisfaction is our priority",
-  },
+const fallbackReassurances = [
+  { icon: "Shield", title: "No Obligation", description: "Free consultations with zero pressure to proceed" },
+  { icon: "Clock", title: "Quick Response", description: "We respond within 24 hours, often much faster" },
+  { icon: "Users", title: "Dedicated Support", description: "A personal coordinator assigned to your case" },
+  { icon: "Heart", title: "Patient-First", description: "Your comfort and satisfaction is our priority" },
 ];
 
 export default function ContactPage() {
