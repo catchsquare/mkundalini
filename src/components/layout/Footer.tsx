@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin, ArrowRight, Globe, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
+import logoImage from "@/assets/logo.png";
 
 const navigation = {
   services: [
