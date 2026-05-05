@@ -19,6 +19,12 @@ import {
   Clock,
 } from "lucide-react";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getIcon } from "@/lib/icon-map";
+
+const resolveIcon = (icon: any) => (typeof icon === "string" ? getIcon(icon) : icon);
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
