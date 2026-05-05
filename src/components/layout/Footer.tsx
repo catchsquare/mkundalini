@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin, ArrowRight, Globe, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
+import logoImage from "@/assets/logo.png";
 
 const navigation = {
   services: [
@@ -67,17 +68,11 @@ export function Footer() {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-2 space-y-5">
             <Link to="/" className="flex items-center gap-3 justify-center sm:justify-start">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg sm:text-xl">K</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-base sm:text-lg leading-tight text-secondary-foreground">
-                  Kundalini
-                </span>
-                <span className="text-xs text-secondary-foreground/70 -mt-0.5">
-                  Dental Clinic
-                </span>
-              </div>
+              <img
+                src={logoImage}
+                alt="Kundalini Dental Clinic"
+                className="h-12 sm:h-14 w-auto object-contain"
+              />
             </Link>
             <p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm text-center sm:text-left">
               World-class dental care in the heart of Kathmandu. Led by {settings.managing_director} 
