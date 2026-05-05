@@ -71,7 +71,7 @@ export default function AboutPage() {
               <div className="space-y-4">
                 {philosophy.map((item, index) => (
                   <motion.div
-                    key={item}
+                    key={item.id}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
@@ -79,7 +79,7 @@ export default function AboutPage() {
                     className="flex items-start gap-3"
                   >
                     <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2.5" />
-                    <span className="text-foreground leading-relaxed">{item}</span>
+                    <span className="text-foreground leading-relaxed">{item.description}</span>
                   </motion.div>
                 ))}
               </div>
@@ -131,24 +131,25 @@ export default function AboutPage() {
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreValues.map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card-elevated p-8"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5">
-                  <value.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">{value.description}</p>
-              </motion.div>
-            ))}
+            {coreValues.map((value, index) => {
+              const Icon = getIcon(value.icon);
+              return (
+                <motion.div
+                  key={value.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card-elevated p-8"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5">
+                    <Icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">{value.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{value.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -164,22 +165,25 @@ export default function AboutPage() {
               className="order-2 lg:order-1"
             >
               <div className="grid sm:grid-cols-2 gap-5">
-                {safetyCommitments.map((item, index) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="bg-muted/50 rounded-2xl p-6 border border-border/50"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                      <item.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
-                  </motion.div>
-                ))}
+                {safetyCommitments.map((item, index) => {
+                  const Icon = getIcon(item.icon);
+                  return (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-muted/50 rounded-2xl p-6 border border-border/50"
+                    >
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                        <Icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                    </motion.div>
+                  );
+                })}
               </div>
             </motion.div>
 
@@ -233,33 +237,12 @@ export default function AboutPage() {
             </p>
             
             <div className="grid sm:grid-cols-3 gap-6 text-left">
-              <div className="bg-secondary-foreground/10 rounded-2xl p-6">
-                <h3 className="font-semibold text-secondary-foreground mb-2">
-                  Conservative Approach
-                </h3>
-                <p className="text-secondary-foreground/70 text-sm leading-relaxed">
-                  We preserve your natural tooth structure whenever possible, 
-                  recommending minimal intervention first.
-                </p>
-              </div>
-              <div className="bg-secondary-foreground/10 rounded-2xl p-6">
-                <h3 className="font-semibold text-secondary-foreground mb-2">
-                  Transparent Pricing
-                </h3>
-                <p className="text-secondary-foreground/70 text-sm leading-relaxed">
-                  Complete cost breakdown before any treatment. No surprises, 
-                  no hidden fees, no pressure.
-                </p>
-              </div>
-              <div className="bg-secondary-foreground/10 rounded-2xl p-6">
-                <h3 className="font-semibold text-secondary-foreground mb-2">
-                  Second Opinions Welcome
-                </h3>
-                <p className="text-secondary-foreground/70 text-sm leading-relaxed">
-                  We encourage you to seek second opinions. Your confidence in 
-                  your treatment plan matters to us.
-                </p>
-              </div>
+              {ethicalPillars.map((pillar) => (
+                <div key={pillar.id} className="bg-secondary-foreground/10 rounded-2xl p-6">
+                  <h3 className="font-semibold text-secondary-foreground mb-2">{pillar.title}</h3>
+                  <p className="text-secondary-foreground/70 text-sm leading-relaxed">{pillar.description}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
@@ -289,7 +272,7 @@ export default function AboutPage() {
             <div className="space-y-8">
               {milestones.map((milestone, index) => (
                 <motion.div
-                  key={milestone.year}
+                  key={milestone.id}
                   initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -300,15 +283,13 @@ export default function AboutPage() {
                 >
                   <div className={`flex-1 ${index % 2 === 0 ? 'lg:text-right' : 'lg:text-left'} pl-20 lg:pl-0`}>
                     <div className="card-elevated p-6 inline-block text-left">
-                      <div className="text-2xl font-bold text-primary mb-1">
-                        {milestone.year}
-                      </div>
-                      <div className="text-foreground">{milestone.event}</div>
+                      <div className="text-2xl font-bold text-primary mb-1">{milestone.title}</div>
+                      <div className="text-foreground">{milestone.description}</div>
                     </div>
                   </div>
-                  
+
                   <div className="absolute left-8 lg:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background transform -translate-x-1/2 lg:-translate-x-2" />
-                  
+
                   <div className="flex-1 hidden lg:block" />
                 </motion.div>
               ))}
