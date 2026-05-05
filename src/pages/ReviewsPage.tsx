@@ -20,6 +20,13 @@ import {
   Sparkles,
 } from "lucide-react";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useTestimonials } from "@/hooks/use-testimonials";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useGallery } from "@/hooks/use-gallery";
+import { useSiteStats } from "@/hooks/use-site-stats";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const guidelineIconMap: Record<string, any> = { Lock, Camera, Eye, Calendar };
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -187,11 +194,57 @@ const photoGuidelines = [
 export default function ReviewsPage() {
   const { getSectionByType } = usePageContent("reviews");
   
-  const heroSection = getSectionByType("hero");
-  const statsSection = getSectionByType("trust_stats");
-  const testimonialsSection = getSectionByType("testimonials_section");
-  
-  const displayStats = statsSection?.stats || trustStats;
+  const { testimonials: dbTestimonials, loading: testimonialsLoading } = useTestimonials();
+  const { byKey: reviewBlocks, loading: blocksLoading } = useContentBlocks("reviews");
+  const { items: galleryItems, loading: galleryLoading } = useGallery({ limit: 8 });
+  const { stats: dbStats, loading: statsLoading } = useSiteStats("reviews");
+
+  const beforeAfterCasesDb = reviewBlocks("before_after_cases");
+  const photoGuidelinesDb = reviewBlocks("photo_guidelines");
+
+  const displayStats = dbStats.length > 0
+    ? dbStats.map((s) => ({ number: s.value, label: s.label }))
+    : (statsSection?.stats || trustStats);
+
+  const displayTestimonials = dbTestimonials.length > 0
+    ? dbTestimonials.map((t, i) => ({
+        id: t.id || i,
+        name: t.patient_name,
+        location: t.patient_location || "",
+        treatment: t.treatment_type || "",
+        rating: t.rating || 5,
+        date: t.display_date
+          ? new Date(t.display_date).toLocaleDateString("en-US", { month: "long", year: "numeric" })
+          : "",
+        quote: t.content,
+        highlight: t.content.length > 140 ? t.content.slice(0, 140).trim() + "…" : t.content,
+      }))
+    : testimonials;
+
+  const displayBeforeAfter = beforeAfterCasesDb.length > 0
+    ? beforeAfterCasesDb.map((b, i) => {
+        const md = (b.metadata || {}) as Record<string, any>;
+        const galleryMatch = galleryItems[i];
+        return {
+          id: b.id,
+          title: b.title || "",
+          treatment: md.treatment || "",
+          duration: md.duration || "",
+          description: b.description || "",
+          patientNote: md.patient_note || "",
+          beforeImage: galleryMatch?.before_image || null,
+          afterImage: galleryMatch?.after_image || null,
+        };
+      })
+    : beforeAfterCases.map((b) => ({ ...b, beforeImage: null, afterImage: null }));
+
+  const displayPhotoGuidelines = photoGuidelinesDb.length > 0
+    ? photoGuidelinesDb.map((b) => ({
+        title: b.title || "",
+        description: b.description || "",
+        icon: guidelineIconMap[b.icon || "Lock"] || Lock,
+      }))
+    : photoGuidelines;
 
   return (
     <Layout>
