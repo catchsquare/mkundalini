@@ -29,6 +29,10 @@ import { Link } from "react-router-dom";
 import { submitLead } from "@/lib/leads";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getIcon } from "@/lib/icon-map";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
