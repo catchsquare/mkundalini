@@ -39,6 +39,9 @@ import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { useFaqs } from "@/hooks/use-faqs";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getIcon } from "@/lib/icon-map";
+
+const resolveIcon = (icon: any) => (typeof icon === "string" ? getIcon(icon) : icon);
 
 const fallbackWhyNepal = [
   {
