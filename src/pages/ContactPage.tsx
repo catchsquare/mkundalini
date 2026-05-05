@@ -291,15 +291,18 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {reassurances.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50"
-              >
-                <item.icon className="w-4 h-4 text-primary" />
-                <span className="text-sm text-foreground font-medium">{item.title}</span>
-              </div>
-            ))}
+            {reassurances.map((item, index) => {
+              const Icon = getIcon(item.icon);
+              return (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 px-4 py-2 bg-card rounded-full border border-border/50"
+                >
+                  <Icon className="w-4 h-4 text-primary" />
+                  <span className="text-sm text-foreground font-medium">{item.title}</span>
+                </div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
