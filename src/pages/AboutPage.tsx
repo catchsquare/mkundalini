@@ -33,16 +33,15 @@ export default function AboutPage() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Sparkles className="w-4 h-4" />
-              Our Story
+              {hero?.badge_text || "Our Story"}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              Dentistry Built on{" "}
-              <span className="text-primary">Trust</span>
+              {hero?.title || "Dentistry Built on"}{" "}
+              <span className="text-primary">{hero?.subtitle || "Trust"}</span>
             </h1>
 <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              At Kundalini Dental Clinic, we believe exceptional dental care begins with 
-              genuine human connection. Founded in 2023, we combine Dr. Nitin Aryal's 
-              15 years of experience with modern facilities to serve you better.
+              {hero?.description ||
+                "At Kundalini Dental Clinic, we believe exceptional dental care begins with genuine human connection. Founded in 2023, we combine Dr. Nitin Aryal's 15 years of experience with modern facilities to serve you better."}
             </p>
           </motion.div>
         </div>
