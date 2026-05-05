@@ -320,30 +320,44 @@ export default function AboutPage() {
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card-elevated p-6 flex flex-col"
-              >
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 mx-auto mb-5 flex items-center justify-center">
-                  <GraduationCap className="w-10 h-10 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground text-lg text-center">{member.name}</h3>
-                <p className="text-sm text-primary text-center mb-3">{member.role}</p>
-                <p className="text-sm text-muted-foreground text-center mb-4 flex-grow leading-relaxed">
-                  {member.bio}
-                </p>
-                <div className="text-xs text-muted-foreground border-t border-border pt-4 space-y-1">
-                  <p><span className="text-foreground/70">Education:</span> {member.education}</p>
-                  <p><span className="text-foreground/70">Experience:</span> {member.experience}</p>
-                  <p><span className="text-foreground/70">Focus:</span> {member.specialization}</p>
-                </div>
-              </motion.div>
-            ))}
+            {teamLoading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <Skeleton key={i} className="h-72 w-full rounded-2xl" />
+                ))
+              : members.map((member, index) => (
+                  <motion.div
+                    key={member.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="card-elevated p-6 flex flex-col"
+                  >
+                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 mx-auto mb-5 flex items-center justify-center overflow-hidden">
+                      {member.photo_url ? (
+                        <img src={member.photo_url} alt={member.photo_alt || member.full_name} className="w-full h-full object-cover" />
+                      ) : (
+                        <GraduationCap className="w-10 h-10 text-primary" />
+                      )}
+                    </div>
+                    <h3 className="font-semibold text-foreground text-lg text-center">{member.full_name}</h3>
+                    <p className="text-sm text-primary text-center mb-3">{member.role}</p>
+                    <p className="text-sm text-muted-foreground text-center mb-4 flex-grow leading-relaxed">
+                      {member.bio}
+                    </p>
+                    <div className="text-xs text-muted-foreground border-t border-border pt-4 space-y-1">
+                      {member.qualifications && member.qualifications.length > 0 && (
+                        <p><span className="text-foreground/70">Education:</span> {member.qualifications.join(", ")}</p>
+                      )}
+                      {member.experience_years != null && (
+                        <p><span className="text-foreground/70">Experience:</span> {member.experience_years} years</p>
+                      )}
+                      {member.specialties && member.specialties.length > 0 && (
+                        <p><span className="text-foreground/70">Focus:</span> {member.specialties.join(", ")}</p>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
           </div>
         </div>
       </section>
@@ -369,19 +383,12 @@ export default function AboutPage() {
             </p>
             
             <div className="flex flex-wrap justify-center gap-4 text-sm">
-              {[
-                "Minimal wait times",
-                "Unhurried consultations",
-                "Clear treatment explanations",
-                "Flexible scheduling",
-                "Post-treatment support",
-                "Multilingual staff",
-              ].map((item) => (
+              {promiseChips.map((item) => (
                 <span
-                  key={item}
+                  key={item.id}
                   className="px-4 py-2 rounded-full bg-primary/10 text-primary font-medium"
                 >
-                  {item}
+                  {item.title}
                 </span>
               ))}
             </div>
