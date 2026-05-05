@@ -180,6 +180,16 @@ const App = () => (
                 <Route path="cms/navigation/footer" element={<Navigation />} />
                 <Route path="cms/navigation/mobile" element={<Navigation />} />
 
+                {/* CMS - Direct Editors */}
+                <Route path="cms/hero-slides" element={<HeroSlides />} />
+                <Route path="cms/content-blocks" element={<ContentBlocks />} />
+                <Route path="cms/faqs" element={<Faqs />} />
+                <Route path="cms/pricing-packages" element={<PricingPackages />} />
+                <Route path="cms/legal-pages" element={<LegalPages />} />
+                <Route path="cms/services" element={<ServicesPageEditor />} />
+                <Route path="cms/team-members" element={<Team />} />
+                <Route path="cms/global-settings" element={<Settings />} />
+
                 {/* Settings */}
                 <Route path="settings" element={<Settings />} />
                 <Route path="settings/seo" element={<Settings />} />
