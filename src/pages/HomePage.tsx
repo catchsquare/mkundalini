@@ -227,8 +227,19 @@ export default function HomePage() {
   // Trust indicators
   const trustData = trustContent?.items || defaultTrustIndicators;
   
-  // Services
-  const servicesData = servicesContent?.services || defaultServices;
+  // Services - override icons by title so CMS-stored emojis get replaced with brand icons
+  const serviceIconOverrides: Record<string, string> = {
+    "Dental Implants": iconDentalImplant,
+    "Cosmetic Dentistry": iconTeethWhitening,
+    "Teeth Whitening": iconTeethWhitening,
+    "Orthodontics": iconOrthodontics,
+    "Full Mouth Restoration": iconFullMouth,
+  };
+  const rawServicesData = servicesContent?.services || defaultServices;
+  const servicesData = rawServicesData.map((s: any) => ({
+    ...s,
+    icon: serviceIconOverrides[s.title] || s.icon,
+  }));
   const servicesHeader = {
     badge: servicesContent?.badge || "Our Expertise",
     headline: servicesContent?.headline || "Premium Dental Services",
