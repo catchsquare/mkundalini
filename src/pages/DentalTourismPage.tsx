@@ -536,34 +536,37 @@ export default function DentalTourismPage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {consultationProcess.map((step, index) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="card-elevated p-6 relative overflow-hidden"
-              >
-                <div className="absolute top-4 right-4 text-6xl font-bold text-primary/5">
-                  {step.step}
-                </div>
-                <div className="relative">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <step.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <span className="text-xs text-primary font-medium uppercase tracking-wider">
-                        {step.duration}
-                      </span>
-                      <h3 className="text-lg font-semibold text-foreground">{step.title}</h3>
-                    </div>
+            {consultationProcess.map((step, index) => {
+              const Icon = resolveIcon(step.icon);
+              return (
+                <motion.div
+                  key={step.step}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card-elevated p-6 relative overflow-hidden"
+                >
+                  <div className="absolute top-4 right-4 text-6xl font-bold text-primary/5">
+                    {step.step}
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-                </div>
-              </motion.div>
-            ))}
+                  <div className="relative">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <span className="text-xs text-primary font-medium uppercase tracking-wider">
+                          {step.duration}
+                        </span>
+                        <h3 className="text-lg font-semibold text-foreground">{step.title}</h3>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.div
