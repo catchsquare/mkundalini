@@ -32,6 +32,10 @@ interface GlobalSettings {
 
   // Branding
   site_logo: string | null;
+  logo_url: string | null;
+  logo_dark_url: string | null;
+  favicon_url: string | null;
+  og_default_image: string | null;
 }
 
 const defaultSettings: GlobalSettings = {
@@ -55,6 +59,10 @@ const defaultSettings: GlobalSettings = {
   whatsapp_enabled: true,
   viber_enabled: true,
   site_logo: null,
+  logo_url: null,
+  logo_dark_url: null,
+  favicon_url: null,
+  og_default_image: null,
 };
 
 export function useGlobalSettings() {
@@ -115,7 +123,11 @@ export function useGlobalSettings() {
           default_seo_description: settingsMap.default_seo_description || defaultSettings.default_seo_description,
           whatsapp_enabled: settingsMap.whatsapp_enabled ?? defaultSettings.whatsapp_enabled,
           viber_enabled: settingsMap.viber_enabled ?? defaultSettings.viber_enabled,
-          site_logo: settingsMap.site_logo || defaultSettings.site_logo,
+          site_logo: settingsMap.site_logo || settingsMap.logo_url || defaultSettings.site_logo,
+          logo_url: settingsMap.logo_url || settingsMap.site_logo || defaultSettings.logo_url,
+          logo_dark_url: settingsMap.logo_dark_url || defaultSettings.logo_dark_url,
+          favicon_url: settingsMap.favicon_url || defaultSettings.favicon_url,
+          og_default_image: settingsMap.og_default_image || defaultSettings.og_default_image,
         });
       }
     } catch (error) {

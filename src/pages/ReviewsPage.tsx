@@ -20,6 +20,13 @@ import {
   Sparkles,
 } from "lucide-react";
 import { usePageContent } from "@/hooks/use-page-content";
+import { useTestimonials } from "@/hooks/use-testimonials";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
+import { useGallery } from "@/hooks/use-gallery";
+import { useSiteStats } from "@/hooks/use-site-stats";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const guidelineIconMap: Record<string, any> = { Lock, Camera, Eye, Calendar };
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -186,12 +193,62 @@ const photoGuidelines = [
 
 export default function ReviewsPage() {
   const { getSectionByType } = usePageContent("reviews");
-  
+
   const heroSection = getSectionByType("hero");
   const statsSection = getSectionByType("trust_stats");
   const testimonialsSection = getSectionByType("testimonials_section");
-  
-  const displayStats = statsSection?.stats || trustStats;
+
+  const { testimonials: dbTestimonials, loading: testimonialsLoading } = useTestimonials();
+  const { byKey: reviewBlocks, loading: blocksLoading } = useContentBlocks("reviews");
+  const { items: galleryItems, loading: galleryLoading } = useGallery({ limit: 8 });
+  const { stats: dbStats, loading: statsLoading } = useSiteStats("reviews");
+
+  const beforeAfterCasesDb = reviewBlocks("before_after_cases");
+  const photoGuidelinesDb = reviewBlocks("photo_guidelines");
+
+  const displayStats = dbStats.length > 0
+    ? dbStats.map((s) => ({ number: s.value, label: s.label }))
+    : (statsSection?.stats || trustStats);
+
+  const displayTestimonials = dbTestimonials.length > 0
+    ? dbTestimonials.map((t, i) => ({
+        id: t.id || i,
+        name: t.patient_name,
+        location: t.patient_location || "",
+        treatment: t.treatment_type || "",
+        rating: t.rating || 5,
+        date: t.display_date
+          ? new Date(t.display_date).toLocaleDateString("en-US", { month: "long", year: "numeric" })
+          : "",
+        quote: t.content,
+        highlight: t.content.length > 140 ? t.content.slice(0, 140).trim() + "…" : t.content,
+      }))
+    : testimonials;
+
+  const displayBeforeAfter = beforeAfterCasesDb.length > 0
+    ? beforeAfterCasesDb.map((b, i) => {
+        const md = (b.metadata || {}) as Record<string, any>;
+        const galleryMatch = galleryItems[i];
+        return {
+          id: b.id,
+          title: b.title || "",
+          treatment: md.treatment || "",
+          duration: md.duration || "",
+          description: b.description || "",
+          patientNote: md.patient_note || "",
+          beforeImage: galleryMatch?.before_image || null,
+          afterImage: galleryMatch?.after_image || null,
+        };
+      })
+    : beforeAfterCases.map((b) => ({ ...b, beforeImage: null, afterImage: null }));
+
+  const displayPhotoGuidelines = photoGuidelinesDb.length > 0
+    ? photoGuidelinesDb.map((b) => ({
+        title: b.title || "",
+        description: b.description || "",
+        icon: guidelineIconMap[b.icon || "Lock"] || Lock,
+      }))
+    : photoGuidelines;
 
   return (
     <Layout>
@@ -229,14 +286,21 @@ export default function ReviewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {displayStats.map((stat: { number: string; label: string }, index: number) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">
-                  {stat.number}
-                </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
+            {statsLoading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="text-center">
+                    <Skeleton className="h-10 w-20 mx-auto mb-2" />
+                    <Skeleton className="h-4 w-24 mx-auto" />
+                  </div>
+                ))
+              : displayStats.map((stat: { number: string; label: string }, index: number) => (
+                  <div key={index} className="text-center">
+                    <div className="text-3xl sm:text-4xl font-bold text-primary mb-1">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  </div>
+                ))}
           </motion.div>
         </div>
       </section>
@@ -264,7 +328,17 @@ export default function ReviewsPage() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {testimonials.map((testimonial) => (
+            {testimonialsLoading
+              ? Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="bg-card rounded-2xl p-8 border border-border/50">
+                    <Skeleton className="h-5 w-24 mb-4" />
+                    <Skeleton className="h-6 w-3/4 mb-3" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-5/6 mb-6" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </div>
+                ))
+              : displayTestimonials.map((testimonial) => (
               <motion.div
                 key={testimonial.id}
                 className="bg-card rounded-2xl p-8 border border-border/50 card-hover flex flex-col"
@@ -344,27 +418,44 @@ export default function ReviewsPage() {
 
           {/* Before/After Cases */}
           <div className="grid md:grid-cols-2 gap-8 mb-12">
-            {beforeAfterCases.map((caseItem, index) => (
+            {(blocksLoading || galleryLoading)
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="bg-card rounded-2xl overflow-hidden border border-border/50">
+                    <Skeleton className="aspect-[16/10] w-full" />
+                    <div className="p-6 space-y-3">
+                      <Skeleton className="h-6 w-2/3" />
+                      <Skeleton className="h-4 w-1/2" />
+                      <Skeleton className="h-4 w-full" />
+                    </div>
+                  </div>
+                ))
+              : displayBeforeAfter.map((caseItem: any, index: number) => (
               <motion.div
                 key={caseItem.id}
                 className="bg-card rounded-2xl overflow-hidden border border-border/50"
                 {...fadeInUp}
                 transition={{ delay: index * 0.1 }}
               >
-                {/* Image Placeholder */}
+                {/* Image (or placeholder) */}
                 <div className="aspect-[16/10] bg-muted/50 relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center p-8">
-                      <Camera className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
-                      <p className="text-muted-foreground text-sm">
-                        Before & After photos available during consultation
-                      </p>
-                      <p className="text-xs text-muted-foreground/60 mt-2">
-                        Patient privacy protected
-                      </p>
+                  {caseItem.beforeImage && caseItem.afterImage ? (
+                    <div className="absolute inset-0 grid grid-cols-2">
+                      <img src={caseItem.beforeImage} alt={`${caseItem.title} - before`} className="w-full h-full object-cover" loading="lazy" />
+                      <img src={caseItem.afterImage} alt={`${caseItem.title} - after`} className="w-full h-full object-cover" loading="lazy" />
                     </div>
-                  </div>
-                  {/* Before/After Labels */}
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center p-8">
+                        <Camera className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
+                        <p className="text-muted-foreground text-sm">
+                          Before & After photos available during consultation
+                        </p>
+                        <p className="text-xs text-muted-foreground/60 mt-2">
+                          Patient privacy protected
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   <div className="absolute bottom-4 left-4 right-4 flex justify-between">
                     <span className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-medium rounded-full">
                       Before
@@ -391,12 +482,14 @@ export default function ReviewsPage() {
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                     {caseItem.description}
                   </p>
-                  <div className="flex items-start gap-2 p-3 bg-primary/5 rounded-lg">
-                    <Quote className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-foreground italic">
-                      "{caseItem.patientNote}"
-                    </p>
-                  </div>
+                  {caseItem.patientNote && (
+                    <div className="flex items-start gap-2 p-3 bg-primary/5 rounded-lg">
+                      <Quote className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-foreground italic">
+                        "{caseItem.patientNote}"
+                      </p>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -411,7 +504,7 @@ export default function ReviewsPage() {
               Our Photo Documentation Standards
             </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {photoGuidelines.map((guideline, index) => (
+              {displayPhotoGuidelines.map((guideline: any, index: number) => (
                 <div key={index} className="text-center">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <guideline.icon className="w-6 h-6 text-primary" />
