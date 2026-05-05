@@ -30,6 +30,8 @@ import iconFullMouth from "@/assets/services/full-mouth-restoration.png";
 import { usePageContent } from "@/hooks/use-page-content";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { useOffers } from "@/hooks/use-offers";
+import { useHeroSlide } from "@/hooks/use-hero-slide";
+import { useContentBlocks } from "@/hooks/use-content-blocks";
 
 // Icon mapping for dynamic content
 const iconMap: Record<string, React.ElementType> = {
@@ -194,6 +196,8 @@ export default function HomePage() {
   const { getSectionByType } = usePageContent('home');
   const { settings } = useGlobalSettings();
   const { offers } = useOffers();
+  const { slide: homeHero } = useHeroSlide('home');
+  const { byKey: homeBlocks } = useContentBlocks('home');
   
   // Get CMS content for each section
   const heroContent = getSectionByType('hero');
@@ -208,13 +212,16 @@ export default function HomePage() {
   // Get first active offer for the floating badge
   const featuredOffer = offers.length > 0 ? offers[0] : null;
   
+  // Service icon mapping (CMS image_url overrides bundled assets)
+  const dbServiceImages = homeBlocks('services_grid');
+  
   // Build dynamic data with CMS content or fallback to defaults
   const heroData = {
-    badge: heroContent?.badge || "Nepal's Leading Dental Care Destination",
-    headline: heroContent?.headline || "Exceptional Dental Care,",
-    headlineHighlight: heroContent?.headline_highlight || "Exceptional Value",
-    description: heroContent?.description || `Quality dental treatments at accessible prices. Led by ${settings.managing_director} with ${settings.managing_director_experience} of experience, we deliver professional care and beautiful, lasting results.`,
-    backgroundImage: heroContent?.background_image || heroImage,
+    badge: homeHero?.badge_text || heroContent?.badge || "Nepal's Leading Dental Care Destination",
+    headline: heroContent?.headline || homeHero?.title || "Exceptional Dental Care,",
+    headlineHighlight: heroContent?.headline_highlight || homeHero?.subtitle || "Exceptional Value",
+    description: heroContent?.description || homeHero?.description || `Quality dental treatments at accessible prices. Led by ${settings.managing_director} with ${settings.managing_director_experience} of experience, we deliver professional care and beautiful, lasting results.`,
+    backgroundImage: heroContent?.background_image || homeHero?.image_url || heroImage,
     ctaPrimary: heroContent?.cta_primary || { label: "Book Your Appointment", link: "/contact" },
     ctaSecondary: heroContent?.cta_secondary || { label: "International Patient? Start Here", link: "/dental-tourism" },
     stats: heroContent?.stats || [
@@ -236,10 +243,13 @@ export default function HomePage() {
     "Full Mouth Restoration": iconFullMouth,
   };
   const rawServicesData = servicesContent?.services || defaultServices;
-  const servicesData = rawServicesData.map((s: any) => ({
-    ...s,
-    icon: serviceIconOverrides[s.title] || s.icon,
-  }));
+  const servicesData = rawServicesData.map((s: any) => {
+    const dbBlock = dbServiceImages.find((b) => b.title === s.title);
+    return {
+      ...s,
+      icon: dbBlock?.image_url || serviceIconOverrides[s.title] || s.icon,
+    };
+  });
   const servicesHeader = {
     badge: servicesContent?.badge || "Our Expertise",
     headline: servicesContent?.headline || "Premium Dental Services",
