@@ -491,25 +491,28 @@ export default function PricingPage() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {pricingFactors.map((item, index) => (
-              <motion.div
-                key={index}
-                className="flex gap-6"
-                variants={fadeInUp}
-              >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <item.icon className="w-7 h-7 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">
-                    {item.factor}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            {pricingFactors.map((item, index) => {
+              const Icon = resolveIcon(item.icon);
+              return (
+                <motion.div
+                  key={index}
+                  className="flex gap-6"
+                  variants={fadeInUp}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      {item.factor}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
