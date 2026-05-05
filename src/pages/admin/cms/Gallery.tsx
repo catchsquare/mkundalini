@@ -514,24 +514,20 @@ export default function Gallery() {
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1.5">Before Image URL *</label>
-                <Input
-                  value={formData.before_image}
-                  onChange={(e) => setFormData({ ...formData, before_image: e.target.value })}
-                  placeholder="https://..."
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1.5">After Image URL *</label>
-                <Input
-                  value={formData.after_image}
-                  onChange={(e) => setFormData({ ...formData, after_image: e.target.value })}
-                  placeholder="https://..."
-                  required
-                />
-              </div>
+              <ImageUploader
+                label="Before Image *"
+                value={formData.before_image}
+                onChange={(url) => setFormData({ ...formData, before_image: url })}
+                folder="gallery"
+                required
+              />
+              <ImageUploader
+                label="After Image *"
+                value={formData.after_image}
+                onChange={(url) => setFormData({ ...formData, after_image: url })}
+                folder="gallery"
+                required
+              />
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
