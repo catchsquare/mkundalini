@@ -232,7 +232,13 @@ serve(async (req) => {
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
             { role: "system", content: buildDateContext() },
-            ...messages,
+            // Strip any client-supplied system/tool roles to prevent prompt injection
+            ...messages
+              .filter((m: { role?: string }) => m?.role === "user" || m?.role === "assistant")
+              .map((m: { role: string; content: unknown }) => ({
+                role: m.role,
+                content: String(m.content ?? ""),
+              })),
           ],
           stream: true,
         }),

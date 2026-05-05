@@ -54,7 +54,7 @@ export default function TermsPage() {
           ) : (
             <article
               className="rich-content prose prose-neutral max-w-none"
-              dangerouslySetInnerHTML={{ __html: page?.content || "" }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(page?.content || "") }}
             />
           )}
         </div>
