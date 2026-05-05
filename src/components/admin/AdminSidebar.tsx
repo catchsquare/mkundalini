@@ -183,6 +183,22 @@ const cmsNavigationGroups: NavGroup[] = [
     ],
   },
   {
+    name: "Site Content",
+    icon: LayoutTemplate,
+    roles: ["super_admin", "admin", "content_editor"],
+    defaultOpen: true,
+    items: [
+      { name: "Hero Slides", href: "/admin/cms/hero-slides", icon: Image },
+      { name: "Content Blocks", href: "/admin/cms/content-blocks", icon: LayoutTemplate },
+      { name: "FAQs", href: "/admin/cms/faqs", icon: MessageSquare },
+      { name: "Services", href: "/admin/cms/services", icon: Stethoscope },
+      { name: "Team Members", href: "/admin/cms/team-members", icon: Users },
+      { name: "Pricing Packages", href: "/admin/cms/pricing-packages", icon: CreditCard },
+      { name: "Legal Pages", href: "/admin/cms/legal-pages", icon: FileText },
+      { name: "Global Settings", href: "/admin/cms/global-settings", icon: Cog },
+    ],
+  },
+  {
     name: "Offers",
     icon: Tags,
     roles: ["super_admin", "admin", "content_editor"],

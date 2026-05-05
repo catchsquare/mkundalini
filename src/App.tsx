@@ -57,6 +57,11 @@ import DoctorsPageEditor from "./pages/admin/cms/DoctorsPageEditor";
 import PricingPageEditor from "./pages/admin/cms/PricingPageEditor";
 import ReviewsPageEditor from "./pages/admin/cms/ReviewsPageEditor";
 import DentalTourismPageEditor from "./pages/admin/cms/DentalTourismPageEditor";
+import HeroSlides from "./pages/admin/cms/HeroSlides";
+import ContentBlocks from "./pages/admin/cms/ContentBlocks";
+import Faqs from "./pages/admin/cms/Faqs";
+import PricingPackages from "./pages/admin/cms/PricingPackages";
+import LegalPages from "./pages/admin/cms/LegalPages";
 
 // Reports
 import Revenue from "./pages/admin/reports/Revenue";
@@ -174,6 +179,16 @@ const App = () => (
                 <Route path="cms/navigation/main" element={<Navigation />} />
                 <Route path="cms/navigation/footer" element={<Navigation />} />
                 <Route path="cms/navigation/mobile" element={<Navigation />} />
+
+                {/* CMS - Direct Editors */}
+                <Route path="cms/hero-slides" element={<HeroSlides />} />
+                <Route path="cms/content-blocks" element={<ContentBlocks />} />
+                <Route path="cms/faqs" element={<Faqs />} />
+                <Route path="cms/pricing-packages" element={<PricingPackages />} />
+                <Route path="cms/legal-pages" element={<LegalPages />} />
+                <Route path="cms/services" element={<ServicesPageEditor />} />
+                <Route path="cms/team-members" element={<Team />} />
+                <Route path="cms/global-settings" element={<Settings />} />
 
                 {/* Settings */}
                 <Route path="settings" element={<Settings />} />
