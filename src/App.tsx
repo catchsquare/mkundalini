@@ -57,6 +57,11 @@ import DoctorsPageEditor from "./pages/admin/cms/DoctorsPageEditor";
 import PricingPageEditor from "./pages/admin/cms/PricingPageEditor";
 import ReviewsPageEditor from "./pages/admin/cms/ReviewsPageEditor";
 import DentalTourismPageEditor from "./pages/admin/cms/DentalTourismPageEditor";
+import HeroSlides from "./pages/admin/cms/HeroSlides";
+import ContentBlocks from "./pages/admin/cms/ContentBlocks";
+import Faqs from "./pages/admin/cms/Faqs";
+import PricingPackages from "./pages/admin/cms/PricingPackages";
+import LegalPages from "./pages/admin/cms/LegalPages";
 
 // Reports
 import Revenue from "./pages/admin/reports/Revenue";
