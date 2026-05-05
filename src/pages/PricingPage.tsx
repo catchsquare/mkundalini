@@ -358,23 +358,26 @@ export default function PricingPage() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            {pricingPhilosophy.map((item, index) => (
-              <motion.div
-                key={index}
-                className="bg-card rounded-2xl p-8 border border-border/50 card-hover"
-                variants={fadeInUp}
-              >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                  <item.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
+            {pricingPhilosophy.map((item, index) => {
+              const Icon = resolveIcon(item.icon);
+              return (
+                <motion.div
+                  key={index}
+                  className="bg-card rounded-2xl p-8 border border-border/50 card-hover"
+                  variants={fadeInUp}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
+                    <Icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
