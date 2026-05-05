@@ -23,7 +23,7 @@ const navigation = {
     { name: "Dental Tourism Guide", href: "/dental-tourism" },
     { name: "Book Appointment", href: "/contact" },
     { name: "Treatment Pricing", href: "/pricing" },
-    { name: "FAQs", href: "/dental-tourism#faqs" },
+    { name: "FAQs", href: "/faq" },
   ],
 };
 
