@@ -30,7 +30,12 @@ export type EntityType =
   | "offer"
   | "team_member"
   | "service"
-  | "service_category";
+  | "service_category"
+  | "hero_slide"
+  | "content_block"
+  | "faq"
+  | "pricing_package"
+  | "legal_page";
 
 interface AuditLogParams {
   action: AuditAction;
