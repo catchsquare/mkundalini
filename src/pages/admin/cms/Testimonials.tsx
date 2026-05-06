@@ -654,6 +654,13 @@ export default function Testimonials() {
               </div>
             </div>
 
+            <ImageUploader
+              value={formData.patient_avatar}
+              onChange={(url) => setFormData({ ...formData, patient_avatar: url })}
+              folder="testimonials"
+              label="Patient Avatar (optional)"
+            />
+
             <div>
               <label className="block text-sm font-medium mb-1.5">Video URL (optional)</label>
               <Input
