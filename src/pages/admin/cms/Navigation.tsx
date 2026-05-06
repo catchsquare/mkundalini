@@ -191,7 +191,7 @@ export default function Navigation() {
         label: formData.label,
         url: formData.url || null,
         page_id: formData.page_id || null,
-        parent_id: formData.parent_id || null,
+        parent_id: formData.parent_id && formData.parent_id !== "__none__" ? formData.parent_id : null,
         location: activeTab,
         target: formData.target,
         is_visible: formData.is_visible,
