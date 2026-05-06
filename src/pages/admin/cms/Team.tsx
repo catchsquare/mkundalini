@@ -530,14 +530,12 @@ export default function Team() {
               />
             </div>
 
-            <div>
-              <Label>Photo URL</Label>
-              <Input
-                value={formData.photo_url}
-                onChange={(e) => setFormData((prev) => ({ ...prev, photo_url: e.target.value }))}
-                placeholder="https://..."
-              />
-            </div>
+            <ImageUploader
+              value={formData.photo_url}
+              onChange={(url) => setFormData((prev) => ({ ...prev, photo_url: url }))}
+              folder="team"
+              label="Photo"
+            />
 
             {formData.photo_url && (
               <div>
