@@ -44,6 +44,7 @@ import { DataTablePagination } from "@/components/admin/shared/DataTablePaginati
 import { DeleteConfirmDialog } from "@/components/admin/shared/DeleteConfirmDialog";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 interface Testimonial {
   id: string;
