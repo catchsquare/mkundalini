@@ -144,6 +144,7 @@ export default function Testimonials() {
       const testimonialData = {
         patient_name: formData.patient_name,
         patient_location: formData.patient_location || null,
+        patient_avatar: formData.patient_avatar || null,
         content: formData.content,
         rating: formData.rating,
         treatment_type: formData.treatment_type || null,
