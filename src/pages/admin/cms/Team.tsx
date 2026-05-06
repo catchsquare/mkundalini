@@ -36,6 +36,7 @@ import { useAuditLog } from "@/hooks/use-audit-log";
 import { DeleteConfirmDialog } from "@/components/admin/shared/DeleteConfirmDialog";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 interface TeamMember {
   id: string;
