@@ -284,10 +284,11 @@ export default function Testimonials() {
     setFormData({
       patient_name: "",
       patient_location: "",
+      patient_avatar: "",
       content: "",
       rating: 5,
       treatment_type: "",
-      source: "website",
+      source: "internal",
       status: "pending",
       is_featured: false,
       is_verified: false,
@@ -302,6 +303,7 @@ export default function Testimonials() {
     setFormData({
       patient_name: testimonial.patient_name,
       patient_location: testimonial.patient_location || "",
+      patient_avatar: testimonial.patient_avatar || "",
       content: testimonial.content,
       rating: testimonial.rating,
       treatment_type: testimonial.treatment_type || "",
