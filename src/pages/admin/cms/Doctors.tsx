@@ -165,7 +165,7 @@ export default function Doctors() {
     setIsSubmitting(true);
     try {
       const dentistData = {
-        profile_id: formData.profile_id || null,
+        profile_id: formData.profile_id && formData.profile_id !== "__none__" ? formData.profile_id : null,
         specialization: formData.specialization || null,
         license_number: formData.license_number || null,
         is_available: formData.is_available,
