@@ -402,7 +402,7 @@ export default function Doctors() {
                   <SelectValue placeholder="Select a user profile" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None</SelectItem>
+                  <SelectItem value="__none__">None</SelectItem>
                   {profiles.map((p) => (
                     <SelectItem key={p.id} value={p.id}>
                       {p.full_name} ({p.email})
