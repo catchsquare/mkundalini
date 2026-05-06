@@ -170,16 +170,25 @@ export default function DoctorsPage() {
                 className="relative"
               >
                 <div className="aspect-[3/4] rounded-3xl bg-gradient-to-br from-primary/15 via-accent/10 to-muted overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center p-8">
-                      <div className="w-40 h-40 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6 border-4 border-primary/20">
-                        <Stethoscope className="w-20 h-20 text-primary/50" />
+                  {featuredDoctor.image ? (
+                    <img
+                      src={featuredDoctor.image}
+                      alt={featuredDoctor.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center p-8">
+                        <div className="w-40 h-40 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6 border-4 border-primary/20">
+                          <Stethoscope className="w-20 h-20 text-primary/50" />
+                        </div>
+                        <p className="text-muted-foreground text-sm">
+                          Professional portrait
+                        </p>
                       </div>
-                      <p className="text-muted-foreground text-sm">
-                        Professional portrait
-                      </p>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Experience Badge */}
