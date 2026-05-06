@@ -577,7 +577,7 @@ export default function Navigation() {
                   <SelectValue placeholder="None (top level)" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None (top level)</SelectItem>
+                  <SelectItem value="__none__">None (top level)</SelectItem>
                   {rootItems
                     .filter((item) => item.id !== selectedItem?.id)
                     .map((item) => (
