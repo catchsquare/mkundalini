@@ -33,6 +33,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
 import { DeleteConfirmDialog } from "@/components/admin/shared/DeleteConfirmDialog";
 import { Label } from "@/components/ui/label";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 interface Offer {
   id: string;
