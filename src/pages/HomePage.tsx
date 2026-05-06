@@ -33,6 +33,7 @@ import { useOffers } from "@/hooks/use-offers";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useTestimonials } from "@/hooks/use-testimonials";
+import { useTeamMembers } from "@/hooks/use-team-members";
 
 // Icon mapping for dynamic content
 const iconMap: Record<string, React.ElementType> = {
@@ -200,6 +201,7 @@ export default function HomePage() {
   const { slide: homeHero } = useHeroSlide('home');
   const { byKey: homeBlocks } = useContentBlocks('home');
   const { testimonials: dbTestimonials } = useTestimonials({ limit: 3 });
+  const { featuredMember } = useTeamMembers();
   
   // Get CMS content for each section
   const heroContent = getSectionByType('hero');
@@ -277,7 +279,7 @@ export default function HomePage() {
     description: doctorContent?.description || `With ${settings.managing_director_experience || "15 years"} of experience in dental care, ${settings.managing_director || "Dr. Nitin Aryal"} leads Kundalini Dental Clinic with a commitment to excellence and patient-centered care. His expertise spans comprehensive dental treatments, ensuring every patient receives personalized attention.`,
     credentials: doctorContent?.credentials || defaultDoctorCredentials,
     experienceBadge: doctorContent?.experience_badge || { value: settings.managing_director_experience?.replace(' years', '') || "15", label: "Years of clinical experience" },
-    photo: doctorContent?.photo || null,
+    photo: doctorContent?.photo || featuredMember?.photo_url || null,
     cta: doctorContent?.cta || { label: "View Full Profile", link: "/doctors" }
   };
   
