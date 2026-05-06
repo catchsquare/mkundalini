@@ -33,6 +33,7 @@ import { useOffers } from "@/hooks/use-offers";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useTestimonials } from "@/hooks/use-testimonials";
+import { useTeamMembers } from "@/hooks/use-team-members";
 
 // Icon mapping for dynamic content
 const iconMap: Record<string, React.ElementType> = {
