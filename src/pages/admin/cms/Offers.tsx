@@ -434,14 +434,12 @@ export default function Offers() {
               </div>
             </div>
 
-            <div>
-              <Label>Image URL (optional)</Label>
-              <Input
-                value={formData.image_url}
-                onChange={(e) => setFormData((prev) => ({ ...prev, image_url: e.target.value }))}
-                placeholder="https://..."
-              />
-            </div>
+            <ImageUploader
+              value={formData.image_url}
+              onChange={(url) => setFormData((prev) => ({ ...prev, image_url: url }))}
+              folder="offers"
+              label="Offer Image (optional)"
+            />
 
             {formData.image_url && (
               <div>
