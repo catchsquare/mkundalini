@@ -79,10 +79,11 @@ export default function Testimonials() {
   const [formData, setFormData] = useState({
     patient_name: "",
     patient_location: "",
+    patient_avatar: "",
     content: "",
     rating: 5,
     treatment_type: "",
-    source: "website",
+    source: "internal",
     status: "pending",
     is_featured: false,
     is_verified: false,
@@ -91,11 +92,10 @@ export default function Testimonials() {
   });
 
   const sourceOptions = [
-    { value: "website", label: "Website" },
+    { value: "internal", label: "Website / Internal" },
     { value: "google", label: "Google" },
     { value: "facebook", label: "Facebook" },
-    { value: "instagram", label: "Instagram" },
-    { value: "manual", label: "Manual Entry" },
+    { value: "trustpilot", label: "Trustpilot" },
   ];
 
   const statusOptions = [
