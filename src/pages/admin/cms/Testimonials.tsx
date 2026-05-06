@@ -44,6 +44,7 @@ import { DataTablePagination } from "@/components/admin/shared/DataTablePaginati
 import { DeleteConfirmDialog } from "@/components/admin/shared/DeleteConfirmDialog";
 import { StatusBadge } from "@/components/admin/shared/StatusBadge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 interface Testimonial {
   id: string;
@@ -78,10 +79,11 @@ export default function Testimonials() {
   const [formData, setFormData] = useState({
     patient_name: "",
     patient_location: "",
+    patient_avatar: "",
     content: "",
     rating: 5,
     treatment_type: "",
-    source: "website",
+    source: "internal",
     status: "pending",
     is_featured: false,
     is_verified: false,
@@ -90,11 +92,10 @@ export default function Testimonials() {
   });
 
   const sourceOptions = [
-    { value: "website", label: "Website" },
+    { value: "internal", label: "Website / Internal" },
     { value: "google", label: "Google" },
     { value: "facebook", label: "Facebook" },
-    { value: "instagram", label: "Instagram" },
-    { value: "manual", label: "Manual Entry" },
+    { value: "trustpilot", label: "Trustpilot" },
   ];
 
   const statusOptions = [
@@ -143,6 +144,7 @@ export default function Testimonials() {
       const testimonialData = {
         patient_name: formData.patient_name,
         patient_location: formData.patient_location || null,
+        patient_avatar: formData.patient_avatar || null,
         content: formData.content,
         rating: formData.rating,
         treatment_type: formData.treatment_type || null,
@@ -282,10 +284,11 @@ export default function Testimonials() {
     setFormData({
       patient_name: "",
       patient_location: "",
+      patient_avatar: "",
       content: "",
       rating: 5,
       treatment_type: "",
-      source: "website",
+      source: "internal",
       status: "pending",
       is_featured: false,
       is_verified: false,
@@ -300,6 +303,7 @@ export default function Testimonials() {
     setFormData({
       patient_name: testimonial.patient_name,
       patient_location: testimonial.patient_location || "",
+      patient_avatar: testimonial.patient_avatar || "",
       content: testimonial.content,
       rating: testimonial.rating,
       treatment_type: testimonial.treatment_type || "",
@@ -649,6 +653,13 @@ export default function Testimonials() {
                 />
               </div>
             </div>
+
+            <ImageUploader
+              value={formData.patient_avatar}
+              onChange={(url) => setFormData({ ...formData, patient_avatar: url })}
+              folder="testimonials"
+              label="Patient Avatar (optional)"
+            />
 
             <div>
               <label className="block text-sm font-medium mb-1.5">Video URL (optional)</label>

@@ -156,8 +156,7 @@ const cmsNavigationGroups: NavGroup[] = [
     icon: UserCog,
     roles: ["super_admin", "admin", "content_editor"],
     items: [
-      { name: "Doctors", href: "/admin/cms/doctors", icon: Stethoscope },
-      { name: "Staff Directory", href: "/admin/cms/team", icon: Users },
+      { name: "Doctors & Staff", href: "/admin/cms/team", icon: Users },
     ],
   },
   {

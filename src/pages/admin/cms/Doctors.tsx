@@ -165,7 +165,7 @@ export default function Doctors() {
     setIsSubmitting(true);
     try {
       const dentistData = {
-        profile_id: formData.profile_id || null,
+        profile_id: formData.profile_id && formData.profile_id !== "__none__" ? formData.profile_id : null,
         specialization: formData.specialization || null,
         license_number: formData.license_number || null,
         is_available: formData.is_available,
@@ -402,7 +402,7 @@ export default function Doctors() {
                   <SelectValue placeholder="Select a user profile" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None</SelectItem>
+                  <SelectItem value="__none__">None</SelectItem>
                   {profiles.map((p) => (
                     <SelectItem key={p.id} value={p.id}>
                       {p.full_name} ({p.email})
