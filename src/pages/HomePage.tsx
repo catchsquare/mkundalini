@@ -201,6 +201,7 @@ export default function HomePage() {
   const { slide: homeHero } = useHeroSlide('home');
   const { byKey: homeBlocks } = useContentBlocks('home');
   const { testimonials: dbTestimonials } = useTestimonials({ limit: 3 });
+  const { featuredMember } = useTeamMembers();
   
   // Get CMS content for each section
   const heroContent = getSectionByType('hero');
