@@ -8,6 +8,8 @@ import { useTeamMembers } from "@/hooks/use-team-members";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getIcon } from "@/lib/icon-map";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 export default function AboutPage() {
   const { byKey, loading } = useContentBlocks("about");
