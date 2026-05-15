@@ -23,6 +23,8 @@ import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getIcon } from "@/lib/icon-map";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 const resolveIcon = (icon: any) => (typeof icon === "string" ? getIcon(icon) : icon);
 
@@ -306,6 +308,12 @@ export default function PricingPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Pricing & Packages"
+        description="Transparent dental treatment pricing in Nepal. Compare costs for implants, veneers, crowns, and full smile makeovers — up to 70% less than Western prices."
+        path="/pricing"
+      />
+      <Breadcrumbs items={[{ label: "Pricing" }]} />
       {/* Hero Section - with proper padding for fixed header */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-muted/50 to-background overflow-hidden">
         <div className="absolute inset-0 opacity-30">

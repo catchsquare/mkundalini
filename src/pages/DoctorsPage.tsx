@@ -21,6 +21,8 @@ import { useTeamMembers } from "@/hooks/use-team-members";
 import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { getIcon } from "@/lib/icon-map";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 // Fallback static doctor data
 const fallbackDoctor = {
@@ -86,6 +88,12 @@ export default function DoctorsPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Our Doctors"
+        description="Meet the experienced dental specialists at Kundalini Dental Clinic — internationally trained dentists delivering safe, world-class care."
+        path="/doctors"
+      />
+      <Breadcrumbs items={[{ label: "Doctors" }]} />
       {/* Hero */}
       <section className="bg-gradient-to-b from-muted/50 to-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
