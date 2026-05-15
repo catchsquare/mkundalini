@@ -12,6 +12,8 @@ import { HelpCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 export default function FaqPage() {
   const { settings } = useGlobalSettings();
@@ -30,12 +32,13 @@ export default function FaqPage() {
 
   return (
     <Layout>
-      <title>{`Frequently Asked Questions | ${settings.clinic_name}`}</title>
-      <meta
-        name="description"
-        content="Answers to the most common questions about treatments, pricing, dental tourism, safety, and appointments at Kundalini Dental Clinic."
+      <SEO
+        title="Frequently Asked Questions"
+        description="Answers to the most common questions about treatments, pricing, dental tourism, safety, and appointments at Kundalini Dental Clinic."
+        path="/faq"
+        jsonLd={faqs.length ? faqSchema : undefined}
       />
-      <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+      <Breadcrumbs items={[{ label: "FAQs" }]} />
 
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary/5 via-background to-accent/5 border-b border-border/50">
