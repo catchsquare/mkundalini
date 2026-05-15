@@ -15,6 +15,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -54,25 +56,29 @@ export default function ServiceDetailPage() {
     );
   }
 
+  const procedureSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalProcedure",
+    name: service.title,
+    description: service.seo_description || service.short_description || service.hero_subtitle || service.title,
+    procedureType: "TherapeuticProcedure",
+    bodyLocation: "Mouth",
+  };
+
   return (
     <Layout>
-      {/* SEO Meta */}
-      {(service.seo_title || service.hero_title) && (
-        <title>{service.seo_title || service.hero_title || service.title}</title>
-      )}
-
-      {/* Breadcrumb */}
-      <div className="bg-muted/30 border-b border-border/50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
-          <nav className="flex items-center gap-2 text-sm" aria-label="Breadcrumb">
-            <Link to="/" className="text-muted-foreground hover:text-primary transition-colors">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/50" />
-            <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">Services</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/50" />
-            <span className="text-foreground font-medium truncate">{service.title}</span>
-          </nav>
-        </div>
-      </div>
+      <SEO
+        title={service.seo_title || service.hero_title || service.title}
+        description={service.seo_description || service.short_description || service.hero_subtitle || `${service.title} at Kundalini Dental Clinic, Kathmandu.`}
+        path={`/services/${service.slug}`}
+        jsonLd={procedureSchema}
+      />
+      <Breadcrumbs
+        items={[
+          { label: "Services", href: "/services" },
+          { label: service.title },
+        ]}
+      />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
