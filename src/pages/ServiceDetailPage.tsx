@@ -60,7 +60,7 @@ export default function ServiceDetailPage() {
     "@context": "https://schema.org",
     "@type": "MedicalProcedure",
     name: service.title,
-    description: service.seo_description || service.short_description || service.hero_subtitle || service.title,
+    description: service.seo_description || service.short_description || service.hero_description || service.title,
     procedureType: "TherapeuticProcedure",
     bodyLocation: "Mouth",
   };
@@ -69,7 +69,7 @@ export default function ServiceDetailPage() {
     <Layout>
       <SEO
         title={service.seo_title || service.hero_title || service.title}
-        description={service.seo_description || service.short_description || service.hero_subtitle || `${service.title} at Kundalini Dental Clinic, Kathmandu.`}
+        description={service.seo_description || service.short_description || service.hero_description || `${service.title} at Kundalini Dental Clinic, Kathmandu.`}
         path={`/services/${service.slug}`}
         jsonLd={procedureSchema}
       />
