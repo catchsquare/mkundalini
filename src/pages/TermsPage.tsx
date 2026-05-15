@@ -4,6 +4,8 @@ import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { useLegalPage } from "@/hooks/use-legal-page";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollText } from "lucide-react";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 export default function TermsPage() {
   const { settings } = useGlobalSettings();
@@ -20,14 +22,15 @@ export default function TermsPage() {
 
   return (
     <Layout>
-      <title>{`${page?.seo_title || title} | ${settings.clinic_name}`}</title>
-      <meta
-        name="description"
-        content={
+      <SEO
+        title={page?.seo_title || title}
+        description={
           page?.seo_description ||
           `Terms and conditions governing the use of ${settings.clinic_name} services, website, and treatments.`
         }
+        path="/terms"
       />
+      <Breadcrumbs items={[{ label: "Terms of Service" }]} />
 
       <section className="bg-gradient-to-br from-primary/5 via-background to-accent/5 border-b border-border/50">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 lg:py-20 text-center">

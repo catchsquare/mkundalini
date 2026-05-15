@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { usePageContent } from "@/hooks/use-page-content";
 import { useServicesByCategory } from "@/hooks/use-services";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 export default function ServicesPage() {
   const { getSectionByType } = usePageContent("services");
@@ -24,6 +26,12 @@ export default function ServicesPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Dental Services & Treatments"
+        description="Explore our full range of dental treatments — implants, veneers, orthodontics, root canals, cosmetic dentistry and more, all at international standards in Kathmandu."
+        path="/services"
+      />
+      <Breadcrumbs items={[{ label: "Services" }]} />
       {/* Hero */}
       <section className="bg-gradient-to-b from-muted/50 to-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -34,6 +34,7 @@ import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useTestimonials } from "@/hooks/use-testimonials";
 import { useTeamMembers } from "@/hooks/use-team-members";
+import { SEO } from "@/components/seo/SEO";
 
 // Icon mapping for dynamic content
 const iconMap: Record<string, React.ElementType> = {
@@ -323,6 +324,11 @@ export default function HomePage() {
 
   return (
     <Layout>
+      <SEO
+        title="Kundalini Dental Clinic | Premium Dental Care in Nepal"
+        description="World-class dental care in Kathmandu, Nepal. Specializing in dental tourism, cosmetic dentistry, implants, and smile makeovers at international standards."
+        path="/"
+      />
       {/* Hero Section */}
       <section className="relative min-h-[auto] sm:min-h-[85vh] lg:min-h-[92vh] flex items-center pt-20 sm:pt-28 lg:pt-32 pb-8 sm:pb-0">
         <div className="absolute inset-0 z-0">

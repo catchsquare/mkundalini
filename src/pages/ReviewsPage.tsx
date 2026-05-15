@@ -25,6 +25,8 @@ import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useGallery } from "@/hooks/use-gallery";
 import { useSiteStats } from "@/hooks/use-site-stats";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 const guidelineIconMap: Record<string, any> = { Lock, Camera, Eye, Calendar };
 
@@ -252,6 +254,12 @@ export default function ReviewsPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Patient Reviews & Testimonials"
+        description="Read verified reviews from patients who travelled to Kundalini Dental Clinic for implants, smile makeovers and dental tourism in Nepal."
+        path="/reviews"
+      />
+      <Breadcrumbs items={[{ label: "Reviews" }]} />
       {/* Hero Section - with proper padding for fixed header */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-muted/50 to-background overflow-hidden">
         <div className="absolute inset-0 opacity-30">

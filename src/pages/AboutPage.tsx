@@ -8,6 +8,8 @@ import { useTeamMembers } from "@/hooks/use-team-members";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getIcon } from "@/lib/icon-map";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 
 export default function AboutPage() {
   const { byKey, loading } = useContentBlocks("about");
@@ -23,6 +25,12 @@ export default function AboutPage() {
 
   return (
     <Layout>
+      <SEO
+        title="About Us"
+        description="Learn about Kundalini Dental Clinic — our mission, ethics, safety standards, and team delivering world-class dental care in Kathmandu, Nepal."
+        path="/about"
+      />
+      <Breadcrumbs items={[{ label: "About" }]} />
       {/* Hero */}
       <section className="bg-gradient-to-b from-muted/50 to-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
