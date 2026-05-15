@@ -32,6 +32,8 @@ import { usePageContent } from "@/hooks/use-page-content";
 import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { getIcon } from "@/lib/icon-map";
 
 const fadeInUp = {
@@ -257,6 +259,12 @@ export default function ContactPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Contact Us"
+        description="Get in touch with Kundalini Dental Clinic in Kathmandu, Nepal. Book a free consultation, request a treatment plan, or ask about dental tourism."
+        path="/contact"
+      />
+      <Breadcrumbs items={[{ label: "Contact" }]} />
       {/* Hero - with proper padding for fixed header */}
       <section className="relative pt-32 pb-20 bg-gradient-to-b from-muted/50 to-background overflow-hidden">
         <div className="absolute inset-0 opacity-30">

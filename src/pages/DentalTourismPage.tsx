@@ -38,6 +38,8 @@ import { usePageContent } from "@/hooks/use-page-content";
 import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { useFaqs } from "@/hooks/use-faqs";
+import { SEO } from "@/components/seo/SEO";
+import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getIcon } from "@/lib/icon-map";
 
@@ -328,6 +330,12 @@ export default function DentalTourismPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Dental Tourism in Nepal"
+        description="Combine world-class dental treatment with a Himalayan journey. Implants, veneers, and full smile makeovers in Kathmandu — up to 70% savings, all-inclusive packages."
+        path="/dental-tourism"
+      />
+      <Breadcrumbs items={[{ label: "Dental Tourism" }]} />
       {/* Hero */}
       <section className="bg-gradient-to-b from-muted/50 to-background py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
