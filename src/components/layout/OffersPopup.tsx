@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useOffers } from "@/hooks/use-offers";
-
-const STORAGE_KEY = "offers_popup_shown";
 
 export function OffersPopup() {
   const { offers, loading } = useOffers();
