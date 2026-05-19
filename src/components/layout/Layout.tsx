@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { AnnouncementBar } from "./AnnouncementBar";
 import { ConsentBanner } from "./ConsentBanner";
+import { OffersPopup } from "./OffersPopup";
 import { FloatingCallButton } from "@/components/ui/floating-call-button";
 
 const DentalAssistantWidget = lazy(() =>
@@ -28,6 +29,7 @@ export function Layout({ children, showAnnouncement = true }: LayoutProps) {
         <DentalAssistantWidget />
       </Suspense>
       <ConsentBanner />
+      <OffersPopup />
     </div>
   );
 }
