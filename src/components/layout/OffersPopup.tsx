@@ -7,18 +7,18 @@ import { useOffers } from "@/hooks/use-offers";
 
 export function OffersPopup() {
   const { offers, loading } = useOffers();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     if (loading || offers.length === 0) return;
-    if (sessionStorage.getItem(STORAGE_KEY)) return;
+    setIndex(0);
     const t = setTimeout(() => {
       setOpen(true);
-      sessionStorage.setItem(STORAGE_KEY, "1");
-    }, 1500);
+    }, 1000);
     return () => clearTimeout(t);
-  }, [loading, offers.length]);
+  }, [loading, offers.length, location.pathname]);
 
   if (offers.length === 0) return null;
 
