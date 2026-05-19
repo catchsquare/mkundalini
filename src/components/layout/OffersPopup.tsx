@@ -26,7 +26,7 @@ export function OffersPopup() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-2xl p-0 overflow-hidden">
+      <DialogContent className="max-w-2xl p-0 overflow-hidden top-4 translate-y-0 sm:top-8 max-h-[90vh] overflow-y-auto">
         <DialogHeader className="px-6 pt-6">
           <DialogTitle className="text-2xl">Special Offers</DialogTitle>
           <DialogDescription>
