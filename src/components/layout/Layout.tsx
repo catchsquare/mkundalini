@@ -29,6 +29,7 @@ export function Layout({ children, showAnnouncement = true }: LayoutProps) {
         <DentalAssistantWidget />
       </Suspense>
       <ConsentBanner />
+      <OffersPopup />
     </div>
   );
 }
