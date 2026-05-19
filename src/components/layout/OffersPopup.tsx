@@ -40,11 +40,11 @@ export function OffersPopup() {
                 <CarouselItem key={offer.id}>
                   <div className="flex flex-col gap-4">
                     {offer.image_url && (
-                      <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-muted">
+                      <div className="relative w-full overflow-hidden rounded-lg bg-muted">
                         <img
                           src={offer.image_url}
                           alt={offer.image_alt || offer.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-auto object-contain"
                           loading="lazy"
                         />
                         {offer.badge_text && (
