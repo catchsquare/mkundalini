@@ -1,4 +1,4 @@
-import { ReactNode, lazy, Suspense } from "react";
+import { ReactNode, lazy, Suspense, useEffect, useState } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { AnnouncementBar } from "./AnnouncementBar";
@@ -17,17 +17,43 @@ interface LayoutProps {
   showAnnouncement?: boolean;
 }
 
+const CONSENT_KEY = "kdc_consent_v1";
+
 export function Layout({ children, showAnnouncement = true }: LayoutProps) {
+  const [consentResolved, setConsentResolved] = useState(true);
+
+  useEffect(() => {
+    const check = () => {
+      try {
+        setConsentResolved(!!localStorage.getItem(CONSENT_KEY));
+      } catch {
+        setConsentResolved(true);
+      }
+    };
+    check();
+    const onResolved = () => setConsentResolved(true);
+    window.addEventListener("kdc-consent-resolved", onResolved);
+    window.addEventListener("storage", check);
+    return () => {
+      window.removeEventListener("kdc-consent-resolved", onResolved);
+      window.removeEventListener("storage", check);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       {showAnnouncement && <AnnouncementBar />}
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
-      <FloatingCallButton />
-      <Suspense fallback={null}>
-        <DentalAssistantWidget />
-      </Suspense>
+      {consentResolved && (
+        <>
+          <FloatingCallButton />
+          <Suspense fallback={null}>
+            <DentalAssistantWidget />
+          </Suspense>
+        </>
+      )}
       <ConsentBanner />
       <OffersPopup />
     </div>
