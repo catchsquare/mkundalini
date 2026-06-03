@@ -30,6 +30,9 @@ export function ConsentBanner() {
       // ignore storage errors
     }
     setVisible(false);
+    try {
+      window.dispatchEvent(new Event("kdc-consent-resolved"));
+    } catch { /* ignore */ }
   };
 
   if (!visible) return null;
