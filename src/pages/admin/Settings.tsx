@@ -20,7 +20,10 @@ import {
   Calendar,
   User,
   ImageIcon,
+  Megaphone,
 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Link as RouterLink } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useAuditLog } from "@/hooks/use-audit-log";
 import { Label } from "@/components/ui/label";
@@ -331,7 +334,84 @@ export default function Settings() {
             <Share2 className="w-4 h-4" />
             Social & Messaging
           </TabsTrigger>
+          <TabsTrigger value="announcement" className="gap-2">
+            <Megaphone className="w-4 h-4" />
+            Announcement Bar
+          </TabsTrigger>
         </TabsList>
+
+        {/* Announcement Bar */}
+        <TabsContent value="announcement">
+          <Card>
+            <CardHeader>
+              <CardTitle>Top Announcement Bar</CardTitle>
+              <CardDescription>
+                Controls the thin promo strip at the top of every public page. Content is pulled from active offers in the Offers editor.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex items-start justify-between gap-4 p-4 rounded-lg border bg-card">
+                <div>
+                  <Label className="text-base">Show announcement bar</Label>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    When off, the bar is completely hidden site-wide even if offers are active.
+                  </p>
+                </div>
+                <Switch
+                  checked={settings.announcement_bar_enabled !== false}
+                  onCheckedChange={(v) => updateSetting("announcement_bar_enabled", v)}
+                />
+              </div>
+
+              <div className="text-sm text-muted-foreground p-4 rounded-lg border bg-muted/40">
+                Manage the messages, badge text, links, and active status of each announcement in the{" "}
+                <RouterLink to="/admin/cms/offers" className="text-primary underline">
+                  Offers editor
+                </RouterLink>
+                . Only offers with status <span className="font-medium">active</span> appear here.
+              </div>
+
+              <div className="flex justify-end">
+                <Button
+                  onClick={async () => {
+                    setSaving(true);
+                    try {
+                      await saveSetting(
+                        "announcement_bar_enabled",
+                        settings.announcement_bar_enabled !== false,
+                        "layout",
+                        "Show top announcement bar on public pages",
+                        true,
+                      );
+                      await logAction({
+                        action: "update",
+                        entityType: "setting",
+                        entityId: "announcement_bar",
+                        newValues: {
+                          announcement_bar_enabled: settings.announcement_bar_enabled !== false,
+                        },
+                      });
+                      toast({ title: "Announcement bar settings saved" });
+                    } catch (error: any) {
+                      toast({
+                        title: "Error saving settings",
+                        description: error.message,
+                        variant: "destructive",
+                      });
+                    } finally {
+                      setSaving(false);
+                    }
+                  }}
+                  disabled={saving}
+                >
+                  {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                  <Save className="w-4 h-4 mr-2" />
+                  Save
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         {/* Branding Settings */}
         <TabsContent value="branding">
