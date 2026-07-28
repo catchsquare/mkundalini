@@ -2,76 +2,70 @@ import { useState, useEffect } from "react";
 import { X, Sparkles, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { useOffers, Offer } from "@/hooks/use-offers";
-
-interface Announcement {
-  id: string;
-  text: string;
-  link?: string;
-  linkText?: string;
-  highlight?: string;
-}
-
-// Convert offers to announcement format
-function offersToAnnouncements(offers: Offer[]): Announcement[] {
-  return offers.map(offer => ({
-    id: offer.id,
-    text: offer.badge_text || 'Special Offer:',
-    highlight: offer.title,
-    link: offer.cta_link || '/contact',
-    linkText: offer.cta_label || 'Learn More',
-  }));
-}
-
-// Fallback static announcements
-const fallbackAnnouncements: Announcement[] = [
-  {
-    id: "1",
-    text: "Limited Time Offer:",
-    highlight: "20% OFF on All Dental Implants",
-    link: "/services/dental-implants",
-    linkText: "Book Now",
-  },
-  {
-    id: "2",
-    text: "International Patients:",
-    highlight: "Free Airport Pickup + Hotel Assistance",
-    link: "/dental-tourism",
-    linkText: "Learn More",
-  },
-  {
-    id: "3",
-    text: "New Year Special:",
-    highlight: "Free Consultation for Smile Makeovers",
-    link: "/contact",
-    linkText: "Claim Offer",
-  },
-];
+import { useOffers } from "@/hooks/use-offers";
+import { supabase } from "@/integrations/supabase/client";
 
 export function AnnouncementBar() {
   const { offers, loading } = useOffers();
-  const [isVisible, setIsVisible] = useState(true);
+  const [enabled, setEnabled] = useState<boolean>(true);
+  const [settingLoaded, setSettingLoaded] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Convert CMS offers to announcements, fallback to static if none
-  const announcements = offers.length > 0 
-    ? offersToAnnouncements(offers) 
-    : fallbackAnnouncements;
+  // Load announcement bar toggle from backend
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      const { data } = await supabase
+        .from("global_settings")
+        .select("setting_value")
+        .eq("setting_key", "announcement_bar_enabled")
+        .maybeSingle();
+      if (!active) return;
+      if (data?.setting_value !== undefined && data?.setting_value !== null) {
+        // stored as boolean or "true"/"false"
+        const v = data.setting_value as unknown;
+        setEnabled(v === true || v === "true");
+      }
+      setSettingLoaded(true);
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
-  // Rotate announcements every 5 seconds
+  // Restore dismissed state per session
+  useEffect(() => {
+    if (sessionStorage.getItem("kdc-announcement-dismissed") === "1") {
+      setDismissed(true);
+    }
+  }, []);
+
+  // Only backend offers — no static fallback
+  const announcements = offers;
+
+  // Rotate every 5s
   useEffect(() => {
     if (announcements.length <= 1) return;
-    
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % announcements.length);
     }, 5000);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [announcements.length]);
 
-  if (!isVisible) return null;
+  if (!settingLoaded || loading) return null;
+  if (!enabled || dismissed || announcements.length === 0) return null;
 
   const current = announcements[currentIndex];
+  const text = current.badge_text || "Special Offer:";
+  const highlight = current.title;
+  const link = current.cta_link || "/contact";
+  const linkText = current.cta_label || "Learn More";
+
+  const handleDismiss = () => {
+    sessionStorage.setItem("kdc-announcement-dismissed", "1");
+    setDismissed(true);
+  };
 
   return (
     <div className="bg-secondary text-secondary-foreground relative z-[60]">
@@ -88,22 +82,21 @@ export function AnnouncementBar() {
             >
               <Sparkles className="w-4 h-4 text-primary flex-shrink-0 hidden sm:block" />
               <span className="text-xs sm:text-sm">
-                <span className="text-secondary-foreground/80">{current.text}</span>{" "}
-                <span className="font-semibold text-primary">{current.highlight}</span>
+                <span className="text-secondary-foreground/80">{text}</span>{" "}
+                <span className="font-semibold text-primary">{highlight}</span>
               </span>
-              {current.link && (
+              {link && (
                 <Link
-                  to={current.link}
+                  to={link}
                   className="inline-flex items-center gap-1 text-xs sm:text-sm font-medium text-primary hover:text-primary/80 transition-colors ml-1 sm:ml-2 whitespace-nowrap"
                 >
-                  {current.linkText}
+                  {linkText}
                   <ArrowRight className="w-3 h-3" />
                 </Link>
               )}
             </motion.div>
           </AnimatePresence>
 
-          {/* Progress dots */}
           {announcements.length > 1 && (
             <div className="hidden sm:flex items-center gap-1.5 ml-4">
               {announcements.map((_, idx) => (
@@ -121,9 +114,8 @@ export function AnnouncementBar() {
             </div>
           )}
 
-          {/* Close button */}
           <button
-            onClick={() => setIsVisible(false)}
+            onClick={handleDismiss}
             className="p-1.5 hover:bg-secondary-foreground/10 rounded-full transition-colors flex-shrink-0 ml-2"
             aria-label="Close announcement"
           >
