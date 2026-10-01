@@ -262,12 +262,8 @@ const fallbackAftercareProcess = [
 
 const fallbackFaqs = [
   {
-    question: "How do I know the quality is really the same as in my country?",
-    answer: "We use FDA-approved implants from Straumann (Swiss), Nobel Biocare (Swedish), and other premium manufacturers — the exact same brands used by top clinics in the USA. We're happy to show you the implant packaging and certificates. Our dentists trained at internationally recognized institutions and maintain certifications that are valid globally.",
-  },
-  {
     question: "What if something goes wrong after I return home?",
-    answer: "Complications are rare (our implant success rate is 97%+), but we have protocols in place. We provide 24/7 WhatsApp support, can video consult to assess any concerns, and will cover the cost of any necessary corrections. For implant issues, we coordinate with trusted dentists in major cities worldwide, or you can return to us and we'll cover the treatment cost.",
+    answer: "Contact the clinic through WhatsApp or by phone if you have concerns after returning home. Some treatments involve multiple stages, so discuss follow-up and aftercare arrangements with your dentist before you travel.",
   },
   {
     question: "Is it safe to travel for dental treatment?",
