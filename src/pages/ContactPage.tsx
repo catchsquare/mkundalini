@@ -53,7 +53,7 @@ const staggerContainer = {
 };
 
 const fallbackContactMethods = [
-  { icon: "MessageCircle", title: "WhatsApp", subtitle: "Fastest Response", value: "+977-9802808008", href: "https://wa.me/9779802808008", description: "Get instant responses. Share photos, X-rays, and questions directly.", responseTime: "Usually within 1 hour", color: "bg-green-500" },
+  { icon: "MessageCircle", title: "WhatsApp", subtitle: "Message the Clinic", value: "+977-9802808008", href: "https://wa.me/9779802808008", description: "Send questions and share existing X-rays or reports. A final diagnosis requires an in-person assessment.", responseTime: "We aim to respond within 24 hours", color: "bg-green-500" },
   { icon: "Phone", title: "Phone", subtitle: "Call Us Directly", value: "+977-9802808008", href: "tel:+9779802808008", description: "Speak directly with our team during clinic hours.", responseTime: "During clinic hours", color: "bg-purple-500" },
   { icon: "Video", title: "Video Consultation", subtitle: "Face-to-Face Online", value: "Book a Session", href: "#booking-form", description: "Schedule a video call with our dental team.", responseTime: "By appointment", color: "bg-accent" },
   { icon: "Mail", title: "Email", subtitle: "Detailed Inquiries", value: "info@kundalinidentalclinic.com.np", href: "mailto:info@kundalinidentalclinic.com.np", description: "Best for sending X-rays, photos, and detailed treatment histories.", responseTime: "Within 24 hours", color: "bg-primary" },
@@ -61,7 +61,7 @@ const fallbackContactMethods = [
 
 const fallbackBookingSteps = [
   { step: 1, title: "Submit Your Inquiry", description: "Fill out the form below or contact us via WhatsApp with your dental concerns and goals." },
-  { step: 2, title: "Free Virtual Consultation", description: "We'll review your case and schedule a video call to discuss treatment options and costs." },
+  { step: 2, title: "Initial Discussion", description: "The clinic will reply to your enquiry. You may share existing X-rays or reports, but a final diagnosis requires an in-person clinical assessment." },
   { step: 3, title: "Receive Your Treatment Plan", description: "Get a detailed, personalized treatment plan with transparent pricing—no obligations." },
   { step: 4, title: "Confirm Your Visit", description: "Once you're ready, we'll help coordinate your appointment dates and travel logistics." },
 ];
