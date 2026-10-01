@@ -163,7 +163,12 @@ function SectionHeading({ id, title, intro }: { id: string; title: string; intro
 export default function HomePage() {
   const { offers } = useOffers();
   const { slide: homeHero } = useHeroSlide("home");
+  // Only display testimonials whose provenance/patient consent is verified (Phase 2A trust correction).
+  const UNVERIFIED_TESTIMONIAL_NAMES = new Set(["Sarah Mitchell", "James Thompson", "Priya Patel"]);
   const { testimonials } = useTestimonials({ limit: 3 });
+  const verifiedTestimonials = testimonials.filter(
+    (t) => !UNVERIFIED_TESTIMONIAL_NAMES.has((t.patient_name || "").trim())
+  );
   const { featuredMember } = useTeamMembers();
 
   const featuredOffer = offers.length > 0 ? offers[0] : null;
