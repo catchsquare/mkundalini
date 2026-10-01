@@ -56,22 +56,12 @@ export default function ServiceDetailPage() {
     );
   }
 
-  const procedureSchema = {
-    "@context": "https://schema.org",
-    "@type": "MedicalProcedure",
-    name: service.title,
-    description: service.seo_description || service.short_description || service.hero_description || service.title,
-    procedureType: "TherapeuticProcedure",
-    bodyLocation: "Mouth",
-  };
-
   return (
     <Layout>
       <SEO
         title={service.seo_title || service.hero_title || service.title}
         description={service.seo_description || service.short_description || service.hero_description || `${service.title} at Kundalini Dental Clinic, Kathmandu.`}
         path={`/services/${service.slug}`}
-        jsonLd={procedureSchema}
       />
       <Breadcrumbs
         items={[
@@ -378,25 +368,6 @@ export default function ServiceDetailPage() {
         </div>
       </section>
 
-      {/* Service Schema Markup */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "MedicalProcedure",
-            name: service.title,
-            description: service.hero_description || service.short_description,
-            ...(service.price && {
-              offers: {
-                "@type": "Offer",
-                price: service.price,
-                priceCurrency: "USD",
-              },
-            }),
-          }),
-        }}
-      />
     </Layout>
   );
 }
