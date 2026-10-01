@@ -62,7 +62,7 @@ const fallbackContactMethods = [
 const fallbackBookingSteps = [
   { step: 1, title: "Submit Your Inquiry", description: "Fill out the form below or contact us via WhatsApp with your dental concerns and goals." },
   { step: 2, title: "Initial Discussion", description: "The clinic will reply to your enquiry. You may share existing X-rays or reports, but a final diagnosis requires an in-person clinical assessment." },
-  { step: 3, title: "Receive Your Treatment Plan", description: "Get a detailed, personalized treatment plan with transparent pricing—no obligations." },
+  { step: 3, title: "In-Person Assessment", description: "Your dentist examines you at the clinic and discusses suitable options, expected appointments and costs before treatment begins." },
   { step: 4, title: "Confirm Your Visit", description: "Once you're ready, we'll help coordinate your appointment dates and travel logistics." },
 ];
 
