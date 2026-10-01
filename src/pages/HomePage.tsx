@@ -551,7 +551,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl">
             <SectionHeading id="home-reviews" title="What Our Patients Say" />
             <div className="grid gap-6 md:grid-cols-3">
-              {testimonials.map((t) => (
+              {verifiedTestimonials.map((t) => (
                 <motion.figure key={t.id} {...fadeUp} className="card-elevated p-6 sm:p-7 flex flex-col">
                   <blockquote className="text-sm sm:text-base text-muted-foreground leading-relaxed flex-1">
                     "{t.content}"
