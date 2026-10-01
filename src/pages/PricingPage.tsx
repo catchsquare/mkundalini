@@ -310,7 +310,7 @@ export default function PricingPage() {
     <Layout>
       <SEO
         title="Pricing & Packages"
-        description="Transparent dental treatment pricing in Nepal. Compare costs for implants, veneers, crowns, and full smile makeovers — up to 70% less than Western prices."
+        description="Dental treatment pricing information for implants, veneers, crowns and smile makeovers at Kundalini Dental Clinic in Kathmandu, Nepal."
         path="/pricing"
       />
       <Breadcrumbs items={[{ label: "Pricing" }]} />

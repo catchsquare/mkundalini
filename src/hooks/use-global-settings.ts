@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { CLINIC } from "@/lib/clinic-info";
 
 interface GlobalSettings {
   clinic_name: string;
@@ -40,22 +41,22 @@ interface GlobalSettings {
 
 const defaultSettings: GlobalSettings = {
   clinic_name: "Kundalini Dental Clinic",
-  address: "Goreto Bhawan, Chappal Karkhana, Kathmandu",
+  address: CLINIC.fullAddress,
   phone: "+977-9802808008",
   email: "info@kundalinidentalclinic.com.np",
   whatsapp: "+9779802808008",
   established_year: "2023",
   managing_director: "Dr. Nitin Aryal",
   managing_director_title: "Managing Director",
-  managing_director_experience: "15 years",
-  weekday_hours: "9:00 AM - 6:00 PM",
-  saturday_hours: "10:00 AM - 4:00 PM",
-  sunday_hours: "Closed",
-  facebook_url: "https://facebook.com/kundalinidental",
-  instagram_url: "https://instagram.com/kundalinidental",
-  linkedin_url: "https://linkedin.com/company/kundalinidental",
+  managing_director_experience: "Practising dentistry since 2012",
+  weekday_hours: CLINIC.hours,
+  saturday_hours: "",
+  sunday_hours: "",
+  facebook_url: CLINIC.facebook,
+  instagram_url: CLINIC.instagram,
+  linkedin_url: "",
   default_seo_title: "Kundalini Dental Clinic | Quality Dental Care in Kathmandu",
-  default_seo_description: "Led by Dr. Nitin Aryal with 15 years experience. Modern dental clinic in Kathmandu offering quality treatments at accessible prices.",
+  default_seo_description: "Dental clinic in Kathmandu, Nepal led by Dr. Nitin Aryal, BDS, practising dentistry since 2012.",
   whatsapp_enabled: true,
   viber_enabled: true,
   site_logo: null,
@@ -116,9 +117,9 @@ export function useGlobalSettings() {
           weekday_hours: settingsMap.weekday_hours || defaultSettings.weekday_hours,
           saturday_hours: settingsMap.saturday_hours || defaultSettings.saturday_hours,
           sunday_hours: settingsMap.sunday_hours || defaultSettings.sunday_hours,
-          facebook_url: settingsMap.facebook_url || defaultSettings.facebook_url,
-          instagram_url: settingsMap.instagram_url || defaultSettings.instagram_url,
-          linkedin_url: settingsMap.linkedin_url || defaultSettings.linkedin_url,
+          facebook_url: settingsMap.facebook_url || settingsMap.social_facebook || defaultSettings.facebook_url,
+          instagram_url: settingsMap.instagram_url || settingsMap.social_instagram || defaultSettings.instagram_url,
+          linkedin_url: settingsMap.linkedin_url || settingsMap.social_linkedin || defaultSettings.linkedin_url,
           default_seo_title: settingsMap.default_seo_title || defaultSettings.default_seo_title,
           default_seo_description: settingsMap.default_seo_description || defaultSettings.default_seo_description,
           whatsapp_enabled: settingsMap.whatsapp_enabled ?? defaultSettings.whatsapp_enabled,

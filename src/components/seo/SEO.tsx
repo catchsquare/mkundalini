@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
 const SITE_URL = "https://kundalinidentalclinic.com.np";
-const DEFAULT_IMAGE = `${SITE_URL}/favicon.png`;
 
 interface SEOProps {
   title: string;
@@ -17,7 +16,7 @@ export function SEO({
   title,
   description,
   path = "",
-  image = DEFAULT_IMAGE,
+  image,
   type = "website",
   noindex = false,
   jsonLd,
@@ -37,7 +36,7 @@ export function SEO({
     <Helmet>
       <title>{fullTitle}</title>
       {description && <meta name="description" content={description} />}
-      <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+      <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
       <link rel="canonical" href={url} />
 
       {/* Open Graph */}
@@ -45,14 +44,14 @@ export function SEO({
       {description && <meta property="og:description" content={description} />}
       <meta property="og:type" content={type} />
       <meta property="og:url" content={url} />
-      <meta property="og:image" content={image} />
+      {image && <meta property="og:image" content={image} />}
       <meta property="og:site_name" content="Kundalini Dental Clinic" />
 
       {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:card" content={image ? "summary_large_image" : "summary"} />
       <meta name="twitter:title" content={fullTitle} />
       {description && <meta name="twitter:description" content={description} />}
-      <meta name="twitter:image" content={image} />
+      {image && <meta name="twitter:image" content={image} />}
 
       {schemas.map((schema, i) => (
         <script key={i} type="application/ld+json">

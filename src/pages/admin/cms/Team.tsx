@@ -553,7 +553,7 @@ export default function Team() {
               <Textarea
                 value={formData.achievements}
                 onChange={(e) => setFormData((prev) => ({ ...prev, achievements: e.target.value }))}
-                placeholder="15 years of dental practice&#10;Founder & Managing Director"
+                placeholder="Practising dentistry since ...&#10;Founder & Managing Director"
                 rows={3}
               />
             </div>

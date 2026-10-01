@@ -32,16 +32,16 @@ const fallbackDoctor = {
   qualifications: [
     "BDS — Bachelor of Dental Surgery",
   ],
-  experience: "15 years",
+  experience: "Practising since 2012",
   specialties: [
     "Comprehensive Dental Care",
     "General Dentistry",
     "Patient-Centered Treatment",
   ],
   languages: ["English", "Nepali"],
-  bio: "Dr. Nitin Aryal founded Kundalini Dental Clinic in 2023 with a vision to provide quality dental care in Kathmandu. With 15 years of clinical experience, he leads the clinic with a commitment to patient-centered care and professional excellence.",
+  bio: "Dr. Nitin Aryal founded Kundalini Dental Clinic in 2023 with a vision to provide quality dental care in Kathmandu. Practising dentistry since 2012, he leads the clinic with a commitment to patient-centered care and professional excellence.",
   achievements: [
-    "15 years of dental practice",
+    "Practising dentistry since 2012",
     "Founder & Managing Director",
     "Committed to quality patient care",
   ],
@@ -49,7 +49,7 @@ const fallbackDoctor = {
 };
 
 const fallbackTrustFactors = [
-  { icon: "GraduationCap", title: "Experienced Leadership", description: "Led by Dr. Nitin Aryal with 15 years of clinical experience." },
+  { icon: "GraduationCap", title: "Experienced Leadership", description: "Led by Dr. Nitin Aryal, BDS, practising dentistry since 2012." },
   { icon: "BadgeCheck", title: "Qualified Professional", description: "Bachelor of Dental Surgery (BDS) with extensive practical experience." },
   { icon: "Globe", title: "Quality Standards", description: "We follow international protocols and maintain high standards of care." },
   { icon: "Languages", title: "Multilingual Team", description: "Communicate comfortably in English and Nepali." },
@@ -78,7 +78,7 @@ export default function DoctorsPage() {
     role: featuredMember.role,
     image: featuredMember.photo_url,
     qualifications: featuredMember.qualifications || [],
-    experience: featuredMember.experience_years ? `${featuredMember.experience_years} years` : '15 years',
+    experience: featuredMember.experience_years ? `${featuredMember.experience_years} years` : 'Practising since 2012',
     specialties: featuredMember.specialties || [],
     languages: featuredMember.languages || [],
     bio: featuredMember.bio || '',
@@ -90,7 +90,7 @@ export default function DoctorsPage() {
     <Layout>
       <SEO
         title="Our Doctors"
-        description="Meet the experienced dental specialists at Kundalini Dental Clinic — internationally trained dentists delivering safe, world-class care."
+        description="Meet the dentists at Kundalini Dental Clinic, Kathmandu, led by Dr. Nitin Aryal, BDS, practising dentistry since 2012."
         path="/doctors"
       />
       <Breadcrumbs items={[{ label: "Doctors" }]} />
@@ -111,7 +111,7 @@ export default function DoctorsPage() {
               <span className="text-primary">{heroSection?.titleHighlight || "Dental Team"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              {heroSection?.description || "Led by Dr. Nitin Aryal with 15 years of experience, our team is committed to delivering exceptional care with compassion and precision."}
+              {heroSection?.description || "Led by Dr. Nitin Aryal, BDS, practising dentistry since 2012, our team is committed to delivering exceptional care with compassion and precision."}
             </p>
           </motion.div>
         </div>
@@ -238,6 +238,11 @@ export default function DoctorsPage() {
                 <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
                   {featuredDoctor.name}
                 </h3>
+                {featuredDoctor.name === "Dr. Nitin Aryal" && (
+                  <Link to="/doctors/dr-nitin-aryal" className="text-sm text-primary hover:underline">
+                    View full profile
+                  </Link>
+                )}
                 <p className="text-xl text-primary font-medium mb-6">
                   {featuredDoctor.role}
                 </p>
@@ -341,9 +346,9 @@ export default function DoctorsPage() {
               <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
                 <Award className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">15 Years Experience</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Practising Since 2012</h3>
               <p className="text-muted-foreground">
-                Dr. Nitin Aryal brings 15 years of clinical experience to every patient consultation.
+                Dr. Nitin Aryal has been practising dentistry since 2012.
               </p>
             </motion.div>
             

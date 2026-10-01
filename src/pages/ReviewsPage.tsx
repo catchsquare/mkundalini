@@ -256,7 +256,7 @@ export default function ReviewsPage() {
     <Layout>
       <SEO
         title="Patient Reviews & Testimonials"
-        description="Read verified reviews from patients who travelled to Kundalini Dental Clinic for implants, smile makeovers and dental tourism in Nepal."
+        description="Patient reviews and testimonials for Kundalini Dental Clinic in Kathmandu, Nepal."
         path="/reviews"
       />
       <Breadcrumbs items={[{ label: "Reviews" }]} />

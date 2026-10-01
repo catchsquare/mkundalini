@@ -1,0 +1,2 @@
+- Verified clinic NAP, socials and doctor credentials live only in src/lib/clinic-info.ts; why: single source prevents placeholder/inconsistent entity data.
+- Unknown URLs render NotFound (noindex, follow) with explicit legacy aliases only, no fuzzy redirects; why: static hosting cannot send real 404/301, so avoid soft 404s.

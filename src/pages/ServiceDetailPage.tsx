@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/accordion";
 import { SEO } from "@/components/seo/SEO";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
+import NotFound from "@/pages/NotFound";
 
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -40,30 +41,9 @@ export default function ServiceDetailPage() {
   }
 
   if (error || !service) {
-    return (
-      <Layout>
-        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-          <h1 className="text-3xl font-bold text-foreground mb-4">Service Not Found</h1>
-          <p className="text-muted-foreground mb-6">The service you're looking for doesn't exist or has been removed.</p>
-          <Button asChild>
-            <Link to="/services">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Services
-            </Link>
-          </Button>
-        </div>
-      </Layout>
-    );
+    // Explicit legacy aliases redirect; anything else is a genuine 404 (noindex, follow).
+    return <NotFound />;
   }
-
-  const procedureSchema = {
-    "@context": "https://schema.org",
-    "@type": "MedicalProcedure",
-    name: service.title,
-    description: service.seo_description || service.short_description || service.hero_description || service.title,
-    procedureType: "TherapeuticProcedure",
-    bodyLocation: "Mouth",
-  };
 
   return (
     <Layout>
@@ -71,7 +51,6 @@ export default function ServiceDetailPage() {
         title={service.seo_title || service.hero_title || service.title}
         description={service.seo_description || service.short_description || service.hero_description || `${service.title} at Kundalini Dental Clinic, Kathmandu.`}
         path={`/services/${service.slug}`}
-        jsonLd={procedureSchema}
       />
       <Breadcrumbs
         items={[
@@ -378,25 +357,6 @@ export default function ServiceDetailPage() {
         </div>
       </section>
 
-      {/* Service Schema Markup */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "MedicalProcedure",
-            name: service.title,
-            description: service.hero_description || service.short_description,
-            ...(service.price && {
-              offers: {
-                "@type": "Offer",
-                price: service.price,
-                priceCurrency: "USD",
-              },
-            }),
-          }),
-        }}
-      />
     </Layout>
   );
 }

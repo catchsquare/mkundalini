@@ -81,7 +81,7 @@ const fallbackWhyNepal = [
 const fallbackWhyKundalini = [
   {
     title: "15 Years of Experience",
-    description: "Led by Dr. Nitin Aryal with 15 years of dental expertise, our clinic established in 2023 combines experienced leadership with modern facilities.",
+    description: "Led by Dr. Nitin Aryal, BDS, practising dentistry since 2012.",
   },
   {
     title: "Specialist-Led Care",
@@ -332,7 +332,7 @@ export default function DentalTourismPage() {
     <Layout>
       <SEO
         title="Dental Tourism in Nepal"
-        description="Combine world-class dental treatment with a Himalayan journey. Implants, veneers, and full smile makeovers in Kathmandu — up to 70% savings, all-inclusive packages."
+        description="Information for international patients planning dental treatment such as implants, veneers and smile makeovers at Kundalini Dental Clinic in Kathmandu, Nepal."
         path="/dental-tourism"
       />
       <Breadcrumbs items={[{ label: "Dental Tourism" }]} />

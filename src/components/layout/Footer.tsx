@@ -3,6 +3,7 @@ import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin, ArrowRight, 
 import { Button } from "@/components/ui/button";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
 import logoFallback from "@/assets/logo.png";
+import { CLINIC } from "@/lib/clinic-info";
 
 const navigation = {
   services: [
@@ -72,6 +73,7 @@ export function Footer() {
                 src={settings.logo_url || settings.site_logo || logoFallback}
                 alt={settings.clinic_name || "Kundalini Dental Clinic"}
                 className="h-12 sm:h-14 w-auto object-contain"
+                loading="lazy"
               />
             </Link>
             <p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm text-center sm:text-left">
@@ -204,8 +206,7 @@ export function Footer() {
                 Clinic Hours
               </h4>
               <div className="text-sm text-secondary-foreground/70 space-y-1">
-                <p>Sun - Fri: {settings.weekday_hours}</p>
-                <p>Saturday: {settings.saturday_hours}</p>
+                <p>{settings.weekday_hours}</p>
               </div>
             </div>
           </div>
@@ -229,8 +230,10 @@ export function Footer() {
               <Link to="/faq" className="hover:text-primary transition-colors">FAQ</Link>
             </div>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-secondary-foreground/50">
-              <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
-              <span>{settings.address}</span>
+              <MapPin className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+              <a href={CLINIC.mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                {settings.address}
+              </a>
             </div>
           </div>
         </div>

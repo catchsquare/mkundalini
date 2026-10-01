@@ -1,5 +1,6 @@
 import { Link, useLocation, Navigate } from "react-router-dom";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+import { SEO } from "@/components/seo/SEO";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Home } from "lucide-react";
@@ -80,88 +81,30 @@ const SERVICE_SLUG_ALIASES: Record<string, string> = {
   "childrens-dentistry": "cleaning",
 };
 
-function resolveServiceSlug(slug: string): string | null {
-  const s = slug.toLowerCase().trim();
-  if (VALID_SERVICE_SLUGS.has(s)) return s;
-  if (SERVICE_SLUG_ALIASES[s]) return SERVICE_SLUG_ALIASES[s];
-  // Fuzzy: try matching against known slugs
-  for (const valid of VALID_SERVICE_SLUGS) {
-    if (s.includes(valid) || valid.includes(s)) return valid;
-  }
-  for (const [alias, target] of Object.entries(SERVICE_SLUG_ALIASES)) {
-    if (s.includes(alias) || alias.includes(s)) return target;
-  }
-  return null;
-}
-
-// Pattern-based redirects: keyword in path -> destination
-const REDIRECT_PATTERNS: Array<{ test: RegExp; to: string }> = [
-  // Services / treatments
-  { test: /(service|treatment|procedure)/i, to: "/services" },
-  { test: /(implant|crown|bridge|veneer|root[-\s]?canal|whitening|braces|aligner|invisalign|orthodont|cosmetic|cleaning|scaling|extraction|denture|filling|cavity|gum|periodont|pediatric|kids|smile|surger)/i, to: "/services" },
-
-  // Doctors / team
-  { test: /(doctor|dentist|team|staff|specialist|surgeon|md|profile)/i, to: "/doctors" },
-
-  // About
-  { test: /(about|story|mission|vision|history|clinic)/i, to: "/about" },
-
-  // Tourism
-  { test: /(tourism|tourist|travel|international|abroad|foreigner|visit|package)/i, to: "/dental-tourism" },
-
-  // Pricing
-  { test: /(pricing|price|cost|fee|charge|rate|payment|insurance)/i, to: "/pricing" },
-
-  // Reviews / testimonials
-  { test: /(review|testimonial|feedback|rating|story|patient[-\s]?story)/i, to: "/reviews" },
-
-  // Contact / appointment / booking
-  { test: /(contact|appointment|book|schedule|consult|call|location|address|map|direction|reach)/i, to: "/contact" },
-
-  // FAQ
-  { test: /(faq|question|help|support)/i, to: "/faq" },
-
-  // Legal
-  { test: /(privacy|gdpr|data[-\s]?protection)/i, to: "/privacy" },
-  { test: /(terms|tos|conditions|agreement)/i, to: "/terms" },
-  { test: /(refund|return|cancel)/i, to: "/refund" },
-
-  // Blog -> reviews/news fallback
-  { test: /(blog|news|article|post)/i, to: "/" },
-
-  // Home
-  { test: /(home|index|main|landing)/i, to: "/" },
-];
-
+/**
+ * Explicit legacy aliases only. No fuzzy/keyword matching: unknown URLs must
+ * render a genuine 404 (noindex, follow) instead of redirecting to a
+ * loosely related page (soft 404).
+ * NOTE: static hosting serves HTTP 200 for every path, so these are
+ * client-side redirects, not server 301s.
+ */
 function findRedirect(pathname: string): string | null {
-  // Skip admin & asset paths
   if (pathname.startsWith("/admin")) return null;
-  if (/\.(xml|json|txt|ico|png|jpg|jpeg|svg|webp|css|js|map|pdf)$/i.test(pathname)) return null;
-
-  // Strip trailing slashes and normalize
   const cleaned = pathname.replace(/\/+$/g, "").toLowerCase();
   if (!cleaned) return null;
 
-  // Exact match without trailing slash
+  // Trailing slash / case variants of known routes
   if (KNOWN_ROUTES.includes(cleaned) && cleaned !== pathname) return cleaned;
 
-  // If first segment looks like a service slug, resolve to a real service or /services
   const segments = cleaned.split("/").filter(Boolean);
-  if (segments.length >= 2 && segments[0] === "services") {
-    const resolved = resolveServiceSlug(segments[1]);
-    return resolved ? `/services/${resolved}` : "/services";
+  if (segments.length === 2 && segments[0] === "services") {
+    const s = segments[1];
+    if (VALID_SERVICE_SLUGS.has(s)) return cleaned !== pathname ? `/services/${s}` : null;
+    if (SERVICE_SLUG_ALIASES[s]) return `/services/${SERVICE_SLUG_ALIASES[s]}`;
   }
-  // Bare slug at root that matches a service alias
-  if (segments.length === 1) {
-    const resolved = resolveServiceSlug(segments[0]);
-    if (resolved) return `/services/${resolved}`;
+  if (segments.length === 2 && segments[0] === "doctors" && cleaned !== pathname) {
+    return cleaned;
   }
-
-  // Pattern matching across full path
-  for (const { test, to } of REDIRECT_PATTERNS) {
-    if (test.test(cleaned)) return to;
-  }
-
   return null;
 }
 
@@ -173,21 +116,18 @@ const NotFound = () => {
     [location.pathname]
   );
 
-  useEffect(() => {
-    if (redirectTo) {
-      // silent redirect
-    } else {
-      // 404 — no match
-      void location.pathname;
-    }
-  }, [location.pathname, redirectTo]);
-
   if (redirectTo && redirectTo !== location.pathname) {
     return <Navigate to={redirectTo} replace />;
   }
 
   return (
     <Layout>
+      <SEO
+        title="Page Not Found"
+        description="The page you requested could not be found."
+        path={location.pathname}
+        noindex
+      />
       <div className="min-h-[80vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto text-center">
           <div className="mb-8">
@@ -212,6 +152,9 @@ const NotFound = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
+              <Link to="/services">Our Services</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
@@ -221,9 +164,6 @@ const NotFound = () => {
               Looking for something specific?
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <Link to="/services" className="text-primary hover:underline">
-                Our Services
-              </Link>
               <Link to="/dental-tourism" className="text-primary hover:underline">
                 Dental Tourism
               </Link>

@@ -27,7 +27,7 @@ export default function AboutPage() {
     <Layout>
       <SEO
         title="About Us"
-        description="Learn about Kundalini Dental Clinic — our mission, ethics, safety standards, and team delivering world-class dental care in Kathmandu, Nepal."
+        description="Learn about Kundalini Dental Clinic — our mission, ethics, safety standards and team in Kathmandu, Nepal."
         path="/about"
       />
       <Breadcrumbs items={[{ label: "About" }]} />
@@ -49,7 +49,7 @@ export default function AboutPage() {
             </h1>
 <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               {hero?.description ||
-                "At Kundalini Dental Clinic, we believe exceptional dental care begins with genuine human connection. Founded in 2023, we combine Dr. Nitin Aryal's 15 years of experience with modern facilities to serve you better."}
+                "At Kundalini Dental Clinic, we believe exceptional dental care begins with genuine human connection. Founded in 2023, we combine the experience of Dr. Nitin Aryal (practising dentistry since 2012) with modern facilities to serve you better."}
             </p>
           </motion.div>
         </div>
