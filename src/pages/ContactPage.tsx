@@ -261,7 +261,7 @@ export default function ContactPage() {
     <Layout>
       <SEO
         title="Contact Us"
-        description="Get in touch with Kundalini Dental Clinic in Kathmandu, Nepal. Book a free consultation, request a treatment plan, or ask about dental tourism."
+        description="Get in touch with Kundalini Dental Clinic in Kathmandu, Nepal. Call +977-9802808008, visit us at Chappal Karkhana, or send an enquiry."
         path="/contact"
       />
       <Breadcrumbs items={[{ label: "Contact" }]} />
