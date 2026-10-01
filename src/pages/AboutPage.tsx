@@ -27,7 +27,7 @@ export default function AboutPage() {
     <Layout>
       <SEO
         title="About Us"
-        description="Learn about Kundalini Dental Clinic — our mission, ethics, safety standards, and team delivering world-class dental care in Kathmandu, Nepal."
+        description="Learn about Kundalini Dental Clinic — our mission, ethics, safety standards and team in Kathmandu, Nepal."
         path="/about"
       />
       <Breadcrumbs items={[{ label: "About" }]} />

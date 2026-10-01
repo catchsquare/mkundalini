@@ -90,7 +90,7 @@ export default function DoctorsPage() {
     <Layout>
       <SEO
         title="Our Doctors"
-        description="Meet the experienced dental specialists at Kundalini Dental Clinic — internationally trained dentists delivering safe, world-class care."
+        description="Meet the dentists at Kundalini Dental Clinic, Kathmandu, led by Dr. Nitin Aryal, BDS, practising dentistry since 2012."
         path="/doctors"
       />
       <Breadcrumbs items={[{ label: "Doctors" }]} />

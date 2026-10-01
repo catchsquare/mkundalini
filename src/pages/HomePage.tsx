@@ -325,8 +325,8 @@ export default function HomePage() {
   return (
     <Layout>
       <SEO
-        title="Kundalini Dental Clinic | Premium Dental Care in Nepal"
-        description="World-class dental care in Kathmandu, Nepal. Specializing in dental tourism, cosmetic dentistry, implants, and smile makeovers at international standards."
+        title="Kundalini Dental Clinic | Dental Clinic in Kathmandu, Nepal"
+        description="Dental clinic in Kathmandu, Nepal offering implants, root canal treatment, braces, crowns, veneers, whitening and general dental care for local and international patients."
         path="/"
       />
       {/* Hero Section */}

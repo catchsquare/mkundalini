@@ -28,7 +28,7 @@ export default function ServicesPage() {
     <Layout>
       <SEO
         title="Dental Services & Treatments"
-        description="Explore our full range of dental treatments — implants, veneers, orthodontics, root canals, cosmetic dentistry and more, all at international standards in Kathmandu."
+        description="Explore our full range of dental treatments — implants, veneers, orthodontics, root canals, cosmetic dentistry and more at Kundalini Dental Clinic in Kathmandu, Nepal."
         path="/services"
       />
       <Breadcrumbs items={[{ label: "Services" }]} />
