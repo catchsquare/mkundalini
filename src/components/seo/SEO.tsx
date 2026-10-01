@@ -37,7 +37,7 @@ export function SEO({
       <title>{fullTitle}</title>
       {description && <meta name="description" content={description} />}
       <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
-      <link rel="canonical" href={url} />
+      {!noindex && <link rel="canonical" href={url} />}
 
       {/* Open Graph */}
       <meta property="og:title" content={fullTitle} />

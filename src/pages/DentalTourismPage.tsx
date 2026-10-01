@@ -80,7 +80,7 @@ const fallbackWhyNepal = [
 
 const fallbackWhyKundalini = [
   {
-    title: "15 Years of Experience",
+    title: "Practising Dentistry Since 2012",
     description: "Led by Dr. Nitin Aryal, BDS, practising dentistry since 2012.",
   },
   {
@@ -378,7 +378,7 @@ export default function DentalTourismPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             {[
-              { value: "15", label: "Years Experience" },
+              { value: "2012", label: "Practising Since" },
               { value: "2023", label: "Clinic Established" },
               { value: "Quality", label: "Dental Care" },
               { value: "Premium", label: "Materials Used" },
@@ -513,7 +513,7 @@ export default function DentalTourismPage() {
                   <Award className="w-8 h-8 text-primary" />
                   <div>
                     <div className="font-bold text-foreground">Est. 2009</div>
-                    <div className="text-sm text-muted-foreground">15+ Years Trusted</div>
+                    <div className="text-sm text-muted-foreground">Practising since 2012</div>
                   </div>
                 </div>
               </motion.div>

@@ -68,7 +68,7 @@ const defaultTrustIndicators = [
   },
   {
     icon: "Award",
-    label: "15 Years Experience",
+    label: "Practising Since 2012",
     description: "Led by Dr. Nitin Aryal",
   },
   {
