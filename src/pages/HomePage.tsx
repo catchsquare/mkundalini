@@ -163,7 +163,12 @@ function SectionHeading({ id, title, intro }: { id: string; title: string; intro
 export default function HomePage() {
   const { offers } = useOffers();
   const { slide: homeHero } = useHeroSlide("home");
+  // Only display testimonials whose provenance/patient consent is verified (Phase 2A trust correction).
+  const UNVERIFIED_TESTIMONIAL_NAMES = new Set(["Sarah Mitchell", "James Thompson", "Priya Patel"]);
   const { testimonials } = useTestimonials({ limit: 3 });
+  const verifiedTestimonials = testimonials.filter(
+    (t) => !UNVERIFIED_TESTIMONIAL_NAMES.has((t.patient_name || "").trim())
+  );
   const { featuredMember } = useTeamMembers();
 
   const featuredOffer = offers.length > 0 ? offers[0] : null;
@@ -541,12 +546,12 @@ export default function HomePage() {
       </section>
 
       {/* 9. Patient reviews — existing approved testimonials only, shown verbatim */}
-      {testimonials.length > 0 && (
+      {verifiedTestimonials.length > 0 && (
         <section aria-labelledby="home-reviews" className="section-padding bg-background">
           <div className="mx-auto max-w-7xl">
             <SectionHeading id="home-reviews" title="What Our Patients Say" />
             <div className="grid gap-6 md:grid-cols-3">
-              {testimonials.map((t) => (
+              {verifiedTestimonials.map((t) => (
                 <motion.figure key={t.id} {...fadeUp} className="card-elevated p-6 sm:p-7 flex flex-col">
                   <blockquote className="text-sm sm:text-base text-muted-foreground leading-relaxed flex-1">
                     "{t.content}"
