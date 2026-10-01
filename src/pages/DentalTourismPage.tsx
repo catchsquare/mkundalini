@@ -49,17 +49,17 @@ const fallbackWhyNepal = [
   {
     icon: DollarSign,
     title: "Significant Cost Savings",
-    description: "Save 60-80% on dental treatments compared to USA, UK, Australia, and Europe — without compromising on quality. The lower cost of living in Nepal allows us to offer world-class care at accessible prices.",
+    description: "Treatment costs depend on your individual treatment plan and are discussed after assessment, before treatment begins.",
   },
   {
     icon: Award,
     title: "Internationally Trained Dentists",
-    description: "Our specialists trained at leading institutions in India, USA, UK, and Germany. They bring global expertise and stay current with the latest techniques through continuous education.",
+    description: "The clinic is led by Dr. Nitin Aryal, BDS, NMC Registration No. 12586, practising dentistry since 2012.",
   },
   {
     icon: Shield,
     title: "Same Materials, Same Standards",
-    description: "We use the same FDA-approved implants, German crowns, and premium materials as top clinics in Western countries. No shortcuts, no compromises.",
+    description: "Contact the clinic before travelling. You may share existing X-rays or reports through WhatsApp for preliminary discussion.",
   },
   {
     icon: Globe,
@@ -210,7 +210,7 @@ const fallbackTravelGuidance = [
   {
     title: "During Your Stay",
     points: [
-      "Complimentary airport pickup and clinic transfers",
+      "Discuss your appointment schedule with the clinic before booking travel",
       "Our coordinator is available via WhatsApp throughout your stay",
       "We can arrange day trips, city tours, and activities between appointments",
       "Kathmandu offers excellent restaurants, shopping, and cultural sites",
@@ -222,7 +222,7 @@ const fallbackTravelGuidance = [
       "Nepal is a safe destination for tourists with low crime rates",
       "No special vaccinations required for most visitors",
       "High-quality private hospitals available if needed",
-      "We provide emergency contact numbers and support 24/7",
+      "Contact the clinic during opening hours if you have concerns after treatment",
     ],
   },
 ];
@@ -251,7 +251,7 @@ const fallbackAftercareProcess = [
   {
     icon: Shield,
     title: "Warranty Coverage",
-    description: "All implants come with lifetime warranty. Crowns and restorations are covered for 5-10 years depending on type.",
+    description: "You will receive aftercare instructions for your treatment. Discuss follow-up arrangements with your dentist before you travel home.",
   },
   {
     icon: HeartPulse,
@@ -353,12 +353,12 @@ export default function DentalTourismPage() {
               <span className="text-primary">{heroSection?.titleHighlight || "Dental Care in Nepal"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-              {heroSection?.description || "Everything you need to know about receiving world-class dental treatment at Kundalini Dental Clinic. We believe in complete transparency — no surprises, no pressure, just honest information."}
+              {heroSection?.description || "Information for patients travelling to Kathmandu for dental care at Kundalini Dental Clinic: planning, assessment, treatment stages and aftercare."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="hero" size="xl">
                 <Link to="/contact">
-                  Start with a Free Consultation
+                  Book an Appointment
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
@@ -512,7 +512,7 @@ export default function DentalTourismPage() {
                 <div className="flex items-center gap-3">
                   <Award className="w-8 h-8 text-primary" />
                   <div>
-                    <div className="font-bold text-foreground">Est. 2009</div>
+                    <div className="font-bold text-foreground">Est. 2023</div>
                     <div className="text-sm text-muted-foreground">Practising since 2012</div>
                   </div>
                 </div>
@@ -585,7 +585,7 @@ export default function DentalTourismPage() {
           >
             <Button asChild size="lg">
               <Link to="/contact">
-                Start Your Free Consultation
+                Book an Appointment
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
@@ -708,12 +708,11 @@ export default function DentalTourismPage() {
               <div className="space-y-4">
                 {[
                   { item: "Initial consultation & examination", included: true },
-                  { item: "All necessary X-rays and 3D scans", included: true },
+                  { item: "X-rays as clinically required", included: true },
                   { item: "Treatment procedure(s)", included: true },
                   { item: "All materials and components", included: true },
                   { item: "Follow-up appointments", included: true },
                   { item: "Medication prescriptions", included: true },
-                  { item: "Written warranty documentation", included: true },
                   { item: "Detailed records for your home dentist", included: true },
                 ].map((row) => (
                   <div key={row.item} className="flex items-center justify-between">
@@ -920,7 +919,7 @@ export default function DentalTourismPage() {
                 className="bg-background text-primary hover:bg-background/90 shadow-lg"
               >
                 <Link to="/contact">
-                  Start Your Free Consultation
+                  Book an Appointment
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
@@ -930,20 +929,17 @@ export default function DentalTourismPage() {
                 variant="outline"
                 className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
               >
-                <a href="https://wa.me/9771234567890" target="_blank" rel="noopener">
+                <a href="https://wa.me/9779802808008" target="_blank" rel="noopener">
                   <MessageCircle className="w-5 h-5 mr-2" />
                   WhatsApp Us
                 </a>
               </Button>
             </div>
             <div className="flex flex-wrap justify-center gap-6 mt-10 text-primary-foreground/70 text-sm">
-              <a href="mailto:info@kundalinidental.com" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
-                <Mail className="w-4 h-4" />
-                info@kundalinidental.com
-              </a>
-              <a href="tel:+9771234567890" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
+              
+              <a href="tel:+9779802808008" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
                 <Phone className="w-4 h-4" />
-                +977 1-234-5678
+                +977-9802808008
               </a>
             </div>
           </motion.div>
