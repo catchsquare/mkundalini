@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { 
   ArrowRight, ArrowLeft, Phone, Globe, Check, 
   Loader2, Clock, DollarSign, Shield, Star,
-  ChevronRight, Stethoscope
+  ChevronRight, Stethoscope, MessageCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
@@ -95,9 +95,6 @@ export default function ServiceDetailPage() {
                       <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Price</span>
                     </div>
                     <p className="font-bold text-foreground">{service.price}</p>
-                    {service.comparison_price && (
-                      <p className="text-xs text-muted-foreground line-through">{service.comparison_price}</p>
-                    )}
                   </div>
                 )}
                 {service.duration && (
@@ -129,14 +126,20 @@ export default function ServiceDetailPage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg" className="rounded-xl">
                   <Link to="/contact">
-                    Book Free Consultation
+                    Book an Appointment
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="rounded-xl">
-                  <a href="tel:+9771234567890">
+                  <a href="https://wa.me/9779802808008" target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    WhatsApp Us
+                  </a>
+                </Button>
+                <Button asChild variant="ghost" size="lg" className="rounded-xl">
+                  <a href="tel:+9779802808008">
                     <Phone className="w-4 h-4 mr-2" />
-                    Call Now
+                    Call Clinic
                   </a>
                 </Button>
               </div>
@@ -328,7 +331,7 @@ export default function ServiceDetailPage() {
               Ready to Get Started with {service.title}?
             </h2>
             <p className="text-base sm:text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-              Book a free consultation to discuss your treatment plan. Our experts will guide you through every step.
+              Book an appointment for an assessment. Your dentist will discuss suitable options, timing and costs with you before treatment begins.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
@@ -337,7 +340,7 @@ export default function ServiceDetailPage() {
                 className="bg-background text-primary hover:bg-background/90 rounded-xl"
               >
                 <Link to="/contact">
-                  Book Free Consultation
+                  Book an Appointment
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
