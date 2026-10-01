@@ -101,15 +101,10 @@ const App = () => (
                 <Route path="leads/forms" element={<Leads />} />
                 <Route path="leads/followups" element={<Leads />} />
 
-                {/* Appointments */}
 
-                {/* Patients */}
 
-                {/* Billing */}
 
-                {/* Inventory */}
 
-                {/* Reports */}
 
                 {/* CMS - Pages */}
                 <Route path="cms/pages" element={<CMSPages />} />
