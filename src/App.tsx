@@ -28,10 +28,6 @@ import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
-import Patients from "./pages/admin/Patients";
-import Appointments from "./pages/admin/Appointments";
-import Billing from "./pages/admin/Billing";
-import Inventory from "./pages/admin/Inventory";
 import Leads from "./pages/admin/Leads";
 
 // Placeholder components for new admin pages
@@ -64,7 +60,6 @@ import PricingPackages from "./pages/admin/cms/PricingPackages";
 import LegalPages from "./pages/admin/cms/LegalPages";
 
 // Reports
-import Revenue from "./pages/admin/reports/Revenue";
 
 const queryClient = new QueryClient();
 
@@ -107,35 +102,14 @@ const App = () => (
                 <Route path="leads/followups" element={<Leads />} />
 
                 {/* Appointments */}
-                <Route path="appointments" element={<Appointments />} />
-                <Route path="appointments/today" element={<AdminPlaceholder title="Today's Schedule" />} />
-                <Route path="appointments/upcoming" element={<AdminPlaceholder title="Upcoming Appointments" />} />
-                <Route path="appointments/history" element={<AdminPlaceholder title="Appointment History" />} />
 
                 {/* Patients */}
-                <Route path="patients" element={<Patients />} />
-                <Route path="patients/new" element={<AdminPlaceholder title="Add New Patient" />} />
-                <Route path="patients/treatments" element={<AdminPlaceholder title="Treatment History" />} />
-                <Route path="patients/records" element={<AdminPlaceholder title="Medical Records" />} />
 
                 {/* Billing */}
-                <Route path="billing" element={<Billing />} />
-                <Route path="billing/payments" element={<AdminPlaceholder title="Payments" />} />
-                <Route path="billing/pending" element={<AdminPlaceholder title="Pending Dues" />} />
-                <Route path="billing/methods" element={<AdminPlaceholder title="Payment Methods" />} />
 
                 {/* Inventory */}
-                <Route path="inventory" element={<Inventory />} />
-                <Route path="inventory/categories" element={<Inventory />} />
-                <Route path="inventory/alerts" element={<Inventory />} />
-                <Route path="inventory/transactions" element={<Inventory />} />
 
                 {/* Reports */}
-                <Route path="reports/revenue" element={<Revenue />} />
-                <Route path="reports/patients" element={<Revenue />} />
-                <Route path="reports/treatments" element={<Revenue />} />
-                <Route path="reports/staff" element={<Revenue />} />
-                <Route path="reports/export" element={<Revenue />} />
 
                 {/* CMS - Pages */}
                 <Route path="cms/pages" element={<CMSPages />} />
