@@ -172,7 +172,7 @@ export default function HomePage() {
   const bhawana = VERIFIED_DOCTORS[1];
   // Only use an uploaded team photo when it belongs to Dr. Nitin Aryal.
   const nitinPhoto =
-    featuredMember?.name?.toLowerCase().includes("nitin") && featuredMember.photo_url
+    featuredMember?.full_name?.toLowerCase().includes("nitin") && featuredMember.photo_url
       ? featuredMember.photo_url
       : null;
 
