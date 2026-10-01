@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CLINIC } from "@/lib/clinic-info";
 import { motion } from "framer-motion";
 import {
   Phone,
@@ -78,9 +79,8 @@ const fallbackTreatmentOptions = [
 ];
 
 const fallbackClinicHours = [
-  { day: "Sunday - Friday", hours: "9:00 AM - 6:00 PM" },
-  { day: "Saturday", hours: "10:00 AM - 4:00 PM" },
-  { day: "Public Holidays", hours: "Closed" },
+  // Operating days not yet verified — show the verified daily time only.
+  { day: "Clinic hours", hours: CLINIC.hours },
 ];
 
 const fallbackReassurances = [
@@ -760,10 +760,10 @@ export default function ContactPage() {
                     Kundalini Dental Clinic
                   </h3>
                   <p className="text-muted-foreground mb-4">
-                    Goreto Bhawan, Chappal Karkhana, Kathmandu
+                    {CLINIC.fullAddress}
                   </p>
                   <a
-                    href="https://maps.google.com/?q=Chappal+Karkhana+Kathmandu+Nepal"
+                    href={CLINIC.mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
@@ -784,28 +784,18 @@ export default function ContactPage() {
             >
               <div className="bg-card rounded-2xl p-6 border border-border/50">
 <h3 className="font-bold text-foreground mb-4">Address</h3>
-                <p className="text-muted-foreground">
+                <address className="text-muted-foreground not-italic">
                   Kundalini Dental Clinic<br />
-                  Goreto Bhawan, Chappal Karkhana<br />
-                  Kathmandu, Nepal
+                  {CLINIC.address.street}<br />
+                  {CLINIC.address.locality}, {CLINIC.address.region} {CLINIC.address.postalCode}<br />
+                  {CLINIC.address.countryName}
+                </address>
+                <p className="text-muted-foreground mt-3">
+                  <a href={CLINIC.phoneHref} className="hover:text-primary">{CLINIC.phone}</a>
                 </p>
-              </div>
-
-              <div className="bg-card rounded-2xl p-6 border border-border/50">
-                <h3 className="font-bold text-foreground mb-4">Getting Here</h3>
-                <div className="space-y-3 text-sm text-muted-foreground">
-                  <p>
-                    <strong className="text-foreground">From Airport:</strong> 25-minute 
-                    drive from Tribhuvan International Airport. Taxi fare approximately $5-8 USD.
-                  </p>
-                  <p>
-                    <strong className="text-foreground">From Thamel:</strong> 10-minute 
-                    walk or short taxi ride from the popular tourist area.
-                  </p>
-                  <p>
-                    <strong className="text-foreground">Landmarks:</strong> Near Hotel 
-                    Annapurna and the Royal Palace Museum.
-                  </p>
+                <div className="flex gap-4 mt-3 text-sm">
+                  <a href={CLINIC.facebook} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Facebook</a>
+                  <a href={CLINIC.instagram} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Instagram</a>
                 </div>
               </div>
 
