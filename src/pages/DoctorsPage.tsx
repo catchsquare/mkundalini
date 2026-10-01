@@ -214,20 +214,6 @@ export default function DoctorsPage() {
                   <p className="text-xs text-muted-foreground">Experience</p>
                 </motion.div>
 
-                {/* Achievement Badge */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3 }}
-                  viewport={{ once: true }}
-                  className="absolute -left-4 lg:-left-8 bottom-12 card-elevated p-4"
-                >
-                  <div className="flex items-center gap-2">
-                    <Award className="w-5 h-5 text-primary" />
-                    <span className="font-bold text-xl text-foreground">3,000+</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">Implant Procedures</p>
-                </motion.div>
               </motion.div>
 
               <motion.div
@@ -444,10 +430,10 @@ export default function DoctorsPage() {
                   <BadgeCheck className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-semibold text-secondary-foreground mb-2">
-                  Verified Credentials
+                  Listed Credentials
                 </h3>
                 <p className="text-secondary-foreground/70 text-sm leading-relaxed">
-                  All qualifications are verified and available for review upon request.
+                  Each dentist's qualification is listed on their profile, including Dr. Nitin Aryal's NMC Registration No. 12586.
                 </p>
               </div>
               <div className="bg-secondary-foreground/10 rounded-2xl p-6">
