@@ -79,14 +79,13 @@ const fallbackTreatmentOptions = [
 ];
 
 const fallbackClinicHours = [
-  // Operating days not yet verified — show the verified daily time only.
-  { day: "Clinic hours", hours: CLINIC.hours },
+  ...CLINIC.openingSchedule.map((o) => ({ day: o.label, hours: o.hours })),
 ];
 
 const fallbackReassurances = [
-  { icon: "Shield", title: "No Obligation", description: "Free consultations with zero pressure to proceed" },
-  { icon: "Clock", title: "Quick Response", description: "We respond within 24 hours, often much faster" },
-  { icon: "Users", title: "Dedicated Support", description: "A personal coordinator assigned to your case" },
+  { icon: "Shield", title: "No Pressure", description: "Ask questions and discuss your options before deciding on treatment." },
+  { icon: "Clock", title: "Quick Response", description: "We aim to respond to enquiries within 24 hours." },
+  { icon: "Users", title: "Clear Communication", description: "Your questions are answered by the clinic team." },
   { icon: "Heart", title: "Patient-First", description: "Your comfort and satisfaction is our priority" },
 ];
 
@@ -434,8 +433,7 @@ export default function ContactPage() {
                   Request Your Consultation
                 </h2>
                 <p className="text-muted-foreground mb-8">
-                  Fill out this form and we'll get back to you within 24 hours with 
-                  next steps. No commitment required.
+                  Fill out this form. We aim to respond to enquiries within 24 hours.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -615,8 +613,8 @@ export default function ContactPage() {
                 <MessageCircle className="w-10 h-10 mb-4" />
                 <h3 className="font-bold text-lg mb-2">Prefer WhatsApp?</h3>
                 <p className="text-white/90 text-sm mb-4">
-                  Skip the form! Send us a message directly and get a response 
-                  within an hour during business hours.
+                  Send us a message directly. You may share existing X-rays or reports;
+                  a final diagnosis requires an in-person clinical assessment.
                 </p>
 <a
                   href="https://wa.me/9779802808008?text=Hello!%20I'm%20interested%20in%20dental%20treatment%20at%20Kundalini%20Dental%20Clinic."
@@ -709,9 +707,8 @@ export default function ContactPage() {
                   Dental Emergency?
                 </h3>
                 <p className="text-muted-foreground">
-                  For urgent dental issues outside regular hours, including severe pain, 
-                  trauma, or swelling, contact our emergency line. We provide 24/7 
-                  guidance for existing patients and emergency walk-ins when possible.
+                  For urgent dental problems such as severe pain, trauma or swelling,
+                  call the clinic during opening hours.
                 </p>
               </div>
               <div className="flex flex-col gap-3">
@@ -720,10 +717,10 @@ export default function ContactPage() {
                   className="inline-flex items-center justify-center gap-2 bg-destructive text-destructive-foreground px-6 py-3 rounded-lg font-medium hover:bg-destructive/90 transition-colors"
                 >
                   <Phone className="w-5 h-5" />
-                  Emergency: +977-9802808008
+                  Call Clinic: +977-9802808008
                 </a>
                 <p className="text-xs text-muted-foreground text-center">
-                  Available 24/7 for emergencies
+                  During clinic opening hours
                 </p>
               </div>
             </div>
@@ -742,8 +739,7 @@ export default function ContactPage() {
               Visit Our Clinic
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Located in the heart of Kathmandu, our modern clinic is easily 
-              accessible from major hotels and the international airport.
+              Ground Floor, Chappal Karkhana, Goreto Bhawan, Kathmandu.
             </p>
           </motion.div>
 
@@ -797,14 +793,6 @@ export default function ContactPage() {
                   <a href={CLINIC.facebook} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Facebook</a>
                   <a href={CLINIC.instagram} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Instagram</a>
                 </div>
-              </div>
-
-              <div className="bg-card rounded-2xl p-6 border border-border/50">
-                <h3 className="font-bold text-foreground mb-4">Airport Pickup</h3>
-                <p className="text-muted-foreground text-sm">
-                  For international patients, we offer complimentary airport pickup 
-                  for treatments over $1,000. Just let us know your flight details!
-                </p>
               </div>
             </motion.div>
           </div>
