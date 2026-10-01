@@ -238,6 +238,11 @@ export default function DoctorsPage() {
                 <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
                   {featuredDoctor.name}
                 </h3>
+                {featuredDoctor.name === "Dr. Nitin Aryal" && (
+                  <Link to="/doctors/dr-nitin-aryal" className="text-sm text-primary hover:underline">
+                    View full profile
+                  </Link>
+                )}
                 <p className="text-xl text-primary font-medium mb-6">
                   {featuredDoctor.role}
                 </p>

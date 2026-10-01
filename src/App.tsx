@@ -13,6 +13,7 @@ import HomePage from "./pages/HomePage";
 import ServicesPage from "./pages/ServicesPage";
 import AboutPage from "./pages/AboutPage";
 import DoctorsPage from "./pages/DoctorsPage";
+import DoctorProfilePage from "./pages/doctors/DoctorProfilePage";
 import DentalTourismPage from "./pages/DentalTourismPage";
 import ContactPage from "./pages/ContactPage";
 import PricingPage from "./pages/PricingPage";
@@ -79,6 +80,7 @@ const App = () => (
               <Route path="/services/:slug" element={<ServiceDetailPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/doctors" element={<DoctorsPage />} />
+              <Route path="/doctors/:slug" element={<DoctorProfilePage />} />
               <Route path="/dental-tourism" element={<DentalTourismPage />} />
               <Route path="/pricing" element={<PricingPage />} />
               <Route path="/reviews" element={<ReviewsPage />} />
