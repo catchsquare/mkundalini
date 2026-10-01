@@ -124,7 +124,7 @@ const fallbackConsultationProcess = [
     step: 3,
     title: "Video Consultation",
     duration: "Day 3-5",
-    description: "Schedule a free video call with one of our specialists. We'll discuss your case, answer all your questions, and explain your treatment options in detail.",
+    description: "Speak with the clinic before your visit to discuss your dental concerns, existing X-rays or reports, and possible next steps. Final diagnosis and treatment planning require appropriate clinical assessment.",
     icon: Video,
   },
   {
@@ -534,8 +534,8 @@ export default function DentalTourismPage() {
               Remote Consultation Process
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Before you book any flights, we'll provide a complete treatment plan 
-              and cost estimate — entirely free, with no obligation.
+              Contact the clinic before booking flights to discuss your situation and possible next steps.
+              Final diagnosis and treatment planning require appropriate clinical assessment.
             </p>
           </motion.div>
 
