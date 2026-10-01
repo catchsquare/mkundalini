@@ -546,7 +546,7 @@ export default function HomePage() {
       </section>
 
       {/* 9. Patient reviews — existing approved testimonials only, shown verbatim */}
-      {testimonials.length > 0 && (
+      {verifiedTestimonials.length > 0 && (
         <section aria-labelledby="home-reviews" className="section-padding bg-background">
           <div className="mx-auto max-w-7xl">
             <SectionHeading id="home-reviews" title="What Our Patients Say" />
