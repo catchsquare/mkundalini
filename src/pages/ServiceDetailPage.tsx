@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/accordion";
 import { SEO } from "@/components/seo/SEO";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
+import NotFound from "@/pages/NotFound";
 
 export default function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -40,20 +41,8 @@ export default function ServiceDetailPage() {
   }
 
   if (error || !service) {
-    return (
-      <Layout>
-        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-          <h1 className="text-3xl font-bold text-foreground mb-4">Service Not Found</h1>
-          <p className="text-muted-foreground mb-6">The service you're looking for doesn't exist or has been removed.</p>
-          <Button asChild>
-            <Link to="/services">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Services
-            </Link>
-          </Button>
-        </div>
-      </Layout>
-    );
+    // Explicit legacy aliases redirect; anything else is a genuine 404 (noindex, follow).
+    return <NotFound />;
   }
 
   return (
