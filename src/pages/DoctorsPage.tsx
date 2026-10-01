@@ -341,7 +341,7 @@ export default function DoctorsPage() {
               <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
                 <Award className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">15 Years Experience</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Practising Since 2012</h3>
               <p className="text-muted-foreground">
                 Dr. Nitin Aryal has been practising dentistry since 2012.
               </p>
