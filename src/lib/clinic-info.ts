@@ -22,11 +22,33 @@ export const CLINIC = {
   },
   fullAddress: "Ground Floor, Chappal Karkhana, Goreto Bhawan, Kathmandu, Bagmati Province 44600, Nepal",
   mapsUrl: "https://maps.app.goo.gl/aRKW1GMW5arimMcE6",
-  /** Daily time only. Operating days are NOT verified — do not imply days. */
+  /** Legacy daily-time string still used by other pages (unchanged in Phase 2A). */
   hours: "9:30 AM – 6:30 PM",
+  /** Verified weekly schedule (confirmed Phase 2A): open 7 days. */
+  openingSchedule: [
+    { label: "Sunday–Friday", hours: "9:30 AM–6:30 PM" },
+    { label: "Saturday", hours: "10:00 AM–2:00 PM" },
+  ],
+  whatsappHref: "https://wa.me/9779802808008",
+  establishedYear: 2023,
   facebook: "https://www.facebook.com/kundalinidentalclinic",
   instagram: "https://www.instagram.com/kundalinidental",
 } as const;
+
+export const openingHoursSpecification = [
+  {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "09:30",
+    closes: "18:30",
+  },
+  {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: "Saturday",
+    opens: "10:00",
+    closes: "14:00",
+  },
+];
 
 export interface VerifiedDoctor {
   slug: string;
@@ -58,5 +80,6 @@ export const clinicEntitySchema = {
     addressCountry: CLINIC.address.country,
   },
   hasMap: CLINIC.mapsUrl,
+  openingHoursSpecification,
   sameAs: [CLINIC.facebook, CLINIC.instagram],
 };
