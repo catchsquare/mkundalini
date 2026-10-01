@@ -21,7 +21,7 @@ export default function ServicesPage() {
   // Get tourism-friendly services for the highlight section
   const tourismServices = categories
     ?.flatMap(c => c.treatments)
-    .filter(t => t.tourism_friendly && t.comparison_price)
+    .filter(t => t.tourism_friendly && t.price)
     .slice(0, 6) || [];
 
   return (
@@ -99,7 +99,7 @@ export default function ServicesPage() {
                     {tourismSection?.title || "High-Value Treatments for International Patients"}
                   </h2>
                   <p className="text-lg text-secondary-foreground/80 max-w-2xl mx-auto">
-                    {tourismSection?.description || "These treatments offer the greatest savings for patients traveling from abroad while maintaining the same quality as top clinics worldwide."}
+                    {tourismSection?.description || "Treatments that patients travelling from abroad often ask about. Contact the clinic before travelling to discuss your plans."}
                   </p>
                 </motion.div>
 
@@ -116,7 +116,7 @@ export default function ServicesPage() {
                       <h3 className="font-semibold text-secondary-foreground mb-1 text-sm">
                         {treatment.title}
                       </h3>
-                      <p className="text-primary font-bold text-sm">{treatment.comparison_price}</p>
+                      <p className="text-primary font-bold text-sm">{treatment.price}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -240,13 +240,6 @@ export default function ServicesPage() {
                               <span className="text-sm text-foreground">{treatment.duration}</span>
                             </div>
                           )}
-                          {treatment.comparison_price && (
-                            <div className="bg-primary/5 rounded-lg px-3 py-2 text-center">
-                              <span className="text-xs text-primary font-medium">
-                                {treatment.comparison_price}
-                              </span>
-                            </div>
-                          )}
                         </div>
 
                         {/* CTAs */}
@@ -280,69 +273,7 @@ export default function ServicesPage() {
             </section>
           ))}
 
-          {/* Price Comparison Table - dynamic from services data */}
-          {(() => {
-            const comparisonData = categories
-              .flatMap(c => c.treatments)
-              .filter(t => t.price && t.comparison_price && t.price !== 'Custom quote')
-              .slice(0, 6);
-            
-            if (comparisonData.length === 0) return null;
-
-            return (
-              <section className="section-padding bg-background">
-                <div className="mx-auto max-w-5xl">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12"
-                  >
-                    <span className="text-primary font-medium text-sm uppercase tracking-wider">
-                      Value Comparison
-                    </span>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-3 mb-4">
-                      Your Savings at Kundalini Dental
-                    </h2>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                      Same quality materials, same international standards — significantly lower costs.
-                    </p>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="card-elevated overflow-hidden"
-                  >
-                    <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="bg-muted/50">
-                            <th className="text-left p-4 font-semibold text-foreground">Treatment</th>
-                            <th className="text-center p-4 font-semibold text-foreground">Comparison</th>
-                            <th className="text-center p-4 font-semibold text-primary bg-primary/5">Our Price</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {comparisonData.map((row, index) => (
-                            <tr key={row.id} className={index % 2 === 0 ? '' : 'bg-muted/20'}>
-                              <td className="p-4 font-medium text-foreground">{row.title}</td>
-                              <td className="p-4 text-center text-muted-foreground line-through">{row.comparison_price}</td>
-                              <td className="p-4 text-center font-semibold text-primary bg-primary/5">{row.price}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                    <div className="bg-muted/30 p-4 text-center text-sm text-muted-foreground">
-                      * Prices are approximate and may vary based on complexity. Final pricing provided after consultation.
-                    </div>
-                  </motion.div>
-                </div>
-              </section>
-            );
-          })()}
+          
         </>
       )}
 
@@ -369,7 +300,7 @@ export default function ServicesPage() {
                 className="bg-background text-accent hover:bg-background/90"
               >
                 <Link to="/contact">
-                  Book Free Consultation
+                  Book an Appointment
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>

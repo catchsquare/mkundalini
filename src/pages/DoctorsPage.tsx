@@ -444,7 +444,7 @@ export default function DoctorsPage() {
                   Global Experience
                 </h3>
                 <p className="text-secondary-foreground/70 text-sm leading-relaxed">
-                  500+ international patients treated with understanding and cultural sensitivity.
+                  Care for local and international patients, with clear communication throughout treatment.
                 </p>
               </div>
             </div>

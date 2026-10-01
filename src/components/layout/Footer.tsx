@@ -42,7 +42,7 @@ export function Footer() {
               </h3>
               <p className="text-secondary-foreground/70 max-w-xl text-sm sm:text-base">
                 Whether you're across town or across the world, we're here to help. 
-                Book your free consultation today.
+                Book an appointment today.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-center lg:justify-end">

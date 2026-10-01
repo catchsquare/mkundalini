@@ -212,11 +212,6 @@ const fallbackEthicalBilling = [
     description:
       "We collect payment or confirm payment arrangements before beginning treatment. This protects both parties and ensures no financial surprises during your care journey.",
   },
-  {
-    title: "Written Guarantees",
-    description:
-      "Major treatments come with written warranties. If a crown fails within the warranty period due to workmanship, we'll replace it at no additional cost.",
-  },
 ];
 
 const fallbackInternationalComparison = [
@@ -588,8 +583,7 @@ export default function PricingPage() {
               Get Your Personalized Quote
             </h2>
             <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-              Ready to know exactly what your treatment will cost? Request a free consultation 
-              and receive a detailed, no-obligation quote tailored to your specific needs.
+              Book an appointment for an assessment. Your expected treatment cost is discussed before treatment begins.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
