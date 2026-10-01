@@ -193,6 +193,9 @@ const photoGuidelines = [
   },
 ];
 
+// No testimonial currently has documented provenance/consent.
+const SHOW_TESTIMONIAL_LISTING = false;
+
 export default function ReviewsPage() {
   const { getSectionByType } = usePageContent("reviews");
 
@@ -313,7 +316,8 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-      {/* Featured Testimonials */}
+      {/* Featured Testimonials — hidden until testimonial provenance/consent is documented (records kept in DB) */}
+      {SHOW_TESTIMONIAL_LISTING && (
       <section className="section-padding bg-background">
         <div className="container-wide mx-auto">
           <motion.div
@@ -403,6 +407,7 @@ export default function ReviewsPage() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* Before & After Section */}
       <section className="section-padding bg-muted/30">

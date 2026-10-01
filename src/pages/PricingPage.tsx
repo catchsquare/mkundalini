@@ -337,7 +337,7 @@ export default function PricingPage() {
               <span className="text-primary">{heroSection?.titleHighlight || "No Surprises"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              {heroSection?.description || "We believe you deserve to know exactly what your dental care will cost before treatment begins. No hidden fees, no unexpected charges—just honest pricing for world-class care."}
+              {heroSection?.description || "Treatment costs depend on the procedure, complexity, materials and individual clinical needs. Your expected cost is discussed after assessment, before treatment begins."}
             </p>
           </motion.div>
         </div>
@@ -576,101 +576,6 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* International Cost Comparison */}
-      <section className="section-padding bg-background">
-        <div className="container-wide mx-auto">
-          <motion.div
-            className="text-center mb-16"
-            {...fadeInUp}
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
-              <Globe className="w-4 h-4" />
-              International Comparison
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              How Our Prices Compare
-            </h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
-              Quality dental care shouldn't require a fortune. Compare our prices with 
-              typical costs in other countries—using the same materials, techniques, and 
-              standards.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="overflow-x-auto"
-            {...fadeInUp}
-          >
-            <table className="w-full min-w-[800px]">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-4 px-6 font-semibold text-foreground">
-                    Treatment
-                  </th>
-                  <th className="text-center py-4 px-6 font-semibold text-primary bg-primary/5 rounded-t-lg">
-                    Kundalini Dental
-                  </th>
-                  <th className="text-center py-4 px-6 font-semibold text-muted-foreground">
-                    USA
-                  </th>
-                  <th className="text-center py-4 px-6 font-semibold text-muted-foreground">
-                    UK
-                  </th>
-                  <th className="text-center py-4 px-6 font-semibold text-muted-foreground">
-                    Australia
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {internationalComparison.map((row, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-border/50 hover:bg-muted/20 transition-colors"
-                  >
-                    <td className="py-4 px-6 text-foreground font-medium">
-                      {row.treatment}
-                    </td>
-                    <td className="py-4 px-6 text-center bg-primary/5">
-                      <span className="font-bold text-primary">{row.nepal}</span>
-                    </td>
-                    <td className="py-4 px-6 text-center text-muted-foreground">
-                      {row.usa}
-                    </td>
-                    <td className="py-4 px-6 text-center text-muted-foreground">
-                      {row.uk}
-                    </td>
-                    <td className="py-4 px-6 text-center text-muted-foreground">
-                      {row.australia}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
-
-          <motion.div
-            className="mt-8 p-6 bg-muted/50 rounded-2xl"
-            {...fadeInUp}
-          >
-            <div className="flex items-start gap-4">
-              <Globe className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-semibold text-foreground mb-2">
-                  Why the Difference?
-                </h4>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Our significantly lower prices don't mean lower quality. Nepal has lower 
-                  operational costs, including rent, utilities, and staff salaries—without 
-                  compromising on education, training, or materials. Our dentists trained 
-                  internationally and use the same premium materials as clinics worldwide. 
-                  You benefit from economic differences, not quality differences.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Get a Quote CTA */}
       <section className="section-padding bg-primary">
         <div className="container-wide mx-auto">
@@ -695,7 +600,7 @@ export default function PricingPage() {
               >
                 <Link to="/contact">
                   <MessageCircle className="w-5 h-5 mr-2" />
-                  Request Free Consultation
+                  Book an Appointment
                 </Link>
               </Button>
               <Button

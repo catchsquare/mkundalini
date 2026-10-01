@@ -164,11 +164,9 @@ export default function HomePage() {
   const { offers } = useOffers();
   const { slide: homeHero } = useHeroSlide("home");
   // Only display testimonials whose provenance/patient consent is verified (Phase 2A trust correction).
-  const UNVERIFIED_TESTIMONIAL_NAMES = new Set(["Sarah Mitchell", "James Thompson", "Priya Patel"]);
-  const { testimonials } = useTestimonials({ limit: 3 });
-  const verifiedTestimonials = testimonials.filter(
-    (t) => !UNVERIFIED_TESTIMONIAL_NAMES.has((t.patient_name || "").trim())
-  );
+  // No testimonial record currently has documented provenance/consent, so none are shown publicly.
+  // DB records are kept; re-enable once a verification field/workflow exists.
+  const verifiedTestimonials: ReturnType<typeof useTestimonials>["testimonials"] = [];
   const { featuredMember } = useTeamMembers();
 
   const featuredOffer = offers.length > 0 ? offers[0] : null;
@@ -293,13 +291,13 @@ export default function HomePage() {
           />
           <ul className="grid gap-px bg-border/60 rounded-2xl overflow-hidden border border-border/60 sm:grid-cols-2 lg:grid-cols-3">
             {treatments.map((t) => (
-              <li key={t.title} className="bg-background">
+              <li key={t.title} className="bg-background sm:last:col-span-2 lg:last:col-span-3">
                 <Link
                   to={t.link}
                   className="group flex h-full flex-col p-6 sm:p-7 transition-colors hover:bg-muted/50 focus-visible:bg-muted/50"
                 >
                   <h3 className="text-lg font-semibold text-foreground mb-2">{t.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1">{t.text}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1 max-w-2xl">{t.text}</p>
                   <span className="inline-flex items-center text-sm font-medium text-primary">
                     Learn about {t.title.toLowerCase()}
                     <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
