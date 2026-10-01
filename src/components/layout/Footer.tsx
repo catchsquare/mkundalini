@@ -77,7 +77,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm text-center sm:text-left">
-              World-class dental care in the heart of Kathmandu. Led by {settings.managing_director} 
+              Comprehensive dental care in Chappal Karkhana, Kathmandu. Led by {settings.managing_director} 
               with {settings.managing_director_experience} of experience, serving local and international patients 
               with premium treatments at accessible prices since {settings.established_year}.
             </p>

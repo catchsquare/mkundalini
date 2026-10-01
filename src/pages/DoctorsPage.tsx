@@ -315,6 +315,24 @@ export default function DoctorsPage() {
         </section>
       )}
 
+      {/* Associate dentist (verified details only) */}
+      <section className="py-12 bg-background" aria-labelledby="associate-dentist-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md rounded-xl border border-border bg-card p-6">
+            <h3 id="associate-dentist-heading" className="text-xl font-bold text-foreground">
+              <Link to="/doctors/dr-bhawana-sharma" className="hover:text-primary hover:underline">
+                Dr. Bhawana Sharma
+              </Link>
+            </h3>
+            <p className="text-primary font-medium mt-1">BDS</p>
+            <p className="text-sm text-muted-foreground mt-1">Practising dentistry since 2018</p>
+            <Link to="/doctors/dr-bhawana-sharma" className="inline-block mt-3 text-sm text-primary hover:underline">
+              View full profile
+            </Link>
+          </div>
+        </div>
+      </section>
+
 {/* Our Commitment Section */}
       <section className="section-padding bg-muted/30">
         <div className="mx-auto max-w-7xl">
