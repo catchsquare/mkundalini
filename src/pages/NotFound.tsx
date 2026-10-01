@@ -24,61 +24,11 @@ const VALID_SERVICE_SLUGS = new Set([
 // Legacy / alternate service slug aliases -> current valid slug
 const SERVICE_SLUG_ALIASES: Record<string, string> = {
   "dental-implants": "single-implants",
-  "implants": "single-implants",
-  "tooth-implant": "single-implants",
-  "implant": "single-implants",
-  "all-on-four": "all-on-4",
-  "all-on-6": "all-on-4",
-  "full-mouth-implants": "full-mouth",
-  "full-mouth-rehabilitation": "full-mouth",
-  "full-mouth-reconstruction": "full-mouth",
-  "crowns": "crowns-bridges",
-  "bridges": "crowns-bridges",
-  "dental-crowns": "crowns-bridges",
-  "dental-bridges": "crowns-bridges",
-  "cap": "crowns-bridges",
-  "rct": "root-canal",
-  "root-canal-treatment": "root-canal",
-  "endodontics": "root-canal",
-  "teeth-whitening": "whitening",
-  "bleaching": "whitening",
-  "dental-veneers": "veneers",
-  "porcelain-veneers": "veneers",
-  "invisalign": "clear-aligners",
-  "aligners": "clear-aligners",
-  "orthodontics": "braces",
-  "orthodontic": "braces",
-  "metal-braces": "braces",
-  "ceramic-braces": "braces",
-  "scaling": "cleaning",
-  "scaling-polishing": "cleaning",
-  "teeth-cleaning": "cleaning",
-  "prophylaxis": "cleaning",
-  "extraction": "extractions",
-  "tooth-extraction": "extractions",
-  "wisdom-tooth": "wisdom-teeth",
-  "wisdom-tooth-removal": "wisdom-teeth",
-  "third-molar": "wisdom-teeth",
-  "filling": "fillings",
-  "tooth-filling": "fillings",
-  "composite-filling": "fillings",
-  "cavity": "fillings",
-  "gum-treatment": "gum-surgery",
-  "periodontics": "gum-surgery",
-  "periodontal": "gum-surgery",
-  "gingivectomy": "gum-surgery",
-  "smile-design": "smile-makeover",
-  "cosmetic-dentistry": "smile-makeover",
-  "dental-bonding": "bonding",
-  "tooth-bonding": "bonding",
-  "bone-graft": "bone-grafting",
-  "sinus-lift": "bone-grafting",
-  "retainer": "retainers",
-  "dentures": "smile-makeover",
-  "denture": "smile-makeover",
-  "pediatric": "cleaning",
-  "kids-dentistry": "cleaning",
-  "childrens-dentistry": "cleaning",
+};
+
+// Explicit full-path legacy aliases (no fuzzy matching).
+const PATH_ALIASES: Record<string, string> = {
+  "/implants": "/services/single-implants",
 };
 
 /**
@@ -93,6 +43,7 @@ function findRedirect(pathname: string): string | null {
   const cleaned = pathname.replace(/\/+$/g, "").toLowerCase();
   if (!cleaned) return null;
 
+  if (PATH_ALIASES[cleaned]) return PATH_ALIASES[cleaned];
   // Trailing slash / case variants of known routes
   if (KNOWN_ROUTES.includes(cleaned) && cleaned !== pathname) return cleaned;
 

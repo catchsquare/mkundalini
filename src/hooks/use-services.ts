@@ -111,5 +111,7 @@ export function useServiceBySlug(slug: string) {
       } as Service;
     },
     enabled: !!slug,
+    // Unknown slugs must resolve to Not Found immediately, not after retries.
+    retry: false,
   });
 }
