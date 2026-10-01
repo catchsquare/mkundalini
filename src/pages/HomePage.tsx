@@ -134,7 +134,7 @@ const defaultWhyChooseUs = [
 
 const defaultDoctorCredentials = [
   "Bachelor of Dental Surgery (BDS)",
-  "15 years of clinical experience",
+  "Practising dentistry since 2012",
   "Managing Director, Kundalini Dental Clinic",
   "Committed to patient-centered care",
   "Expertise in comprehensive dental treatments",
@@ -277,7 +277,7 @@ export default function HomePage() {
     badge: doctorContent?.badge || "Meet Your Doctor",
     headline: doctorContent?.headline || settings.managing_director || "Dr. Nitin Aryal",
     subtitle: doctorContent?.subtitle || `${settings.managing_director_title || "BDS"} • Managing Director`,
-    description: doctorContent?.description || `With ${settings.managing_director_experience || "15 years"} of experience in dental care, ${settings.managing_director || "Dr. Nitin Aryal"} leads Kundalini Dental Clinic with a commitment to excellence and patient-centered care. His expertise spans comprehensive dental treatments, ensuring every patient receives personalized attention.`,
+    description: doctorContent?.description || `${settings.managing_director || "Dr. Nitin Aryal"}, BDS (practising dentistry since 2012), leads Kundalini Dental Clinic with a commitment to excellence and patient-centered care. His expertise spans comprehensive dental treatments, ensuring every patient receives personalized attention.`,
     credentials: doctorContent?.credentials || defaultDoctorCredentials,
     experienceBadge: doctorContent?.experience_badge || { value: settings.managing_director_experience?.replace(' years', '') || "15", label: "Years of clinical experience" },
     photo: doctorContent?.photo || featuredMember?.photo_url || null,
@@ -334,9 +334,11 @@ export default function HomePage() {
         <div className="absolute inset-0 z-0">
           <img
             src={typeof heroData.backgroundImage === 'string' ? heroData.backgroundImage : heroImage}
-            alt="Kundalini Dental Clinic - Modern dental treatment room with state-of-the-art equipment in Kathmandu, Nepal"
+            alt=""
+            aria-hidden="true"
             className="w-full h-full object-cover"
             loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/30 sm:to-background/20" />
         </div>
@@ -593,6 +595,7 @@ export default function HomePage() {
                     src={doctorData.photo} 
                     alt={doctorData.headline}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">

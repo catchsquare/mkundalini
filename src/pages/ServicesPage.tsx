@@ -194,6 +194,7 @@ export default function ServicesPage() {
                           <img 
                             src={treatment.image_url} 
                             alt={treatment.image_alt || treatment.title}
+                            loading="lazy"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>

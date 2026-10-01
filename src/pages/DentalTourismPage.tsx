@@ -81,7 +81,7 @@ const fallbackWhyNepal = [
 const fallbackWhyKundalini = [
   {
     title: "15 Years of Experience",
-    description: "Led by Dr. Nitin Aryal with 15 years of dental expertise, our clinic established in 2023 combines experienced leadership with modern facilities.",
+    description: "Led by Dr. Nitin Aryal, BDS, practising dentistry since 2012.",
   },
   {
     title: "Specialist-Led Care",

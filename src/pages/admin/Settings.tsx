@@ -533,7 +533,7 @@ export default function Settings() {
                   <Input
                     value={settings.director_title || ""}
                     onChange={(e) => updateSetting("director_title", e.target.value)}
-                    placeholder="BDS, 15 years experience"
+                    placeholder="BDS, NMC No. ..., practising since ..."
                   />
                 </div>
               </div>
@@ -672,7 +672,7 @@ export default function Settings() {
                   <Textarea
                     value={settings.seo_description || ""}
                     onChange={(e) => updateSetting("seo_description", e.target.value)}
-                    placeholder="Premium dental care in Kathmandu, Nepal. Led by Dr. Nitin Aryal with 15 years experience..."
+                    placeholder="Premium dental care in Kathmandu, Nepal. Dental clinic in Kathmandu, Nepal..."
                     maxLength={160}
                     rows={3}
                   />
