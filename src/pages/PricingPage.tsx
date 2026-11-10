@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { PRICE_LIST, formatNpr, formatUsd, NPR_PER_USD, RATE_REVIEWED } from "@/lib/pricing";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -70,104 +71,7 @@ const fallbackPricingPhilosophy = [
   },
 ];
 
-const fallbackTreatmentPricing = [
-  {
-    category: "Dental Implants",
-    description: "Titanium implants with porcelain crowns",
-    treatments: [
-      {
-        name: "Single Tooth Implant",
-        priceRange: "$800 - $1,200",
-        includes: "Implant, abutment, porcelain crown, all follow-ups",
-        note: "Premium Swiss/Korean titanium implants",
-      },
-      {
-        name: "All-on-4 Full Arch",
-        priceRange: "$6,000 - $9,000",
-        includes: "4 implants, full arch prosthesis, all procedures",
-        note: "Complete smile restoration",
-      },
-      {
-        name: "All-on-6 Full Arch",
-        priceRange: "$8,000 - $12,000",
-        includes: "6 implants, full arch prosthesis, all procedures",
-        note: "Maximum stability option",
-      },
-    ],
-  },
-  {
-    category: "Cosmetic Dentistry",
-    description: "Aesthetic smile enhancements",
-    treatments: [
-      {
-        name: "Porcelain Veneer (per tooth)",
-        priceRange: "$250 - $400",
-        includes: "Consultation, preparation, custom veneer, bonding",
-        note: "E-max or Zirconia options",
-      },
-      {
-        name: "Complete Smile Makeover",
-        priceRange: "$3,000 - $8,000",
-        includes: "Comprehensive treatment plan, 8-20 veneers",
-        note: "Customized to your goals",
-      },
-      {
-        name: "Teeth Whitening",
-        priceRange: "$150 - $300",
-        includes: "Professional in-office treatment",
-        note: "Immediate visible results",
-      },
-    ],
-  },
-  {
-    category: "Restorative Dentistry",
-    description: "Repair and rebuild damaged teeth",
-    treatments: [
-      {
-        name: "Dental Crown",
-        priceRange: "$150 - $350",
-        includes: "Preparation, custom crown, fitting",
-        note: "Zirconia or porcelain options",
-      },
-      {
-        name: "Root Canal Treatment",
-        priceRange: "$100 - $250",
-        includes: "Complete procedure, all visits",
-        note: "Per tooth, complexity varies",
-      },
-      {
-        name: "Dental Bridge (3-unit)",
-        priceRange: "$400 - $700",
-        includes: "Preparation, custom bridge, fitting",
-        note: "Replace missing teeth",
-      },
-    ],
-  },
-  {
-    category: "Orthodontics",
-    description: "Teeth alignment and correction",
-    treatments: [
-      {
-        name: "Traditional Braces",
-        priceRange: "$1,200 - $2,500",
-        includes: "Complete treatment, all adjustments, retainers",
-        note: "12-24 month treatment",
-      },
-      {
-        name: "Clear Aligners",
-        priceRange: "$1,500 - $3,500",
-        includes: "Full set of aligners, monitoring, retainers",
-        note: "Invisalign-style treatment",
-      },
-      {
-        name: "Ceramic Braces",
-        priceRange: "$1,500 - $3,000",
-        includes: "Complete treatment, all adjustments, retainers",
-        note: "Tooth-colored brackets",
-      },
-    ],
-  },
-];
+
 
 const fallbackPricingFactors = [
   {
@@ -214,50 +118,7 @@ const fallbackEthicalBilling = [
   },
 ];
 
-const fallbackInternationalComparison = [
-  {
-    treatment: "Single Dental Implant (with crown)",
-    nepal: "$800 - $1,200",
-    usa: "$3,000 - $5,000",
-    uk: "$2,500 - $4,000",
-    australia: "$4,000 - $6,000",
-  },
-  {
-    treatment: "All-on-4 Full Arch",
-    nepal: "$6,000 - $9,000",
-    usa: "$20,000 - $30,000",
-    uk: "$15,000 - $25,000",
-    australia: "$22,000 - $35,000",
-  },
-  {
-    treatment: "Porcelain Veneer (per tooth)",
-    nepal: "$250 - $400",
-    usa: "$1,000 - $2,500",
-    uk: "$800 - $1,500",
-    australia: "$1,200 - $2,000",
-  },
-  {
-    treatment: "Dental Crown (Zirconia)",
-    nepal: "$200 - $350",
-    usa: "$1,000 - $1,500",
-    uk: "$700 - $1,200",
-    australia: "$1,000 - $1,800",
-  },
-  {
-    treatment: "Root Canal + Crown",
-    nepal: "$250 - $500",
-    usa: "$1,500 - $2,500",
-    uk: "$1,200 - $2,000",
-    australia: "$1,500 - $2,500",
-  },
-  {
-    treatment: "Complete Smile Makeover (12 veneers)",
-    nepal: "$3,000 - $4,800",
-    usa: "$12,000 - $30,000",
-    uk: "$10,000 - $18,000",
-    australia: "$15,000 - $24,000",
-  },
-];
+
 
 export default function PricingPage() {
   const { getSectionByType } = usePageContent("pricing");
@@ -279,22 +140,10 @@ export default function PricingPage() {
     ? ethicalBlocks.map((b) => ({ title: b.title || "", description: b.description || "" }))
     : fallbackEthicalBilling;
 
-  const compareBlocks = byKey("international_comparison");
-  const internationalComparison = compareBlocks.length > 0
-    ? compareBlocks.map((b) => {
-        const m = (b.metadata || {}) as any;
-        return { treatment: b.title || "", nepal: m.nepal || "", usa: m.usa || "", uk: m.uk || "", australia: m.australia || "" };
-      })
-    : fallbackInternationalComparison;
 
-  const treatmentBlocks = byKey("treatment_pricing");
-  const treatmentPricing = treatmentBlocks.length > 0
-    ? treatmentBlocks.map((b) => ({
-        category: b.title || "",
-        description: b.description || "",
-        treatments: (((b.metadata || {}) as any).treatments || []) as Array<{ name: string; priceRange: string; includes: string; note: string }>,
-      }))
-    : fallbackTreatmentPricing;
+
+  // Prices come only from src/lib/pricing.ts (single verified source), never the CMS.
+  const treatmentPricing = PRICE_LIST;
 
   const heroSection = heroSlide
     ? { badge: heroSlide.badge_text, title: heroSlide.title, titleHighlight: heroSlide.subtitle, description: heroSlide.description }
@@ -393,11 +242,11 @@ export default function PricingPage() {
             {...fadeInUp}
           >
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Treatment Cost Ranges
+              Treatment Prices
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              These ranges represent typical costs for common treatments. Your specific 
-              price depends on individual factors discussed during consultation.
+              Prices are in Nepali rupees. US dollar figures are approximate, based on
+              Rs. {NPR_PER_USD} per US$1 ({RATE_REVIEWED}). You pay the rupee amount.
             </p>
           </motion.div>
 
@@ -418,7 +267,7 @@ export default function PricingPage() {
                   </p>
                 </div>
                 <div className="divide-y divide-border/50">
-                  {category.treatments.map((treatment, treatmentIndex) => (
+                  {category.items.map((treatment, treatmentIndex) => (
                     <div
                       key={treatmentIndex}
                       className="px-8 py-6 flex flex-col md:flex-row md:items-center gap-4"
@@ -427,19 +276,16 @@ export default function PricingPage() {
                         <h4 className="font-semibold text-foreground mb-1">
                           {treatment.name}
                         </h4>
-                        <p className="text-sm text-muted-foreground">
-                          {treatment.includes}
-                        </p>
-                        <span className="text-xs text-accent mt-1 inline-block">
-                          {treatment.note}
-                        </span>
+                        {treatment.note && (
+                          <p className="text-sm text-muted-foreground">{treatment.note}</p>
+                        )}
                       </div>
                       <div className="md:text-right">
                         <span className="text-2xl font-bold text-primary">
-                          {treatment.priceRange}
+                          {formatNpr(treatment)}
                         </span>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          USD equivalent
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {formatUsd(treatment)}
                         </p>
                       </div>
                     </div>
@@ -540,7 +386,7 @@ export default function PricingPage() {
               <div className="flex items-center gap-4 p-4 bg-primary/5 rounded-xl">
                 <CheckCircle className="w-6 h-6 text-primary flex-shrink-0" />
                 <p className="text-sm text-foreground">
-                  Over 5,000 patients treated with transparent, ethical billing practices
+                  A written estimate before every treatment, with no charges added after you agree
                 </p>
               </div>
             </motion.div>

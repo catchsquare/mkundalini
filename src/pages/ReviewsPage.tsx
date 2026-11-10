@@ -45,125 +45,17 @@ const staggerContainer = {
   viewport: { once: true },
 };
 
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Mitchell",
-    location: "Melbourne, Australia",
-    treatment: "Full Smile Makeover – 16 Veneers",
-    rating: 5,
-    date: "October 2024",
-    image: null,
-    quote:
-      "I spent two years researching dental tourism options. After my first video consultation with Dr. Sharma, I knew I'd found the right place. The entire team made me feel like family. My new smile has genuinely changed my life – I smile in photos now, something I haven't done in 20 years.",
-    highlight: "I smile in photos now, something I haven't done in 20 years.",
-  },
-  {
-    id: 2,
-    name: "James Thompson",
-    location: "London, United Kingdom",
-    treatment: "All-on-4 Dental Implants",
-    rating: 5,
-    date: "September 2024",
-    image: null,
-    quote:
-      "After years of deteriorating teeth and failed treatments back home, I was skeptical about going abroad. Kundalini Dental exceeded every expectation. The surgical precision, the aftercare, the communication – all world-class. I can eat apples again. Simple things matter most.",
-    highlight: "I can eat apples again. Simple things matter most.",
-  },
-  {
-    id: 3,
-    name: "Priya Patel",
-    location: "New Jersey, USA",
-    treatment: "8 Porcelain Veneers + Whitening",
-    rating: 5,
-    date: "August 2024",
-    image: null,
-    quote:
-      "As a healthcare professional myself, I had high standards. The clinic's sterilization protocols, the quality of materials, and the technical skill impressed me deeply. Plus, I saved enough to fund a week exploring Nepal – an unexpected bonus to an already wonderful experience.",
-    highlight: "The technical skill impressed me deeply.",
-  },
-  {
-    id: 4,
-    name: "Michael Chen",
-    location: "Sydney, Australia",
-    treatment: "6 Dental Implants + Bone Grafting",
-    rating: 5,
-    date: "July 2024",
-    image: null,
-    quote:
-      "My case was complex – significant bone loss requiring grafting before implants. Dr. Sharma was honest about the timeline and realistic about outcomes. Nine months later, I have a complete, functional smile. The patience and expertise shown throughout was remarkable.",
-    highlight: "The patience and expertise shown throughout was remarkable.",
-  },
-  {
-    id: 5,
-    name: "Emma Williams",
-    location: "Dubai, UAE",
-    treatment: "Complete Smile Design – 20 Veneers",
-    rating: 5,
-    date: "June 2024",
-    image: null,
-    quote:
-      "I've had dental work in three countries. Kundalini is genuinely different – they listen first, then treat. No rushing, no upselling. When they suggested fewer veneers than I'd planned, I knew they had my best interest at heart. The results speak for themselves.",
-    highlight: "They listen first, then treat.",
-  },
-  {
-    id: 6,
-    name: "Robert Anderson",
-    location: "Toronto, Canada",
-    treatment: "Full Mouth Reconstruction",
-    rating: 5,
-    date: "May 2024",
-    image: null,
-    quote:
-      "Decades of dental anxiety meant I avoided dentists until it was almost too late. The team's gentle approach and genuine compassion helped me through complex treatment I never thought I'd survive. I'm not just grateful for my smile – I'm grateful for how they treated me as a person.",
-    highlight: "I'm grateful for how they treated me as a person.",
-  },
-];
+// Sample testimonials removed (Nov 2026). Only real, consented reviews from the CMS are shown.
+const testimonials: Array<{ id: number; name: string; location: string; treatment: string; rating: number; date: string; quote: string; highlight: string }> = [];
 
-const beforeAfterCases = [
-  {
-    id: 1,
-    title: "Complete Smile Transformation",
-    treatment: "16 Porcelain Veneers",
-    duration: "2 visits over 10 days",
-    description:
-      "Patient presented with severe discoloration, uneven spacing, and worn enamel. Custom-designed E-max veneers created a natural, harmonious smile while preserving maximum tooth structure.",
-    patientNote: "I finally have the smile I always dreamed of.",
-  },
-  {
-    id: 2,
-    title: "Full Arch Restoration",
-    treatment: "All-on-4 Dental Implants",
-    duration: "3 visits over 6 months",
-    description:
-      "Patient had failing dentition requiring full arch replacement. All-on-4 protocol provided immediate function with a fixed provisional prosthesis, followed by final ceramic restoration.",
-    patientNote: "I can eat normally for the first time in years.",
-  },
-  {
-    id: 3,
-    title: "Anterior Aesthetic Enhancement",
-    treatment: "8 Minimal-Prep Veneers",
-    duration: "2 visits over 7 days",
-    description:
-      "Patient sought improvement in front teeth appearance. Conservative minimal-prep veneers achieved beautiful aesthetics while preserving healthy tooth enamel.",
-    patientNote: "So natural – even my dentist back home couldn't tell.",
-  },
-  {
-    id: 4,
-    title: "Single Implant Restoration",
-    treatment: "Implant + Zirconia Crown",
-    duration: "2 visits over 4 months",
-    description:
-      "Missing lateral incisor replaced with titanium implant and custom-shaded zirconia crown. Color-matched perfectly to adjacent natural teeth for seamless integration.",
-    patientNote: "Nobody can tell which tooth is the implant.",
-  },
-];
+
+// Invented sample cases removed (Nov 2026). Real cases come from the CMS with photos.
 
 const trustStats = [
   { number: "2023", label: "Established" },
-  { number: "15", label: "Years Experience" },
-  { number: "Quality", label: "Care Guaranteed" },
-  { number: "Modern", label: "Facilities" },
+  { number: "2012", label: "Practising Since" },
+  { number: "5", label: "Dentists & Specialists" },
+  { number: "7 Days", label: "Open Every Week" },
 ];
 
 const photoGuidelines = [
@@ -211,8 +103,10 @@ export default function ReviewsPage() {
   const beforeAfterCasesDb = reviewBlocks("before_after_cases");
   const photoGuidelinesDb = reviewBlocks("photo_guidelines");
 
-  const displayStats = dbStats.length > 0
-    ? dbStats.map((s) => ({ number: s.value, label: s.label }))
+  // Guarantee-style claims are filtered out regardless of CMS content.
+  const safeDbStats = dbStats.filter((s) => !/guarantee/i.test(`${s.value} ${s.label}`));
+  const displayStats = safeDbStats.length > 0
+    ? safeDbStats.map((s) => ({ number: s.value, label: s.label }))
     : (statsSection?.stats || trustStats);
 
   const displayTestimonials = dbTestimonials.length > 0
@@ -245,7 +139,9 @@ export default function ReviewsPage() {
           afterImage: galleryMatch?.after_image || null,
         };
       })
-    : beforeAfterCases.map((b) => ({ ...b, beforeImage: null, afterImage: null }));
+    : [];
+  // Only show cases backed by real, consented before/after photos.
+  const realBeforeAfter = displayBeforeAfter.filter((c) => c.beforeImage && c.afterImage);
 
   const displayPhotoGuidelines = photoGuidelinesDb.length > 0
     ? photoGuidelinesDb.map((b) => ({
@@ -409,7 +305,8 @@ export default function ReviewsPage() {
       </section>
       )}
 
-      {/* Before & After Section */}
+      {/* Before & After Section: only rendered when real photo cases exist */}
+      {!blocksLoading && !galleryLoading && realBeforeAfter.length > 0 && (
       <section className="section-padding bg-muted/30">
         <div className="container-wide mx-auto">
           <motion.div
@@ -442,7 +339,7 @@ export default function ReviewsPage() {
                     </div>
                   </div>
                 ))
-              : displayBeforeAfter.map((caseItem: any, index: number) => (
+              : realBeforeAfter.map((caseItem: any, index: number) => (
               <motion.div
                 key={caseItem.id}
                 className="bg-card rounded-2xl overflow-hidden border border-border/50"
@@ -534,6 +431,7 @@ export default function ReviewsPage() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* Ethical Disclaimer */}
       <section className="section-padding bg-background">
@@ -700,8 +598,8 @@ export default function ReviewsPage() {
               Ready to Start Your Journey?
             </h2>
             <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-              Join thousands of satisfied patients who transformed their smiles 
-              with Kundalini Dental Clinic. Your story could be next.
+              Send us a message on WhatsApp with your question or your X-rays. We reply with
+              your options and an honest estimate before you commit to anything.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button

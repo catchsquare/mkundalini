@@ -14,8 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      blocked_dates: {
+        Row: { blocked_date: string; reason: string | null; created_at: string }
+        Insert: { blocked_date: string; reason?: string | null; created_at?: string }
+        Update: { blocked_date?: string; reason?: string | null; created_at?: string }
+        Relationships: []
+      }
+      booking_settings: {
+        Row: {
+          id: number
+          is_enabled: boolean
+          slot_minutes: number
+          capacity_per_slot: number
+          min_notice_minutes: number
+          max_days_ahead: number
+          max_pending_per_phone: number
+          clinic_timezone: string
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          is_enabled?: boolean
+          slot_minutes?: number
+          capacity_per_slot?: number
+          min_notice_minutes?: number
+          max_days_ahead?: number
+          max_pending_per_phone?: number
+          clinic_timezone?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          is_enabled?: boolean
+          slot_minutes?: number
+          capacity_per_slot?: number
+          min_notice_minutes?: number
+          max_days_ahead?: number
+          max_pending_per_phone?: number
+          clinic_timezone?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       appointments: {
         Row: {
+          booking_ref: string | null
+          source: string
+          patient_timezone: string | null
+          patient_message: string | null
           appointment_date: string
           created_at: string
           created_by: string | null
@@ -30,6 +76,10 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          booking_ref?: string | null
+          source?: string
+          patient_timezone?: string | null
+          patient_message?: string | null
           appointment_date: string
           created_at?: string
           created_by?: string | null
@@ -44,6 +94,10 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          booking_ref?: string | null
+          source?: string
+          patient_timezone?: string | null
+          patient_message?: string | null
           appointment_date?: string
           created_at?: string
           created_by?: string | null
@@ -1921,6 +1975,24 @@ export type Database = {
       }
     }
     Functions: {
+      book_appointment: {
+        Args: {
+          p_date: string
+          p_start_time: string
+          p_treatment: string
+          p_full_name: string
+          p_phone: string
+          p_email?: string | null
+          p_country?: string | null
+          p_timezone?: string | null
+          p_message?: string | null
+        }
+        Returns: Json
+      }
+      get_available_slots: {
+        Args: { p_date: string }
+        Returns: { start_time: string; end_time: string; remaining: number }[]
+      }
       has_cms_access: { Args: { _user_id: string }; Returns: boolean }
       has_role:
         | {

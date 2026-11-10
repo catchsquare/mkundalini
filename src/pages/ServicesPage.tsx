@@ -45,7 +45,7 @@ export default function ServicesPage() {
               {heroSection?.badge || "Our Treatments"}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              {heroSection?.title || "World-Class Dental"}{" "}
+              {heroSection?.title || "Complete Dental"}{" "}
               <span className="text-primary">{heroSection?.titleHighlight || "Treatments"}</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">

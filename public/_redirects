@@ -1,0 +1,2 @@
+/admin /app-shell 200
+/admin/* /app-shell 200

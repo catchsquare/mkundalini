@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,42 +23,46 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import RefundPage from "./pages/RefundPage";
 import FaqPage from "./pages/FaqPage";
+import BookPage from "./pages/BookPage";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
-import AdminLogin from "./pages/admin/AdminLogin";
-import AdminLayout from "./pages/admin/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
-import Leads from "./pages/admin/Leads";
+const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
+const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const Leads = lazy(() => import("./pages/admin/Leads"));
+const Appointments = lazy(() => import("./pages/admin/Appointments"));
+const Patients = lazy(() => import("./pages/admin/Patients"));
+const BookingSettings = lazy(() => import("./pages/admin/BookingSettings"));
 
 // Placeholder components for new admin pages
-import { AdminPlaceholder } from "./pages/admin/AdminPlaceholder";
-import UserManagement from "./pages/admin/UserManagement";
-import Settings from "./pages/admin/Settings";
-import AuditLogs from "./pages/admin/AuditLogs";
+const AdminPlaceholder = lazy(() => import("./pages/admin/AdminPlaceholder").then(m => ({ default: m.AdminPlaceholder })));
+const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
+const Settings = lazy(() => import("./pages/admin/Settings"));
+const AuditLogs = lazy(() => import("./pages/admin/AuditLogs"));
 
 // CMS Pages
-import CMSPages from "./pages/admin/cms/Pages";
-import Navigation from "./pages/admin/cms/Navigation";
-import Doctors from "./pages/admin/cms/Doctors";
-import Blog from "./pages/admin/cms/Blog";
-import Testimonials from "./pages/admin/cms/Testimonials";
-import Gallery from "./pages/admin/cms/Gallery";
-import Offers from "./pages/admin/cms/Offers";
-import Team from "./pages/admin/cms/Team";
-import HomePageEditor from "./pages/admin/cms/HomePageEditor";
-import AboutPageEditor from "./pages/admin/cms/AboutPageEditor";
-import ServicesPageEditor from "./pages/admin/cms/ServicesPageEditor";
-import ContactPageEditor from "./pages/admin/cms/ContactPageEditor";
-import DoctorsPageEditor from "./pages/admin/cms/DoctorsPageEditor";
-import PricingPageEditor from "./pages/admin/cms/PricingPageEditor";
-import ReviewsPageEditor from "./pages/admin/cms/ReviewsPageEditor";
-import DentalTourismPageEditor from "./pages/admin/cms/DentalTourismPageEditor";
-import HeroSlides from "./pages/admin/cms/HeroSlides";
-import ContentBlocks from "./pages/admin/cms/ContentBlocks";
-import Faqs from "./pages/admin/cms/Faqs";
-import PricingPackages from "./pages/admin/cms/PricingPackages";
-import LegalPages from "./pages/admin/cms/LegalPages";
+const CMSPages = lazy(() => import("./pages/admin/cms/Pages"));
+const Navigation = lazy(() => import("./pages/admin/cms/Navigation"));
+const Doctors = lazy(() => import("./pages/admin/cms/Doctors"));
+const Blog = lazy(() => import("./pages/admin/cms/Blog"));
+const Testimonials = lazy(() => import("./pages/admin/cms/Testimonials"));
+const Gallery = lazy(() => import("./pages/admin/cms/Gallery"));
+const Offers = lazy(() => import("./pages/admin/cms/Offers"));
+const Team = lazy(() => import("./pages/admin/cms/Team"));
+const HomePageEditor = lazy(() => import("./pages/admin/cms/HomePageEditor"));
+const AboutPageEditor = lazy(() => import("./pages/admin/cms/AboutPageEditor"));
+const ServicesPageEditor = lazy(() => import("./pages/admin/cms/ServicesPageEditor"));
+const ContactPageEditor = lazy(() => import("./pages/admin/cms/ContactPageEditor"));
+const DoctorsPageEditor = lazy(() => import("./pages/admin/cms/DoctorsPageEditor"));
+const PricingPageEditor = lazy(() => import("./pages/admin/cms/PricingPageEditor"));
+const ReviewsPageEditor = lazy(() => import("./pages/admin/cms/ReviewsPageEditor"));
+const DentalTourismPageEditor = lazy(() => import("./pages/admin/cms/DentalTourismPageEditor"));
+const HeroSlides = lazy(() => import("./pages/admin/cms/HeroSlides"));
+const ContentBlocks = lazy(() => import("./pages/admin/cms/ContentBlocks"));
+const Faqs = lazy(() => import("./pages/admin/cms/Faqs"));
+const PricingPackages = lazy(() => import("./pages/admin/cms/PricingPackages"));
+const LegalPages = lazy(() => import("./pages/admin/cms/LegalPages"));
 
 // Reports
 
@@ -89,6 +93,7 @@ const App = () => (
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/refund" element={<RefundPage />} />
               <Route path="/faq" element={<FaqPage />} />
+              <Route path="/book" element={<BookPage />} />
 
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
@@ -98,6 +103,9 @@ const App = () => (
                 <Route path="quick-actions" element={<AdminPlaceholder title="Quick Actions" />} />
 
                 {/* CRM & Leads */}
+                <Route path="appointments" element={<Appointments />} />
+                <Route path="patients" element={<Patients />} />
+                <Route path="booking-settings" element={<BookingSettings />} />
                 <Route path="leads" element={<Leads />} />
                 <Route path="leads/pipeline" element={<Leads />} />
                 <Route path="leads/forms" element={<Leads />} />

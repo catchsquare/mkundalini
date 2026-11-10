@@ -1,0 +1,23 @@
+# Fallback config if the site is ever hosted on Apache shared hosting
+# instead of Cloudflare Pages. Serves /about from about.html.
+Options -MultiViews
+RewriteEngine On
+
+# Force https and drop www
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://kundalinidentalclinic.com.np%{REQUEST_URI} [L,R=301]
+
+# /about -> about.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+
+# Admin panel is a client-side app
+RewriteRule ^admin(/.*)?$ app-shell.html [L]
+
+ErrorDocument 404 /404.html
+
+<FilesMatch "\.(js|css|png|jpg|jpeg|webp|svg|woff2)$">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>

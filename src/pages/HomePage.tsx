@@ -24,7 +24,7 @@ import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { useTestimonials } from "@/hooks/use-testimonials";
 import { useTeamMembers } from "@/hooks/use-team-members";
 import { SEO } from "@/components/seo/SEO";
-import { CLINIC, VERIFIED_DOCTORS } from "@/lib/clinic-info";
+import { CLINIC, VERIFIED_DOCTORS, VISITING_SPECIALISTS } from "@/lib/clinic-info";
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -236,7 +236,7 @@ export default function HomePage() {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
               <Button asChild size="lg" className="h-12 sm:h-14 text-base px-6 sm:px-8">
-                <Link to="/contact">
+                <Link to="/book">
                   Book an Appointment
                   <ArrowRight className="w-4 h-4 ml-2" aria-hidden="true" />
                 </Link>
@@ -363,6 +363,17 @@ export default function HomePage() {
                 </div>
               </motion.article>
             ))}
+          </div>
+          <div className="mt-6 rounded-xl border border-border bg-card p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-3">Visiting specialists</h3>
+            <ul className="grid gap-2 sm:grid-cols-3 text-sm">
+              {VISITING_SPECIALISTS.map((d) => (
+                <li key={d.name}>
+                  <span className="font-medium text-foreground">{d.name}</span>
+                  <span className="block text-muted-foreground">{d.role}</span>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="mt-8">
             <Button asChild variant="outline" size="lg" className="h-12">
@@ -611,7 +622,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="h-12 sm:h-14 px-6 sm:px-8">
-                <Link to="/contact">
+                <Link to="/book">
                   Book Appointment
                   <ArrowRight className="w-4 h-4 ml-2" aria-hidden="true" />
                 </Link>

@@ -95,6 +95,17 @@ const navigationGroups: NavGroup[] = [
     ],
   },
   {
+    name: "Appointments",
+    icon: CalendarDays,
+    defaultOpen: true,
+    roles: ["super_admin", "admin", "manager", "receptionist", "dentist"],
+    items: [
+      { name: "Calendar & Requests", href: "/admin/appointments", icon: CalendarDays },
+      { name: "Patients", href: "/admin/patients", icon: Users },
+      { name: "Booking Settings", href: "/admin/booking-settings", icon: Cog },
+    ],
+  },
+  {
     name: "Leads",
     icon: Target,
     roles: ["super_admin", "admin", "manager", "receptionist"],

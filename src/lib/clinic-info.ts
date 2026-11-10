@@ -64,6 +64,35 @@ export const VERIFIED_DOCTORS: VerifiedDoctor[] = [
   { slug: "dr-bhawana-sharma", name: "Dr. Bhawana Sharma", qualification: "BDS", practisingSince: 2018 },
 ];
 
+/**
+ * Visiting specialists (confirmed by clinic management, Nov 2026).
+ * Qualifications, NMC numbers and photos to be added when supplied.
+ * No profile pages until credentials are available, to avoid thin pages.
+ */
+export interface VisitingSpecialist {
+  name: string;
+  role: string;
+  focus: string;
+}
+
+export const VISITING_SPECIALISTS: VisitingSpecialist[] = [
+  {
+    name: "Dr. Tekendra Chaulagain",
+    role: "Orthodontist (visiting)",
+    focus: "Braces, ceramic and self-ligating braces, clear aligners",
+  },
+  {
+    name: "Dr. Dewan Karki",
+    role: "Oral surgeon (visiting)",
+    focus: "Surgical extractions, wisdom teeth, implant surgery",
+  },
+  {
+    name: "Dr. Deepak Kumar Sharma",
+    role: "Oral surgeon (visiting)",
+    focus: "Surgical extractions, wisdom teeth, implant surgery",
+  },
+];
+
 export const clinicEntitySchema = {
   "@context": "https://schema.org",
   "@type": "Dentist",

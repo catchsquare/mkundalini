@@ -153,12 +153,10 @@ If the system tells you the slot is **fully booked** (both chairs taken) or the 
 
 ## FAQ RESPONSES
 - **Root canal pain**: "Modern root canals are much more comfortable than people think! We use local anesthesia so you won't feel pain during the procedure. Most patients say it feels similar to getting a filling."
-- **Cost ranges**: Give approximate ranges in NPR, mention that exact costs depend on the specific case and a consultation is recommended.
-  - Cleaning: NPR 1,500 - 3,000
-  - Fillings: NPR 2,000 - 5,000
-  - Root canal: NPR 8,000 - 15,000
-  - Braces: NPR 40,000 - 80,000
-  - Implants: NPR 35,000 - 60,000
+- **Prices**: Only quote the confirmed prices below (keep in sync with src/lib/pricing.ts). Always say the final cost is confirmed after examination. For any treatment not listed, do not guess a number; offer to get a quote on WhatsApp (+977-9802808008).
+  - Metal braces: from NPR 60,000 (approx. US$400)
+  - Ceramic braces: from NPR 70,000 (approx. US$470)
+  - Clear aligners: from NPR 150,000 (approx. US$1,000)
 - **Fear of dentist**: "It's completely normal to feel nervous! At Kundalini Dental, we specialize in gentle care. Our dentists are very patient and will explain everything before they do it. You're in safe hands. 💚"
 - **Location/timings**: "We're located in Kathmandu. You can call us at +977-9802808008 for directions and to check our current hours."
 
@@ -214,21 +212,26 @@ serve(async (req) => {
       );
     }
 
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    // Any OpenAI-compatible chat endpoint works. Default: Google Gemini's
+    // OpenAI-compatible API (free tier available). Set in Supabase secrets:
+    //   AI_API_KEY (required), AI_BASE_URL and AI_MODEL (optional).
+    const AI_API_KEY = Deno.env.get("AI_API_KEY") ?? Deno.env.get("GEMINI_API_KEY");
+    if (!AI_API_KEY) {
+      throw new Error("AI_API_KEY is not configured");
     }
+    const AI_BASE_URL = Deno.env.get("AI_BASE_URL") ?? "https://generativelanguage.googleapis.com/v1beta/openai";
+    const AI_MODEL = Deno.env.get("AI_MODEL") ?? "gemini-2.5-flash";
 
     const response = await fetch(
-      "https://ai.gateway.lovable.dev/v1/chat/completions",
+      `${AI_BASE_URL.replace(/\/$/, "")}/chat/completions`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          Authorization: `Bearer ${AI_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
+          model: AI_MODEL,
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
             { role: "system", content: buildDateContext() },
@@ -252,7 +255,7 @@ serve(async (req) => {
           { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      if (response.status === 402) {
+      if (response.status === 402 || response.status === 403) {
         return new Response(
           JSON.stringify({ error: "Service temporarily unavailable. Please call us at +977-9802808008." }),
           { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }

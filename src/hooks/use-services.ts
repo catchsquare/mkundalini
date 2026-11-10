@@ -1,5 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { priceForService, formatNpr, formatUsd } from '@/lib/pricing';
+
+/**
+ * Public prices come only from src/lib/pricing.ts. Any price stored in the CMS
+ * is ignored so placeholder values can never reach the live site.
+ */
+function verifiedPrice(slug: string): { price: string | null; comparison_price: null } {
+  const p = priceForService(slug);
+  return { price: p ? `From ${formatNpr(p)} (${formatUsd(p)})` : null, comparison_price: null };
+}
 
 export interface ServiceCategory {
   id: string;
@@ -71,6 +81,7 @@ export function useServices() {
       if (error) throw error;
       return (data || []).map(s => ({
         ...s,
+        ...verifiedPrice(s.slug),
         features: s.features || [],
         faqs: (s.faqs as any) || [],
       })) as Service[];
@@ -106,6 +117,7 @@ export function useServiceBySlug(slug: string) {
       if (error) throw error;
       return {
         ...data,
+        ...verifiedPrice(data.slug),
         features: data.features || [],
         faqs: (data.faqs as any) || [],
       } as Service;
