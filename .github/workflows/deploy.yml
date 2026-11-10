@@ -2,7 +2,8 @@ name: Build, prerender and deploy
 
 on:
   push:
-    branches: [main]
+    # main = live site; seo-rebuild = test deploy on a preview address
+    branches: [main, seo-rebuild]
   # Picks up CMS edits (prices, offers, doctors, pages) every 6 hours.
   schedule:
     - cron: "15 */6 * * *"
@@ -42,4 +43,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=kundalini-dental --branch=main
+          command: |
+            pages project create kundalini-dental --production-branch=main || true
+            pages deploy dist --project-name=kundalini-dental --branch=${{ github.ref_name }}
