@@ -77,9 +77,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-sm text-secondary-foreground/70 leading-relaxed max-w-sm text-center sm:text-left">
-              Comprehensive dental care in Chappal Karkhana, Kathmandu. Led by {settings.managing_director} 
-              with {settings.managing_director_experience} of experience, serving local and international patients 
-              with premium treatments at accessible prices since {settings.established_year}.
+              {`Dental clinic in Chappal Karkhana, Kathmandu, established in ${settings.established_year}. Led by ${settings.managing_director}, practising dentistry since 2012, with visiting specialists in orthodontics and oral surgery. Patients from Nepal and abroad welcome.`}
             </p>
             
             {/* Contact Quick Links */}
