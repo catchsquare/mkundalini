@@ -1,0 +1,48 @@
+name: Build, prerender and deploy
+
+on:
+  push:
+    branches: [main]
+  # Picks up CMS edits (prices, offers, doctors, pages) every 6 hours.
+  schedule:
+    - cron: "15 */6 * * *"
+  # "Run workflow" button in GitHub > Actions, for publishing CMS edits immediately.
+  workflow_dispatch:
+  # Lets an external trigger (e.g. a Supabase webhook) publish CMS edits.
+  repository_dispatch:
+    types: [cms-update]
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      VITE_SUPABASE_PROJECT_ID: ${{ vars.VITE_SUPABASE_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Prerender pages to static HTML
+        run: node scripts/prerender.mjs
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=kundalini-dental --branch=main

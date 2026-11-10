@@ -18,6 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Layout } from "@/components/layout/Layout";
 import { usePageContent } from "@/hooks/use-page-content";
 import { useTeamMembers } from "@/hooks/use-team-members";
+import { VISITING_SPECIALISTS } from "@/lib/clinic-info";
 import { useContentBlocks } from "@/hooks/use-content-blocks";
 import { useHeroSlide } from "@/hooks/use-hero-slide";
 import { getIcon } from "@/lib/icon-map";
@@ -315,6 +316,29 @@ export default function DoctorsPage() {
             <Link to="/doctors/dr-bhawana-sharma" className="inline-block mt-3 text-sm text-primary hover:underline">
               View full profile
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Visiting specialists (verified names and roles only) */}
+      <section className="py-12 bg-background" aria-labelledby="visiting-specialists-heading">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 id="visiting-specialists-heading" className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+            Visiting Specialists
+          </h2>
+          <p className="text-muted-foreground mb-6 max-w-2xl">
+            For orthodontic and surgical treatment, our resident dentists work alongside visiting
+            specialists. Appointments with a specialist are scheduled on their clinic days, so tell us
+            your travel dates early if you are coming from abroad.
+          </p>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {VISITING_SPECIALISTS.map((d) => (
+              <div key={d.name} className="rounded-xl border border-border bg-card p-6">
+                <h3 className="text-xl font-bold text-foreground">{d.name}</h3>
+                <p className="text-primary font-medium mt-1">{d.role}</p>
+                <p className="text-sm text-muted-foreground mt-2">{d.focus}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -53,23 +53,23 @@ const fallbackWhyNepal = [
   },
   {
     icon: Award,
-    title: "Internationally Trained Dentists",
-    description: "The clinic is led by Dr. Nitin Aryal, BDS, NMC Registration No. 12586, practising dentistry since 2012.",
+    title: "Registered, Experienced Dentists",
+    description: "The clinic is led by Dr. Nitin Aryal, BDS, NMC Registration No. 12586, practising dentistry since 2012, with visiting specialists for orthodontics and oral surgery.",
   },
   {
     icon: Shield,
-    title: "Same Materials, Same Standards",
-    description: "Contact the clinic before travelling. You may share existing X-rays or reports through WhatsApp for preliminary discussion.",
+    title: "Plan Before You Fly",
+    description: "Send your existing X-rays or dental reports on WhatsApp before you travel. We review them and tell you what can be planned, and what needs an in-person examination first.",
   },
   {
     icon: Globe,
     title: "English-Speaking Care",
-    description: "Our entire team speaks fluent English. You'll never face communication barriers during consultations, treatment, or aftercare.",
+    description: "Consultations, treatment plans and written estimates are given in English, so you understand every step before you agree to it.",
   },
   {
     icon: Clock,
-    title: "No Waiting Lists",
-    description: "Unlike many countries where dental appointments can take months, we can typically schedule your treatment within days of your arrival.",
+    title: "Appointments Around Your Trip",
+    description: "Tell us your travel dates when you first contact us. We plan your visits around them, including the days our visiting specialists are in clinic.",
   },
   {
     icon: MapPin,
@@ -84,20 +84,20 @@ const fallbackWhyKundalini = [
     description: "Led by Dr. Nitin Aryal, BDS, practising dentistry since 2012.",
   },
   {
-    title: "Specialist-Led Care",
-    description: "Your treatment is performed by qualified dental professionals dedicated to their area of expertise.",
+    title: "Specialists for Complex Work",
+    description: "Braces and aligners are planned with our visiting orthodontist. Surgical extractions and implant surgery are handled with our visiting oral surgeons.",
   },
   {
-    title: "Modern Technology",
-    description: "We use contemporary dental technology for accurate diagnostics and efficient treatments.",
+    title: "Written Estimate First",
+    description: "After your examination you get a written treatment plan and cost estimate. Nothing starts until you approve it.",
   },
   {
     title: "Transparent Pricing",
-    description: "Complete cost breakdown before you travel. No hidden fees, no surprises. The price we quote is the price you pay.",
+    description: "Our published prices are listed in rupees with approximate US dollar figures, so you can budget before you book a flight.",
   },
   {
-    title: "Dedicated Patient Coordinator",
-    description: "One point of contact who speaks your language and handles everything from scheduling to travel assistance.",
+    title: "One WhatsApp Number",
+    description: "Message +977 980-2808008 from anywhere. The same number handles questions before you travel, appointment changes during your stay, and follow-up after you go home.",
   },
   {
     title: "Comprehensive Documentation",
@@ -376,8 +376,8 @@ export default function DentalTourismPage() {
             {[
               { value: "2012", label: "Practising Since" },
               { value: "2023", label: "Clinic Established" },
-              { value: "Quality", label: "Dental Care" },
-              { value: "Premium", label: "Materials Used" },
+              { value: "5", label: "Dentists & Specialists" },
+              { value: "7 Days", label: "Open Every Week" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
