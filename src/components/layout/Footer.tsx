@@ -22,7 +22,7 @@ const navigation = {
   ],
   forPatients: [
     { name: "Dental Tourism Guide", href: "/dental-tourism" },
-    { name: "Book Appointment", href: "/contact" },
+    { name: "Book Appointment", href: "/book" },
     { name: "Treatment Pricing", href: "/pricing" },
     { name: "FAQs", href: "/faq" },
   ],
@@ -47,7 +47,7 @@ export function Footer() {
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-center lg:justify-end">
               <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base">
-                <Link to="/contact">
+                <Link to="/book">
                   Book Appointment
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>

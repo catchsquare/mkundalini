@@ -21,7 +21,7 @@ const ORIGIN = `http://127.0.0.1:${PORT}`;
 // Seeds; everything else is discovered by following internal links.
 const SEEDS = [
   "/", "/services", "/about", "/doctors", "/dental-tourism", "/pricing",
-  "/reviews", "/contact", "/faq", "/privacy", "/terms", "/refund",
+  "/reviews", "/contact", "/book", "/faq", "/privacy", "/terms", "/refund",
 ];
 const EXCLUDE = [/^\/admin/, /^\/api/];
 const MAX_PAGES = 300;

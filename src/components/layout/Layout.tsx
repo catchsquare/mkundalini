@@ -15,11 +15,13 @@ const DentalAssistantWidget = lazy(() =>
 interface LayoutProps {
   children: ReactNode;
   showAnnouncement?: boolean;
+  /** Chat bubble, call button and offer popup. Off on pages with a form to fill in. */
+  showFloatingWidgets?: boolean;
 }
 
 const CONSENT_KEY = "kdc_consent_v1";
 
-export function Layout({ children, showAnnouncement = true }: LayoutProps) {
+export function Layout({ children, showAnnouncement = true, showFloatingWidgets = true }: LayoutProps) {
   const [consentResolved, setConsentResolved] = useState(true);
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export function Layout({ children, showAnnouncement = true }: LayoutProps) {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
-      {consentResolved && (
+      {consentResolved && showFloatingWidgets && (
         <>
           <FloatingCallButton />
           <Suspense fallback={null}>
@@ -55,7 +57,7 @@ export function Layout({ children, showAnnouncement = true }: LayoutProps) {
         </>
       )}
       <ConsentBanner />
-      <OffersPopup />
+      {showFloatingWidgets && <OffersPopup />}
     </div>
   );
 }

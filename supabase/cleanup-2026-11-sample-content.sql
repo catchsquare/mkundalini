@@ -11,6 +11,7 @@
 --   4. Removes guarantee-style stats ("Quality / Care Guaranteed" etc.).
 --   5. Clears sample USD prices. Public prices now come only from
 --      src/lib/pricing.ts.
+--   6. Sets the verified opening hours used by online booking.
 
 begin;
 
@@ -39,6 +40,13 @@ where label ilike '%guarantee%'
 -- 5. Sample USD prices
 update public.services set price = null, comparison_price = null;
 update public.pricing_packages set is_visible = false;
+
+-- 6. Verified opening hours (Sunday-Friday 9:30-18:30, Saturday 10:00-14:00)
+--    These drive the online booking slots. Edit later in /admin -> Booking Settings.
+update public.working_hours set open_time = '09:30', close_time = '18:30', is_closed = false
+where day_of_week between 0 and 5;
+update public.working_hours set open_time = '10:00', close_time = '14:00', is_closed = false
+where day_of_week = 6;
 
 commit;
 

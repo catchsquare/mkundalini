@@ -218,7 +218,7 @@ export function Header() {
             </Link>
           </Button>
           <Button asChild size="sm" className="whitespace-nowrap">
-            <Link to="/contact">Book Appointment</Link>
+            <Link to="/book">Book Appointment</Link>
           </Button>
         </div>
 
@@ -348,7 +348,7 @@ export function Header() {
                     </Link>
                   </Button>
                   <Button asChild className="w-full h-12 text-base">
-                    <Link to="/contact" onClick={closeMobileMenu}>
+                    <Link to="/book" onClick={closeMobileMenu}>
                       Book Appointment
                     </Link>
                   </Button>

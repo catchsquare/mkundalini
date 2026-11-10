@@ -42,7 +42,11 @@ interface Appointment {
   treatment_type: string;
   status: string;
   notes: string | null;
-  patient: { first_name: string; last_name: string; phone: string } | null;
+  booking_ref?: string | null;
+  source?: string | null;
+  patient_timezone?: string | null;
+  patient_message?: string | null;
+  patient: { first_name: string; last_name: string; phone: string; email?: string | null; country?: string | null } | null;
 }
 
 interface Patient {
@@ -55,6 +59,8 @@ interface Patient {
 export default function Appointments() {
   const [searchParams] = useSearchParams();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [requests, setRequests] = useState<Appointment[]>([]);
+  const [moving, setMoving] = useState<{ appt: Appointment; date: string; time: string } | null>(null);
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -94,6 +100,7 @@ export default function Appointments() {
   useEffect(() => {
     fetchAppointments();
     fetchPatients();
+    fetchRequests();
   }, [weekStart]);
 
   useEffect(() => {
@@ -102,7 +109,7 @@ export default function Appointments() {
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "appointments" },
-        () => fetchAppointments()
+        () => { fetchAppointments(); fetchRequests(); }
       )
       .subscribe();
 
@@ -118,7 +125,7 @@ export default function Appointments() {
         .from("appointments")
         .select(`
           *,
-          patient:patients(first_name, last_name, phone)
+          patient:patients(first_name, last_name, phone, email, country)
         `)
         .gte("appointment_date", format(weekStart, "yyyy-MM-dd"))
         .lte("appointment_date", format(weekEnd, "yyyy-MM-dd"))
@@ -184,6 +191,45 @@ export default function Appointments() {
     }
   };
 
+  // Online booking requests waiting for a staff decision (today onwards).
+  const fetchRequests = async () => {
+    const { data, error } = await supabase
+      .from("appointments")
+      .select(`*, patient:patients(first_name, last_name, phone, email, country)`)
+      .eq("status", "requested")
+      .gte("appointment_date", format(new Date(), "yyyy-MM-dd"))
+      .order("appointment_date")
+      .order("start_time");
+    if (!error) setRequests((data as unknown as Appointment[]) || []);
+  };
+
+  // Move an appointment to a new date/time, keeping its length. Moving a
+  // requested booking also confirms it, since staff agreed the time with the patient.
+  const reschedule = async () => {
+    if (!moving) return;
+    const toMin = (t: string) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5));
+    const length = Math.max(15, toMin(moving.appt.end_time) - toMin(moving.appt.start_time));
+    const endMin = toMin(moving.time) + length;
+    const end = `${String(Math.floor(endMin / 60)).padStart(2, "0")}:${String(endMin % 60).padStart(2, "0")}`;
+    const { error } = await supabase
+      .from("appointments")
+      .update({
+        appointment_date: moving.date,
+        start_time: moving.time,
+        end_time: end,
+        status: moving.appt.status === "requested" ? "confirmed" : moving.appt.status,
+      })
+      .eq("id", moving.appt.id);
+    if (error) {
+      toast({ variant: "destructive", title: "Error", description: getSafeErrorMessage(error) });
+      return;
+    }
+    toast({ title: "Appointment moved" });
+    setMoving(null);
+    fetchAppointments();
+    fetchRequests();
+  };
+
   const updateStatus = async (id: string, status: string) => {
     try {
       const { error } = await supabase
@@ -194,6 +240,7 @@ export default function Appointments() {
       if (error) throw error;
       toast({ title: "Status updated" });
       fetchAppointments();
+      fetchRequests();
     } catch (error: unknown) {
       toast({ variant: "destructive", title: "Error", description: getSafeErrorMessage(error) });
     }
@@ -219,14 +266,14 @@ export default function Appointments() {
       case "confirmed": return "bg-primary/10 border-primary/30 text-primary";
       case "cancelled": return "bg-red-100 border-red-300 text-red-800";
       case "no_show": return "bg-gray-100 border-gray-300 text-gray-800";
+      case "requested": return "bg-amber-100 border-amber-400 text-amber-900 border-dashed";
       default: return "bg-orange-100 border-orange-300 text-orange-800";
     }
   };
 
   const getDayAppointments = (date: Date) => {
-    return appointments.filter((a) =>
-      isSameDay(new Date(a.appointment_date), date)
-    );
+    const key = format(date, "yyyy-MM-dd");
+    return appointments.filter((a) => a.appointment_date === key);
   };
 
   return (
@@ -242,6 +289,60 @@ export default function Appointments() {
           New Appointment
         </Button>
       </div>
+
+      {/* Online booking requests */}
+      {requests.length > 0 && (
+        <div className="rounded-xl border-2 border-amber-300 bg-amber-50 dark:bg-amber-950/20 p-4">
+          <h2 className="font-semibold text-foreground mb-3">
+            {requests.length} online booking {requests.length === 1 ? "request" : "requests"} to confirm
+          </h2>
+          <div className="space-y-3">
+            {requests.map((r) => {
+              const phoneDigits = (r.patient?.phone || "").replace(/\D/g, "");
+              const waNumber = phoneDigits.length === 10 && phoneDigits.startsWith("9") ? `977${phoneDigits}` : phoneDigits;
+              return (
+                <div key={r.id} className="rounded-lg bg-card border border-border p-3 flex flex-col lg:flex-row lg:items-center gap-3">
+                  <div className="flex-1 min-w-0 text-sm">
+                    <p className="font-semibold text-foreground">
+                      {format(new Date(`${r.appointment_date}T00:00:00`), "EEE d MMM")} · {r.start_time.slice(0, 5)} ·{" "}
+                      {r.patient?.first_name} {r.patient?.last_name !== "-" ? r.patient?.last_name : ""}
+                      {r.booking_ref && <span className="ml-2 font-mono text-xs text-muted-foreground">{r.booking_ref}</span>}
+                    </p>
+                    <p className="text-muted-foreground">
+                      {r.treatment_type} · {r.patient?.phone}
+                      {r.patient?.email ? ` · ${r.patient.email}` : ""}
+                      {r.patient?.country && r.patient.country !== "Nepal" ? ` · ${r.patient.country}` : ""}
+                      {r.patient_timezone && r.patient_timezone !== "Asia/Kathmandu" ? ` · lives in ${r.patient_timezone}` : ""}
+                    </p>
+                    {r.patient_message && (
+                      <p className="text-muted-foreground italic mt-1 break-words">"{r.patient_message}"</p>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button size="sm" onClick={() => updateStatus(r.id, "confirmed")}>Confirm</Button>
+                    <Button size="sm" variant="outline"
+                      onClick={() => setMoving({ appt: r, date: r.appointment_date, time: r.start_time.slice(0, 5) })}>
+                      Move
+                    </Button>
+                    <Button size="sm" variant="outline" asChild>
+                      <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                    </Button>
+                    <Button size="sm" variant="outline" asChild>
+                      <a href={`tel:+${waNumber}`}>Call</a>
+                    </Button>
+                    <Button size="sm" variant="ghost" className="text-destructive" onClick={() => updateStatus(r.id, "cancelled")}>
+                      Decline
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-xs text-muted-foreground mt-3">
+            Agree a new time with the patient first, then use Move. Moving a request confirms it.
+          </p>
+        </div>
+      )}
 
       {/* Week Navigation */}
       <div className="flex items-center justify-between bg-card rounded-xl border border-border p-4">
@@ -339,6 +440,9 @@ export default function Appointments() {
                         <p className="text-[10px] opacity-80 truncate">
                           {appt.treatment_type}
                         </p>
+                        {appt.booking_ref && (
+                          <p className="text-[10px] font-mono opacity-80">{appt.booking_ref}</p>
+                        )}
                         <Select
                           value={appt.status}
                           onValueChange={(val) => updateStatus(appt.id, val)}
@@ -347,6 +451,7 @@ export default function Appointments() {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
+                            <SelectItem value="requested">Requested (online)</SelectItem>
                             <SelectItem value="scheduled">Scheduled</SelectItem>
                             <SelectItem value="confirmed">Confirmed</SelectItem>
                             <SelectItem value="in_progress">In Progress</SelectItem>
@@ -364,6 +469,37 @@ export default function Appointments() {
           })}
         </div>
       </div>
+
+      {/* Move appointment dialog */}
+      <Dialog open={moving !== null} onOpenChange={(o) => !o && setMoving(null)}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Move appointment</DialogTitle>
+          </DialogHeader>
+          {moving && (
+            <div className="space-y-4 mt-2">
+              <p className="text-sm text-muted-foreground">
+                {moving.appt.patient?.first_name} {moving.appt.patient?.last_name !== "-" ? moving.appt.patient?.last_name : ""} ·{" "}
+                {moving.appt.treatment_type}
+              </p>
+              <div>
+                <label className="block text-sm font-medium mb-1.5" htmlFor="move-date">New date</label>
+                <Input id="move-date" type="date" value={moving.date}
+                  onChange={(e) => setMoving({ ...moving, date: e.target.value })} />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1.5" htmlFor="move-time">New start time (Nepal)</label>
+                <Input id="move-time" type="time" step={900} value={moving.time}
+                  onChange={(e) => setMoving({ ...moving, time: e.target.value })} />
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setMoving(null)}>Cancel</Button>
+                <Button onClick={reschedule} disabled={!moving.date || !moving.time}>Save</Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* New Appointment Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

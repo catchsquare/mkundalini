@@ -18,7 +18,8 @@ and the new site has run for a week.
 
 ## 1. Create your Supabase project
 1. Sign up at supabase.com with the clinic's Google account.
-2. New project: name `kundalini-dental`, region **Mumbai (ap-south-1)**.
+2. New project: name `kundalini`, region **Asia-Pacific**. Keep "Enable Data API" and
+   "Automatically expose new tables" on, and "automatic RLS" off.
    Save the database password in a password manager.
 
 ## 2. Export your data from Lovable
@@ -92,6 +93,16 @@ After a week of the new site running cleanly, downgrade or cancel the Lovable
 plan.
 
 ---
+
+## Online booking
+- Patients book at `/book`. Each booking arrives as **requested** at the top
+  of `/admin` → Appointments, and as a lead (which triggers the email alert).
+- Staff **Confirm**, **Move** (agree a new time with the patient first) or
+  **Decline**. Calls and WhatsApp open from the same row.
+- `/admin` → Booking Settings: slot length, patients per slot, notice period,
+  opening hours, lunch breaks and closed dates (festivals, leave).
+- Double-booking is blocked inside the database, even if two people click at
+  the same moment. Tests: `supabase/tests/booking_test.sql`.
 
 ## Day-to-day after the move
 - **Editing content:** use `/admin` as before. Edits appear on the live site

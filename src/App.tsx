@@ -23,6 +23,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import RefundPage from "./pages/RefundPage";
 import FaqPage from "./pages/FaqPage";
+import BookPage from "./pages/BookPage";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -30,6 +31,9 @@ const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
 const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
 const Leads = lazy(() => import("./pages/admin/Leads"));
+const Appointments = lazy(() => import("./pages/admin/Appointments"));
+const Patients = lazy(() => import("./pages/admin/Patients"));
+const BookingSettings = lazy(() => import("./pages/admin/BookingSettings"));
 
 // Placeholder components for new admin pages
 const AdminPlaceholder = lazy(() => import("./pages/admin/AdminPlaceholder").then(m => ({ default: m.AdminPlaceholder })));
@@ -89,6 +93,7 @@ const App = () => (
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/refund" element={<RefundPage />} />
               <Route path="/faq" element={<FaqPage />} />
+              <Route path="/book" element={<BookPage />} />
 
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
@@ -98,6 +103,9 @@ const App = () => (
                 <Route path="quick-actions" element={<AdminPlaceholder title="Quick Actions" />} />
 
                 {/* CRM & Leads */}
+                <Route path="appointments" element={<Appointments />} />
+                <Route path="patients" element={<Patients />} />
+                <Route path="booking-settings" element={<BookingSettings />} />
                 <Route path="leads" element={<Leads />} />
                 <Route path="leads/pipeline" element={<Leads />} />
                 <Route path="leads/forms" element={<Leads />} />
